@@ -11,6 +11,7 @@ from fastapi.responses import HTMLResponse
 import os
 import uvicorn
 from routers import plants, garden_plans
+from routers.pdf_router import router as pdf_router
 
 # Import our configuration
 from config import settings
@@ -67,6 +68,9 @@ app.include_router(garden_plans.router, prefix="/api/plans", tags=["garden-plans
 
 # TODO: Add these routers as we build them
 # app.include_router(pdf_generator.router, prefix="/api/pdf", tags=["pdf"])
+
+# Add PDF router
+app.include_router(pdf_router)
 
 # ========================
 # Core Routes

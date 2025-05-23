@@ -15,75 +15,94 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime
 import os
 from pathlib import Path
+from pydantic import BaseModel
 
 from services.pdf_service import PDFService
-from services.garden_plan_service import GardenPlanService
-from models.garden_plan import GardenPlan, LocationInfo, PlantInfo, GrowingInstructions, PlantingSchedule
+from services.garden_plan_service import garden_plan_service
+from models.garden_plan import GardenPlan, LocationInfo, PlantInfo, GrowingInstructions, PlantingSchedule, PlanRequest
 
 # Initialize router
 router = APIRouter(prefix="/pdf", tags=["PDF Generation"])
 
 # Initialize services
 pdf_service = PDFService()
-garden_plan_service = GardenPlanService()
+
+class PDFGenerationRequest(BaseModel):
+    """Request model for PDF generation"""
+    zip_code: str
+    plant_names: List[str]  # We'll map this to selected_plants
+    custom_filename: Optional[str] = None
+    include_images: bool = True
+    include_calendar: bool = True
+    include_layout: bool = True
+    # Garden plan specific fields
+    garden_size: Optional[str] = "medium"  # small, medium, large
+    experience_level: Optional[str] = "beginner"  # beginner, intermediate, advanced
+
+class PDFFromPlanRequest(BaseModel):
+    """Request model for PDF generation from existing plan"""
+    garden_plan: GardenPlan
+    custom_filename: Optional[str] = None
+    include_images: bool = True
+    include_calendar: bool = True
+    include_layout: bool = True
 
 @router.post("/generate")
-async def generate_garden_plan_pdf(
-    zip_code: str,
-    plant_names: List[str],
-    custom_filename: Optional[str] = None,
-    include_images: bool = True,
-    include_calendar: bool = True,
-    include_layout: bool = True
-) -> Dict[str, Any]:
+async def generate_garden_plan_pdf(request: PDFGenerationRequest) -> Dict[str, Any]:
     """
     Generate a comprehensive garden plan PDF
     
-    **Parameters:**
-    - **zip_code**: Location zip/postal code (e.g., "12345" or "K1A 0A6")
-    - **plant_names**: List of plants to include in the garden plan
-    - **custom_filename**: Optional custom filename (timestamp will be added)
-    - **include_images**: Whether to include plant images in PDF
-    - **include_calendar**: Whether to include planting calendar
-    - **include_layout**: Whether to include garden layout guide
+    **Request Body:**
+    ```json
+    {
+        "zip_code": "12345",
+        "plant_names": ["Tomato", "Lettuce", "Carrots"],
+        "custom_filename": "my_garden",
+        "include_images": true,
+        "include_calendar": true,
+        "include_layout": true,
+        "garden_size": "medium",
+        "experience_level": "beginner"
+    }
+    ```
     
     **Returns:**
     - PDF generation result with file information
     """
     try:
         # Validate inputs
-        if not zip_code or not zip_code.strip():
+        if not request.zip_code or not request.zip_code.strip():
             raise HTTPException(status_code=400, detail="zip_code is required")
         
-        if not plant_names or len(plant_names) == 0:
+        if not request.plant_names or len(request.plant_names) == 0:
             raise HTTPException(status_code=400, detail="At least one plant must be selected")
         
-        if len(plant_names) > 20:
+        if len(request.plant_names) > 20:
             raise HTTPException(status_code=400, detail="Maximum 20 plants allowed per garden plan")
         
-        print(f"🌱 Generating garden plan PDF for {zip_code} with {len(plant_names)} plants...")
+        print(f"🌱 Generating garden plan PDF for {request.zip_code} with {len(request.plant_names)} plants...")
         
-        # Generate garden plan using the garden plan service
-        garden_plan_result = await garden_plan_service.create_garden_plan(
-            zip_code=zip_code,
-            selected_plants=plant_names
+        # Create PlanRequest object for the garden plan service
+        plan_request = PlanRequest(
+            zip_code=request.zip_code,
+            selected_plants=request.plant_names,  # Map plant_names to selected_plants
+            garden_size=request.garden_size,
+            experience_level=request.experience_level
         )
         
-        if not garden_plan_result["success"]:
-            raise HTTPException(
-                status_code=400, 
-                detail=f"Failed to create garden plan: {garden_plan_result.get('error', 'Unknown error')}"
-            )
+        # Generate garden plan using the garden plan service
+        garden_plan_result = await garden_plan_service.create_garden_plan(plan_request)
         
-        garden_plan = garden_plan_result["garden_plan"]
+        # The result is the garden plan object directly, not a dict with success/error
+        garden_plan = garden_plan_result
         
         # Generate PDF
         pdf_result = await pdf_service.generate_garden_plan_pdf(
             garden_plan=garden_plan,
-            custom_filename=custom_filename,
-            include_images=include_images,
-            include_calendar=include_calendar,
-            include_layout=include_layout
+            custom_filename=request.custom_filename,
+            include_images=request.include_images,
+            include_calendar=request.include_calendar,
+            include_layout=request.include_layout
         )
         
         if pdf_result["success"]:
@@ -92,6 +111,7 @@ async def generate_garden_plan_pdf(
                 "message": "PDF generated successfully",
                 "pdf_info": pdf_result,
                 "download_url": f"/pdf/download/{pdf_result['filename']}",
+                "view_url": f"/pdf/view/{pdf_result['filename']}",
                 "garden_plan_summary": {
                     "location": garden_plan.location.zip_code,
                     "plant_count": len(garden_plan.plant_information),
@@ -107,22 +127,20 @@ async def generate_garden_plan_pdf(
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 @router.post("/generate-from-plan")
-async def generate_pdf_from_existing_plan(
-    garden_plan: GardenPlan,
-    custom_filename: Optional[str] = None,
-    include_images: bool = True,
-    include_calendar: bool = True,
-    include_layout: bool = True
-) -> Dict[str, Any]:
+async def generate_pdf_from_existing_plan(request: PDFFromPlanRequest) -> Dict[str, Any]:
     """
     Generate PDF from an existing garden plan object
     
-    **Parameters:**
-    - **garden_plan**: Complete garden plan object
-    - **custom_filename**: Optional custom filename
-    - **include_images**: Whether to include plant images
-    - **include_calendar**: Whether to include planting calendar
-    - **include_layout**: Whether to include garden layout guide
+    **Request Body:**
+    ```json
+    {
+        "garden_plan": { /* complete garden plan object */ },
+        "custom_filename": "my_garden",
+        "include_images": true,
+        "include_calendar": true,
+        "include_layout": true
+    }
+    ```
     
     **Returns:**
     - PDF generation result with file information
@@ -131,11 +149,11 @@ async def generate_pdf_from_existing_plan(
         print(f"📄 Generating PDF from existing garden plan...")
         
         pdf_result = await pdf_service.generate_garden_plan_pdf(
-            garden_plan=garden_plan,
-            custom_filename=custom_filename,
-            include_images=include_images,
-            include_calendar=include_calendar,
-            include_layout=include_layout
+            garden_plan=request.garden_plan,
+            custom_filename=request.custom_filename,
+            include_images=request.include_images,
+            include_calendar=request.include_calendar,
+            include_layout=request.include_layout
         )
         
         if pdf_result["success"]:
@@ -143,7 +161,8 @@ async def generate_pdf_from_existing_plan(
                 "success": True,
                 "message": "PDF generated successfully from existing plan",
                 "pdf_info": pdf_result,
-                "download_url": f"/pdf/download/{pdf_result['filename']}"
+                "download_url": f"/pdf/download/{pdf_result['filename']}",
+                "view_url": f"/pdf/view/{pdf_result['filename']}"
             }
         else:
             raise HTTPException(status_code=500, detail=f"PDF generation failed: {pdf_result['error']}")

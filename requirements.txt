@@ -26,6 +26,18 @@ httpx==0.25.2
 # Environment Management
 python-dotenv==1.0.0
 
+# Date and Time Handling
+python-dateutil==2.8.2
+
+# JSON Processing
+ujson==5.8.0
+
+# File and OS Operations
+pathlib2==2.3.7
+
+# Async Support
+aiofiles==23.2.1
+
 # Development and Testing
 pytest==7.4.3
 pytest-asyncio==0.21.1
@@ -34,3 +46,10 @@ flake8==6.1.0
 
 # Logging
 python-json-logger==2.0.7
+
+# Static File Serving
+aiofiles==23.2.1
+
+# HTML/CSS Processing (for PDF generation)
+cssselect2==0.7.0
+html5lib==1.1

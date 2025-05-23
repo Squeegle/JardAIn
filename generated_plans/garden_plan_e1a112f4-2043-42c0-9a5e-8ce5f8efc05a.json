@@ -1,0 +1,243 @@
+{
+  "plan_id": "e1a112f4-2043-42c0-9a5e-8ce5f8efc05a",
+  "created_date": "2025-05-23T18:09:41.090530",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "Broccoli",
+    "Peppers",
+    "Spinach"
+  ],
+  "plant_information": [
+    {
+      "name": "Broccoli",
+      "scientific_name": "Brassica oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 65,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "onions",
+        "garlic",
+        "spinach",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "tomatoes",
+        "peppers",
+        "strawberries"
+      ]
+    },
+    {
+      "name": "Peppers",
+      "scientific_name": "Capsicum annuum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 80,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "tomatoes",
+        "basil",
+        "onions",
+        "carrots"
+      ],
+      "avoid_planting_with": [
+        "fennel",
+        "brassicas"
+      ]
+    },
+    {
+      "name": "Spinach",
+      "scientific_name": "Spinacia oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 40,
+      "spacing_inches": 4,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "radishes",
+        "strawberries",
+        "peas"
+      ],
+      "avoid_planting_with": []
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Broccoli",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-20",
+      "harvest_end_date": "2024-07-25",
+      "succession_planting_interval": 30
+    },
+    {
+      "plant_name": "Peppers",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-07-25",
+      "harvest_end_date": "2024-10-01",
+      "succession_planting_interval": 30
+    },
+    {
+      "plant_name": "Spinach",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-15",
+      "harvest_end_date": "2024-06-20",
+      "succession_planting_interval": 14
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Broccoli",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Broccoli seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Broccoli deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Broccoli weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Broccoli approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Broccoli at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Peppers",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Peppers seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Peppers deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Peppers weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Peppers approximately 80 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Peppers at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Spinach",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Spinach seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 4 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Spinach deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Spinach weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Spinach approximately 40 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Spinach at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Broccoli",
+          "Peppers"
+        ],
+        "spacing_notes": "Plant broccoli and peppers in rows, about 18 inches apart. Leave a 3-foot gap between the two rows for easy access."
+      },
+      {
+        "group_name": "Spinach Bed",
+        "plants": [
+          "Spinach"
+        ],
+        "spacing_notes": "Sow spinach seeds densely, about 4 inches apart, in a separate bed or section of the main garden area. This will allow for easy harvesting and minimize competition from other plants."
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Start your seeds indoors 4-6 weeks before the last frost date to give them a head start on the growing season.",
+    "Choose varieties of broccoli that mature quickly (around 50-60 days) to ensure you get a harvest before the first frost.",
+    "Peppers are warm-season crops and prefer well-draining soil with a pH between 6.0 and 7.0. Make sure your garden bed has good drainage and add organic matter like compost or manure to improve soil structure.",
+    "Spinach is a cool-season crop that prefers partial shade and consistent moisture. Plant it in early spring as soon as the soil can be worked, or in late summer for a fall harvest.",
+    "In Moncton's cold climate, it's essential to provide protection from frost using row covers or other methods when planting broccoli and spinach.",
+    "Broccoli and peppers require full sun (at least 6 hours of direct sunlight) to produce well. Make sure your garden bed receives sufficient sunlight and consider using a trellis for support if needed."
+  ]
+}

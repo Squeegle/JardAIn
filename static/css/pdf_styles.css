@@ -25,149 +25,113 @@ body {
     }
 }
 
-.page-break {
-    page-break-before: always;
+/* FORCE PAGE BREAKS - Multiple approaches for WeasyPrint compatibility */
+
+/* Method 1: Strong page break enforcement */
+.plant-page {
+    page-break-before: always !important;
+    break-before: page !important;
+    page-break-after: auto;
+    break-after: auto;
+    padding: 0.5in 0;
+    min-height: 4in;
 }
 
-/* Cover Page Styles */
-.cover-page {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);
-    padding: 2in;
-}
-
-.cover-header {
-    margin-bottom: 2in;
-}
-
-.app-title {
-    font-size: 28pt;
-    font-weight: bold;
-    color: #2d5a2d;
-    margin-bottom: 0.5in;
-}
-
-.cover-decoration {
-    font-size: 48pt;
-    margin: 0.5in 0;
-}
-
-.garden-title {
-    font-size: 24pt;
-    color: #4a7c59;
-    margin-bottom: 1in;
-    font-weight: 300;
-}
-
-.location-info {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 1in;
-    border-radius: 10px;
-    border: 2px solid #4a7c59;
-    margin-bottom: 1in;
-}
-
-.location-info h3 {
+/* Method 2: Individual plant title enforcement */
+.plant-title {
+    page-break-before: always !important;
+    break-before: page !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
     font-size: 18pt;
     color: #2d5a2d;
+    margin-bottom: 0.5in;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* Method 3: Force new pages for major sections */
+.calendar-page {
+    page-break-before: always !important;
+    break-before: page !important;
+    padding: 0.5in 0;
+}
+
+.layout-page {
+    page-break-before: always !important;
+    break-before: page !important;
+    padding: 0.5in 0;
+}
+
+/* Method 4: Ensure first plant doesn't force page break */
+.plant-page:first-of-type .plant-title {
+    page-break-before: auto !important;
+    break-before: auto !important;
+}
+
+/* Prevent breaking within important sections */
+.plant-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 0.5in;
+    padding: 0.3in;
+    background: #f8fffe;
+    border-left: 4px solid #4a7c59;
+}
+
+.instruction-block {
+    page-break-inside: avoid;
+    break-inside: avoid;
     margin-bottom: 0.3in;
+    padding: 0.2in;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
-.climate-zone {
-    font-size: 14pt;
-    color: #4a7c59;
-    margin-bottom: 0.2in;
+/* Keep table rows together */
+.plant-info-table tr,
+.schedule-table tr,
+.spacing-table tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
-.frost-dates p {
-    font-size: 12pt;
-    margin: 0.1in 0;
-    color: #666;
+/* Remove any conflicting page break rules */
+.page-break {
+    display: none; /* Remove manual page breaks since CSS handles it */
 }
 
-.plan-summary {
-    display: flex;
-    justify-content: center;
-    gap: 2in;
-    margin: 1in 0;
+/* Overview Page (first page) */
+.overview-page {
+    padding: 0.5in 0;
+    page-break-after: always !important;
+    break-after: page !important;
 }
 
-.summary-item {
-    text-align: center;
-}
-
-.summary-number {
-    display: block;
-    font-size: 36pt;
-    font-weight: bold;
-    color: #4a7c59;
-    line-height: 1;
-}
-
-.summary-label {
-    display: block;
-    font-size: 12pt;
-    color: #666;
-    margin-top: 0.1in;
-}
-
-.cover-footer {
-    font-size: 10pt;
-    color: #666;
-    border-top: 1px solid #ccc;
-    padding-top: 0.3in;
-}
-
-/* Table of Contents */
-.toc-page {
-    padding: 1in 0;
-}
-
+/* Section titles */
 .section-title {
     font-size: 20pt;
     color: #2d5a2d;
     margin-bottom: 0.5in;
     border-bottom: 2px solid #4a7c59;
     padding-bottom: 0.2in;
+    page-break-after: avoid;
+    break-after: avoid;
 }
 
-.toc-content {
-    margin-top: 0.5in;
+/* Plant header styling */
+.plant-header {
+    background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);
+    padding: 0.3in;
+    border-radius: 8px;
+    margin-bottom: 0.5in;
+    border: 2px solid #4a7c59;
 }
 
-.toc-item {
-    display: flex;
-    align-items: baseline;
-    margin-bottom: 0.3in;
-    font-size: 12pt;
-}
-
-.toc-name {
-    color: #2d5a2d;
-    font-weight: 500;
-}
-
-.toc-dots {
-    flex: 1;
-    border-bottom: 1px dotted #ccc;
-    margin: 0 0.2in;
-    height: 1px;
-}
-
-.toc-page {
-    color: #4a7c59;
-    font-weight: bold;
-}
-
-/* Overview Page */
-.overview-page {
-    padding: 0.5in 0;
-}
-
+/* Location and overview styling */
 .location-details, .plants-overview {
     margin-bottom: 1in;
     padding: 0.5in;
@@ -198,176 +162,103 @@ body {
 
 .plant-name {
     display: block;
-    font-weight: bold;
+    font-weight: 500;
     color: #2d5a2d;
     font-size: 10pt;
 }
 
 .plant-category {
-    display: block;
-    font-size: 8pt;
     color: #666;
-    margin-top: 0.1in;
+    font-size: 8pt;
 }
 
-/* Plant Pages */
-.plant-page {
-    padding: 0.5in 0;
-}
-
-.plant-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5in;
-    padding-bottom: 0.3in;
-    border-bottom: 2px solid #4a7c59;
-}
-
-.plant-title {
-    font-size: 18pt;
-    color: #2d5a2d;
-}
-
-.plant-category-badge {
-    background: #4a7c59;
-    color: white;
-    padding: 0.1in 0.3in;
-    border-radius: 15px;
-    font-size: 10pt;
-    font-weight: bold;
-}
-
-.plant-image {
-    text-align: center;
-    margin: 0.5in 0;
-}
-
-.plant-image img {
-    max-width: 3in;
-    max-height: 2in;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-.plant-section {
-    margin-bottom: 0.8in;
+/* Plant content styling */
+.plant-content {
+    margin-top: 0.3in;
 }
 
 .plant-section h3 {
     color: #2d5a2d;
     font-size: 14pt;
     margin-bottom: 0.3in;
-    border-left: 4px solid #4a7c59;
-    padding-left: 0.2in;
+    border-bottom: 1px solid #4a7c59;
+    padding-bottom: 0.1in;
 }
 
-.info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.2in;
-    margin-top: 0.2in;
+/* Table styling */
+.plant-info-table, .schedule-table, .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0.3in;
 }
 
-.info-item {
-    background: #f8fffe;
-    padding: 0.2in;
-    border-radius: 3px;
-    font-size: 10pt;
+.plant-info-table td, .schedule-table td, .info-table td {
+    padding: 0.1in;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
 }
 
-.instruction-block {
-    margin-bottom: 0.5in;
-    padding: 0.3in;
-    background: #f8fffe;
-    border-radius: 5px;
+.plant-info-table td:first-child, 
+.schedule-table td:first-child, 
+.info-table td:first-child {
+    width: 30%;
+    font-weight: 500;
+    color: #2d5a2d;
 }
 
+/* Instruction styling */
 .instruction-block h4 {
     color: #4a7c59;
     font-size: 12pt;
     margin-bottom: 0.2in;
 }
 
-.instruction-block p {
+.instruction-content {
     line-height: 1.5;
-    text-align: justify;
+    color: #333;
 }
 
-.schedule-info {
-    background: #f8fffe;
-    padding: 0.3in;
-    border-radius: 5px;
-}
-
-.schedule-item {
-    margin-bottom: 0.2in;
-    font-size: 10pt;
-}
-
-/* Calendar Page */
-.calendar-page {
-    padding: 0.5in 0;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.3in;
-    margin-top: 0.5in;
-}
-
-.month-block {
-    background: #f8fffe;
-    border: 1px solid #4a7c59;
-    border-radius: 5px;
-    padding: 0.2in;
-    min-height: 2in;
+/* Calendar styling */
+.month-section {
+    margin-bottom: 0.5in;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 .month-title {
     color: #2d5a2d;
-    font-size: 12pt;
-    text-align: center;
-    margin-bottom: 0.2in;
-    padding-bottom: 0.1in;
-    border-bottom: 1px solid #4a7c59;
+    font-size: 14pt;
+    margin-bottom: 0.3in;
+    background: #f8fffe;
+    padding: 0.2in;
+    border-left: 4px solid #4a7c59;
+}
+
+.activity-list {
+    list-style: none;
+    margin-left: 0.3in;
 }
 
 .activity-item {
-    background: white;
+    margin-bottom: 0.2in;
     padding: 0.1in;
-    margin-bottom: 0.1in;
+    background: white;
     border-radius: 3px;
-    font-size: 9pt;
-    border-left: 3px solid #4a7c59;
+    border: 1px solid #eee;
 }
 
-.no-activities {
-    text-align: center;
-    color: #999;
-    font-style: italic;
-    font-size: 9pt;
-    margin-top: 0.5in;
-}
-
-/* Layout Page */
-.layout-page {
-    padding: 0.5in 0;
-}
-
+/* Layout page styling */
 .spacing-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0.3in 0;
+    margin-bottom: 0.5in;
 }
 
 .spacing-table th,
 .spacing-table td {
-    border: 1px solid #ddd;
     padding: 0.1in;
     text-align: left;
-    font-size: 9pt;
+    border-bottom: 1px solid #ddd;
 }
 
 .spacing-table th {
@@ -381,58 +272,29 @@ body {
 }
 
 .tips-section {
-    margin: 0.5in 0;
-    padding: 0.3in;
-    background: #f8fffe;
-    border-radius: 5px;
+    margin-top: 0.5in;
 }
 
 .tips-list {
-    margin-left: 0.3in;
-    margin-top: 0.2in;
+    list-style-type: disc;
+    margin-left: 0.5in;
 }
 
 .tips-list li {
-    margin-bottom: 0.1in;
-    font-size: 10pt;
-}
-
-.area-estimate {
-    margin-top: 0.3in;
-    padding: 0.2in;
-    background: white;
-    border-radius: 3px;
-    text-align: center;
-}
-
-.category-group {
-    margin-bottom: 0.3in;
-    padding: 0.2in;
-    background: #f8fffe;
-    border-radius: 5px;
-}
-
-.category-group h4 {
-    color: #2d5a2d;
     margin-bottom: 0.2in;
-    font-size: 12pt;
+    line-height: 1.4;
 }
 
-.category-plants {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.1in;
+/* Generation info */
+.generation-info {
+    margin-top: 1in;
+    padding-top: 0.3in;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    color: #666;
 }
 
-.category-plant {
-    background: white;
-    padding: 0.05in 0.2in;
-    border-radius: 10px;
-    font-size: 9pt;
-    border: 1px solid #ddd;
-}
-
-/* Utility Classes */
+/* Utility classes */
 .text-center {
     text-align: center;
 }

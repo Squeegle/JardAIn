@@ -190,68 +190,48 @@ class GardenPlanService:
         # Generate instructions for each plant individually for better quality
         for plant in plants:
             prompt = f"""
-            You are a professional master gardener writing a detailed growing guide. You MUST provide SPECIFIC numbers, temperatures, dates, and measurements - NO generic advice allowed.
+You are a professional master gardener. You MUST respond with ONLY valid JSON - no extra text, explanations, or formatting.
 
-            PLANT: {plant.name} ({plant.scientific_name})
-            LOCATION: {location.city}, {location.state} - Zone {location.usda_zone}
-            FROST DATES: Last frost {location.last_frost_date}, First frost {location.first_frost_date}
-            EXPERIENCE: {request.experience_level} gardener
+PLANT: {plant.name} in {location.city}, {location.state} (Zone {location.usda_zone})
+FROST DATES: Last {location.last_frost_date}, First {location.first_frost_date}
 
-            EXAMPLES OF REQUIRED DETAIL LEVEL:
-            ❌ BAD: "Water regularly" 
-            ✅ GOOD: "Water 1-1.5 inches per week, checking soil moisture 2 inches deep"
-            
-            ❌ BAD: "Plant after frost danger"
-            ✅ GOOD: "Start seeds indoors on March 15th, transplant outdoors May 20th when soil reaches 60°F"
+CRITICAL: Respond with ONLY the JSON below - no "Here's the JSON:" or explanations:
 
-            ❌ BAD: "Fertilize as needed"
-            ✅ GOOD: "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant"
+{{
+    "plant_name": "{plant.name}",
+    "preparation_steps": [
+        "Test soil pH to {plant.soil_ph_range or '6.0-6.8'} using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50°F",
+        "Choose location with {plant.sun_requirements or 'full sun'} receiving 6-8 hours direct sunlight daily"
+    ],
+    "planting_steps": [
+        "Start {plant.name} seeds indoors 6-8 weeks before {location.last_frost_date} at 70-75°F soil temperature",
+        "Sow seeds {plant.planting_depth_inches or 0.5} inches deep with {plant.spacing_inches or 12} inch spacing between plants",
+        "Transplant outdoors 2 weeks after {location.last_frost_date} when nighttime temperatures stay above 50°F"
+    ],
+    "care_instructions": [
+        "Water {plant.name} deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+    ],
+    "pest_management": [
+        "Inspect {plant.name} weekly for common zone {location.usda_zone} pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+    ],
+    "harvest_instructions": [
+        "Begin harvesting {plant.name} approximately {plant.days_to_harvest or 60} days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75°F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+    ],
+    "storage_tips": [
+        "Store fresh {plant.name} at 55-60°F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for {plant.plant_type} type"
+    ]
+}}
 
-            REQUIREMENTS - INCLUDE ALL OF THESE SPECIFICS:
-            - Exact dates based on {location.last_frost_date} and {location.first_frost_date}
-            - Specific temperatures in Fahrenheit
-            - Exact measurements (inches, tablespoons, etc.)
-            - Timing intervals (every X days/weeks)
-            - Specific varieties good for zone {location.usda_zone}
-            - Local climate considerations for {location.climate_type} climate
-
-            Respond with ONLY this JSON format with DETAILED instructions:
-
-            {{
-                "plant_name": "{plant.name}",
-                "preparation_steps": [
-                    "Test soil pH to achieve {plant.soil_ph_range or '6.0-6.8'} using digital pH meter - adjust 2-3 weeks before planting",
-                    "Work 2-3 inches of compost into top 8 inches of soil in {location.climate_type} climate conditions",
-                    "Choose location receiving {plant.sun_requirements or 'full sun'} - minimum 6-8 hours direct sunlight for {plant.name}"
-                ],
-                "planting_steps": [
-                    "Start {plant.name} seeds indoors on [EXACT DATE] - {plant.days_to_harvest or 60} days before {location.first_frost_date}",
-                    "Sow seeds {plant.planting_depth_inches or 0.5} inches deep in seed starting mix at 70-75°F soil temperature",
-                    "Transplant outdoors on [EXACT DATE] when nighttime temperatures stay above 50°F"
-                ],
-                "care_instructions": [
-                    "Water {plant.name} with 1-1.5 inches per week - check soil moisture 2 inches deep every 3 days",
-                    "Apply balanced 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks during growing season",
-                    "Mulch with 2-3 inches organic matter, keeping 6 inches from plant stem"
-                ],
-                "pest_management": [
-                    "Inspect {plant.name} weekly for [specific pests] common in zone {location.usda_zone} from [month] to [month]",
-                    "Apply neem oil spray at 2 tablespoons per gallon every 14 days if pests detected",
-                    "Use floating row covers during first 3 weeks after transplant to prevent early season pests"
-                ],
-                "harvest_instructions": [
-                    "Begin harvest approximately {plant.days_to_harvest or 60} days after transplant - around [EXACT DATE]",
-                    "Harvest in early morning (6-8 AM) when temperatures are below 75°F",
-                    "Use clean, sharp shears cutting 1/4 inch above leaf nodes"
-                ],
-                "storage_tips": [
-                    "Store fresh {plant.name} at 55-60°F with 85% humidity for maximum 7-10 days",
-                    "For longer storage, [specific preservation method] within 24 hours of harvest",
-                    "Freeze excess by [specific freezing method] - maintains quality for 8-12 months"
-                ]
-            }}
-
-            CRITICAL: Replace ALL placeholder text with specific information. Calculate exact dates from the frost dates provided. Include numbers, temperatures, and measurements in EVERY instruction.
+RESPOND WITH ONLY THE JSON ABOVE - NO OTHER TEXT.
             """
             
             try:
@@ -259,33 +239,31 @@ class GardenPlanService:
                 response = await llm_service.generate_plant_info(prompt)
                 
                 if response and len(response.strip()) > 200:  # Ensure substantial content
-                    try:
-                        # Clean up the response to ensure valid JSON
-                        cleaned_response = response.strip()
-                        if not cleaned_response.startswith('{'):
-                            # Find the first { and last }
-                            start = cleaned_response.find('{')
-                            end = cleaned_response.rfind('}') + 1
-                            if start != -1 and end > start:
-                                cleaned_response = cleaned_response[start:end]
-                        
-                        instruction_data = json.loads(cleaned_response)
-                        
-                        # Validate that we got detailed content
-                        is_detailed = self._validate_instruction_quality(instruction_data)
-                        
-                        if is_detailed:
-                            instructions = GrowingInstructions(**instruction_data)
-                            instructions_list.append(instructions)
-                            print(f"✅ Generated detailed instructions for {plant.name}")
-                        else:
-                            print(f"⚠️  Instructions for {plant.name} not detailed enough, enhancing...")
-                            enhanced_instructions = self._enhance_basic_instructions(instruction_data, plant, location, request)
-                            instructions_list.append(enhanced_instructions)
+                    print(f"📝 Raw response length: {len(response)} characters")
+                    
+                    # Use improved JSON extraction
+                    instruction_data = self._extract_and_clean_json(response)
+                    
+                    if instruction_data:
+                        try:
+                            # Validate that we got detailed content
+                            is_detailed = self._validate_instruction_quality(instruction_data)
                             
-                    except json.JSONDecodeError as e:
-                        print(f"⚠️  JSON parsing error for {plant.name}: {e}")
-                        print(f"Raw response preview: {response[:300]}...")
+                            if is_detailed:
+                                instructions = GrowingInstructions(**instruction_data)
+                                instructions_list.append(instructions)
+                                print(f"✅ Generated detailed instructions for {plant.name}")
+                            else:
+                                print(f"⚠️  Instructions for {plant.name} not detailed enough, enhancing...")
+                                enhanced_instructions = self._enhance_basic_instructions(instruction_data, plant, location, request)
+                                instructions_list.append(enhanced_instructions)
+                        
+                        except Exception as e:
+                            print(f"⚠️  Error creating GrowingInstructions for {plant.name}: {e}")
+                            instructions_list.append(self._create_enhanced_default_instructions(plant, location, request))
+                    else:
+                        print(f"⚠️  Could not extract valid JSON for {plant.name}")
+                        print(f"Response preview: {response[:300]}...")
                         instructions_list.append(self._create_enhanced_default_instructions(plant, location, request))
                 else:
                     print(f"⚠️  Insufficient response for {plant.name}, using enhanced default")
@@ -557,6 +535,94 @@ class GardenPlanService:
             harvest_instructions=[f"Harvest {plant.name} when ready"],
             storage_tips=[f"Store {plant.name} properly after harvest"]
         )
+    
+    def _extract_and_clean_json(self, response: str) -> Optional[Dict[str, Any]]:
+        """
+        Extract and clean JSON from LLM response that may contain extra text
+        """
+        if not response:
+            return None
+        
+        # Remove common LLM prefixes/suffixes
+        cleaned = response.strip()
+        
+        # Remove common prefixes
+        prefixes_to_remove = [
+            "Here's the JSON:",
+            "Here is the JSON:",
+            "```json",
+            "```",
+            "JSON:",
+            "Response:",
+            "Here's the detailed information:",
+            "Here are the instructions:"
+        ]
+        
+        for prefix in prefixes_to_remove:
+            if cleaned.lower().startswith(prefix.lower()):
+                cleaned = cleaned[len(prefix):].strip()
+        
+        # Remove common suffixes
+        suffixes_to_remove = ["```", "Let me know if you need more details!", "I hope this helps!"]
+        for suffix in suffixes_to_remove:
+            if cleaned.lower().endswith(suffix.lower()):
+                cleaned = cleaned[:-len(suffix)].strip()
+        
+        # Find JSON boundaries
+        start_idx = cleaned.find('{')
+        end_idx = cleaned.rfind('}')
+        
+        if start_idx == -1 or end_idx == -1 or start_idx >= end_idx:
+            print(f"⚠️  No valid JSON boundaries found in response")
+            return None
+        
+        # Extract just the JSON part
+        json_str = cleaned[start_idx:end_idx + 1]
+        
+        try:
+            # Try to parse the extracted JSON
+            data = json.loads(json_str)
+            return data
+            
+        except json.JSONDecodeError as e:
+            print(f"⚠️  JSON parsing failed: {e}")
+            print(f"Attempting to fix common JSON issues...")
+            
+            # Try to fix common JSON issues
+            fixed_json = self._fix_common_json_issues(json_str)
+            
+            try:
+                data = json.loads(fixed_json)
+                print("✅ Fixed JSON successfully!")
+                return data
+            except json.JSONDecodeError:
+                print(f"❌ Could not fix JSON. Raw content preview:")
+                print(f"{json_str[:200]}...")
+                return None
+    
+    def _fix_common_json_issues(self, json_str: str) -> str:
+        """
+        Fix common JSON formatting issues from LLM responses
+        """
+        import re
+        
+        # Fix unescaped quotes in strings
+        # This is a basic fix - more complex cases might need better handling
+        fixed = json_str
+        
+        # Fix trailing commas before closing brackets/braces
+        fixed = re.sub(r',(\s*[}\]])', r'\1', fixed)
+        
+        # Fix missing commas between array elements
+        fixed = re.sub(r'"\s*\n\s*"', '",\n    "', fixed)
+        
+        # Fix missing quotes around keys (basic case)
+        fixed = re.sub(r'(\w+):', r'"\1":', fixed)
+        
+        # Remove any control characters
+        fixed = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', fixed)
+        
+        return fixed
 
 # Global instance
 garden_plan_service = GardenPlanService()

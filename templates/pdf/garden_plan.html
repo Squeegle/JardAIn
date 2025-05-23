@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ garden_plan.location }} Garden Plan - {{ app_name }}</title>
+    <link rel="stylesheet" href="static/css/pdf_styles.css">
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="cover-page">
+        <div class="cover-header">
+            <h1 class="app-title">{{ app_name }}</h1>
+            <div class="cover-decoration">🌱</div>
+        </div>
+        
+        <div class="cover-content">
+            <h2 class="garden-title">Your Personalized Garden Plan</h2>
+            <div class="location-info">
+                <h3>📍 {{ garden_plan.location }}</h3>
+                {% if location_info.climate_zone %}
+                <p class="climate-zone">Climate Zone: {{ location_info.climate_zone }}</p>
+                {% endif %}
+                {% if location_info.frost_dates %}
+                <div class="frost-dates">
+                    <p>Last Frost: {{ location_info.frost_dates.last_spring_frost or 'N/A' }}</p>
+                    <p>First Frost: {{ location_info.frost_dates.first_fall_frost or 'N/A' }}</p>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="plan-summary">
+                <div class="summary-item">
+                    <span class="summary-number">{{ total_plants }}</span>
+                    <span class="summary-label">Plants Selected</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-number">{{ garden_plan.plant_information|length }}</span>
+                    <span class="summary-label">Varieties</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cover-footer">
+            <p>Generated on {{ generation_date }} at {{ generation_time }}</p>
+            <p>AI-Powered Garden Planning</p>
+        </div>
+    </div>
+
+    <!-- Page Break -->
+    <div class="page-break"></div>
+
+    <!-- Table of Contents -->
+    <div class="toc-page">
+        <h2 class="section-title">📚 Table of Contents</h2>
+        <div class="toc-content">
+            <div class="toc-item">
+                <span class="toc-name">Garden Overview</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">3</span>
+            </div>
+            <div class="toc-item">
+                <span class="toc-name">Plant Details</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">4</span>
+            </div>
+            {% if include_calendar %}
+            <div class="toc-item">
+                <span class="toc-name">Planting Calendar</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">{{ 4 + enhanced_plants|length }}</span>
+            </div>
+            {% endif %}
+            {% if include_layout %}
+            <div class="toc-item">
+                <span class="toc-name">Garden Layout Guide</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">{{ 5 + enhanced_plants|length }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Page Break -->
+    <div class="page-break"></div>
+
+    <!-- Garden Overview -->
+    <div class="overview-page">
+        <h2 class="section-title">🌿 Garden Overview</h2>
+        <div class="overview-content">
+            <div class="location-details">
+                <h3>Location Information</h3>
+                <p><strong>Location:</strong> {{ garden_plan.location }}</p>
+                {% if location_info.climate_zone %}
+                <p><strong>Climate Zone:</strong> {{ location_info.climate_zone }}</p>
+                {% endif %}
+                {% if location_info.average_temperatures %}
+                <p><strong>Growing Season:</strong> {{ location_info.average_temperatures.growing_season or 'See local guidelines' }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="plants-overview">
+                <h3>Selected Plants ({{ total_plants }} varieties)</h3>
+                <div class="plants-grid">
+                    {% for plant in enhanced_plants %}
+                    <div class="plant-card-mini">
+                        <span class="plant-name">{{ plant.name }}</span>
+                        {% if plant.database_info %}
+                        <span class="plant-category">{{ plant.database_info.category or 'Vegetable' }}</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Break -->
+    <div class="page-break"></div>
+
+    <!-- Individual Plant Sections -->
+    {% for plant in enhanced_plants %}
+    <div class="plant-page">
+        <div class="plant-header">
+            <h2 class="plant-title">🌱 {{ plant.name }}</h2>
+            {% if plant.database_info %}
+            <div class="plant-category-badge">{{ plant.database_info.category or 'Vegetable' }}</div>
+            {% endif %}
+        </div>
+
+        {% if plant.has_image and include_images %}
+        <div class="plant-image">
+            <img src="{{ plant.image_path }}" alt="{{ plant.name }}" onerror="this.style.display='none'">
+        </div>
+        {% endif %}
+
+        <div class="plant-content">
+            <!-- Basic Information -->
+            {% if plant.database_info %}
+            <div class="plant-section">
+                <h3>📋 Basic Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>Category:</strong> {{ plant.database_info.category or 'N/A' }}
+                    </div>
+                    <div class="info-item">
+                        <strong>Sun Requirement:</strong> {{ plant.database_info.sun_requirement or 'Full sun' }}
+                    </div>
+                    <div class="info-item">
+                        <strong>Water Needs:</strong> {{ plant.database_info.water_needs or 'Regular' }}
+                    </div>
+                    <div class="info-item">
+                        <strong>Days to Maturity:</strong> {{ plant.database_info.days_to_maturity or 'See instructions' }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Growing Instructions -->
+            {% if plant.growing_instructions %}
+            <div class="plant-section">
+                <h3>🌿 Growing Instructions</h3>
+                
+                {% if plant.growing_instructions.soil_preparation %}
+                <div class="instruction-block">
+                    <h4>Soil Preparation</h4>
+                    <p>{{ plant.growing_instructions.soil_preparation }}</p>
+                </div>
+                {% endif %}
+
+                {% if plant.growing_instructions.planting_instructions %}
+                <div class="instruction-block">
+                    <h4>Planting Instructions</h4>
+                    <p>{{ plant.growing_instructions.planting_instructions }}</p>
+                </div>
+                {% endif %}
+
+                {% if plant.growing_instructions.care_instructions %}
+                <div class="instruction-block">
+                    <h4>Care & Maintenance</h4>
+                    <p>{{ plant.growing_instructions.care_instructions }}</p>
+                </div>
+                {% endif %}
+
+                {% if plant.growing_instructions.harvest_instructions %}
+                <div class="instruction-block">
+                    <h4>Harvesting</h4>
+                    <p>{{ plant.growing_instructions.harvest_instructions }}</p>
+                </div>
+                {% endif %}
+
+                {% if plant.growing_instructions.common_problems %}
+                <div class="instruction-block">
+                    <h4>Common Problems & Solutions</h4>
+                    <p>{{ plant.growing_instructions.common_problems }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Planting Schedule -->
+            {% if plant.growing_instructions and plant.growing_instructions.planting_schedule %}
+            <div class="plant-section">
+                <h3>📅 Planting Schedule</h3>
+                <div class="schedule-info">
+                    {% for key, value in plant.growing_instructions.planting_schedule.items() %}
+                    <div class="schedule-item">
+                        <strong>{{ key.replace('_', ' ').title() }}:</strong> {{ value }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if not loop.last %}
+    <div class="page-break"></div>
+    {% endif %}
+    {% endfor %}
+
+    <!-- Planting Calendar Section -->
+    {% if include_calendar and calendar_data %}
+    <div class="page-break"></div>
+    <div class="calendar-page">
+        <h2 class="section-title">📅 Planting Calendar for {{ location_info.climate_zone or garden_plan.location }}</h2>
+        
+        <div class="calendar-grid">
+            {% for month, activities in calendar_data.calendar.items() %}
+            <div class="month-block">
+                <h3 class="month-title">{{ month }}</h3>
+                <div class="month-activities">
+                    {% if activities %}
+                        {% for activity in activities %}
+                        <div class="activity-item">
+                            <strong>{{ activity.plant }}</strong><br>
+                            <em>{{ activity.action }}</em>
+                            {% if activity.notes %}
+                            <br><small>{{ activity.notes }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-activities">No plantings scheduled</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Garden Layout Section -->
+    {% if include_layout and layout_data %}
+    <div class="page-break"></div>
+    <div class="layout-page">
+        <h2 class="section-title">🗺️ Garden Layout Guide</h2>
+        
+        <div class="layout-content">
+            <!-- Spacing Guide -->
+            <div class="spacing-section">
+                <h3>Plant Spacing Requirements</h3>
+                <table class="spacing-table">
+                    <thead>
+                        <tr>
+                            <th>Plant</th>
+                            <th>Spacing</th>
+                            <th>Depth</th>
+                            <th>Sun</th>
+                            <th>Water</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for plant in layout_data.spacing_guide %}
+                        <tr>
+                            <td>{{ plant.plant }}</td>
+                            <td>{{ plant.spacing }}</td>
+                            <td>{{ plant.depth }}</td>
+                            <td>{{ plant.sun_requirement }}</td>
+                            <td>{{ plant.water_needs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Layout Tips -->
+            <div class="tips-section">
+                <h3>Layout Tips & Best Practices</h3>
+                <ul class="tips-list">
+                    {% for tip in layout_data.layout_tips %}
+                    <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="area-estimate">
+                    <p><strong>Estimated Garden Area:</strong> {{ layout_data.total_area_estimate }}</p>
+                </div>
+            </div>
+
+            <!-- Plant Categories -->
+            <div class="categories-section">
+                <h3>Plants by Category</h3>
+                {% for category, plants in layout_data.categories.items() %}
+                <div class="category-group">
+                    <h4>{{ category }}</h4>
+                    <div class="category-plants">
+                        {% for plant in plants %}
+                        <span class="category-plant">{{ plant.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html> 

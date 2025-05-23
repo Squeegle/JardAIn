@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} - AI Garden Planner</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">🌱</span>
+                <h1>{{ app_name }}</h1>
+                <span class="tagline">AI Garden Planner</span>
+            </div>
+            {% if debug %}
+            <div class="nav-links">
+                <a href="/docs" class="nav-link">📚 API Docs</a>
+                <a href="/health" class="nav-link">🔍 Health</a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-title">Plan Your Perfect Garden with AI</h2>
+                <p class="hero-subtitle">
+                    Get personalized planting schedules, growing instructions, and layout recommendations 
+                    based on your location and plant selection. Download a beautiful PDF guide!
+                </p>
+            </div>
+        </section>
+
+        <!-- Garden Form -->
+        <section class="form-section">
+            <div class="container">
+                <div class="garden-form-card">
+                    <h3>🌱 Create Your Garden Plan</h3>
+                    
+                    <!-- Location Input -->
+                    <div class="form-group">
+                        <label for="zipCode">📍 Your Location</label>
+                        <input 
+                            type="text" 
+                            id="zipCode" 
+                            placeholder="Enter ZIP code or postal code (e.g., 90210 or K1A 0A6)"
+                            class="form-control"
+                        >
+                        <small>We use this to provide location-specific planting advice</small>
+                    </div>
+
+                    <!-- Garden Details -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gardenSize">🏡 Garden Size</label>
+                            <select id="gardenSize" class="form-control">
+                                <option value="small">Small (container/patio)</option>
+                                <option value="medium" selected>Medium (backyard plot)</option>
+                                <option value="large">Large (big garden/farm)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="experienceLevel">🎯 Experience Level</label>
+                            <select id="experienceLevel" class="form-control">
+                                <option value="beginner" selected>Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Plant Search -->
+                    <div class="form-group">
+                        <label for="plantSearch">🔍 Search Plants</label>
+                        <input 
+                            type="text" 
+                            id="plantSearch" 
+                            placeholder="Search for vegetables, herbs, fruits..."
+                            class="form-control"
+                        >
+                    </div>
+
+                    <!-- Plant Selection Grid -->
+                    <div class="plant-selection">
+                        <h4>Select Your Plants (<span id="selectedCount">0</span> selected)</h4>
+                        <div id="plantGrid" class="plant-grid">
+                            <!-- Plants will be loaded here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button id="generateBtn" class="btn btn-primary" disabled>
+                        🌱 Generate My Garden Plan
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="results-section" style="display: none;">
+            <div class="container">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- PDF Download Section -->
+        <section id="pdfSection" class="pdf-section" style="display: none;">
+            <div class="container">
+                <!-- PDF download options will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 {{ app_name }} - AI-Powered Garden Planning</p>
+            <p>Built with FastAPI & 
+                {% if debug %}
+                    Ollama + Llama 3.1 (Development)
+                {% else %}
+                    OpenAI GPT-3.5 (Production)
+                {% endif %}
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 

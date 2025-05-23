@@ -1,0 +1,172 @@
+{
+  "plan_id": "3c238fed-b9dd-46c7-a5c6-b8219d84965e",
+  "created_date": "2025-05-23T17:46:19.001593",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "Broccoli",
+    "Spinach"
+  ],
+  "plant_information": [
+    {
+      "name": "Broccoli",
+      "scientific_name": "Brassica oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 65,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "onions",
+        "garlic",
+        "spinach",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "tomatoes",
+        "peppers",
+        "strawberries"
+      ]
+    },
+    {
+      "name": "Spinach",
+      "scientific_name": "Spinacia oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 40,
+      "spacing_inches": 4,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "radishes",
+        "strawberries",
+        "peas"
+      ],
+      "avoid_planting_with": []
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Broccoli",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-20",
+      "harvest_end_date": "2024-07-25",
+      "succession_planting_interval": 30
+    },
+    {
+      "plant_name": "Spinach",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-15",
+      "harvest_end_date": "2024-06-10",
+      "succession_planting_interval": 20
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Broccoli",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Broccoli seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Broccoli deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Broccoli weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Broccoli approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Broccoli at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Spinach",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Spinach seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 4 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Spinach deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Spinach weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Spinach approximately 40 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Spinach at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for small garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Broccoli",
+          "Spinach"
+        ],
+        "spacing_notes": "Plant broccoli in the center, with spinach around it. Broccoli needs more space to grow than spinach."
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Start seedlings indoors 4-6 weeks before the last frost date to give them a head start on the growing season.",
+    "Choose a location with full sun (at least 6 hours of direct sunlight) for your broccoli and partial shade for your spinach.",
+    "Soil preparation is key: add compost or well-rotted manure to improve soil fertility and drainage, as Moncton's clay soils can be heavy and waterlogged.",
+    "Broccoli prefers cooler temperatures (around 60\u00b0F/15\u00b0C), so plant it in early spring or late summer for a fall harvest. Spinach is more tolerant of heat but still prefers cooler conditions.",
+    "Water deeply but infrequently to encourage deep root growth, reducing the risk of overwatering and related diseases.",
+    "Watch out for pests like aphids, slugs, and snails that thrive in Moncton's humid climate; use organic controls whenever possible."
+  ]
+}

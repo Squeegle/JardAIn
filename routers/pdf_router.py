@@ -383,4 +383,81 @@ async def pdf_service_health() -> Dict[str, Any]:
             "status": "unhealthy", 
             "message": f"PDF service error: {str(e)}",
             "timestamp": datetime.now().isoformat()
-        } 
+        }
+
+@router.get("/garden-plan/{plan_id}")
+async def download_garden_plan_pdf(plan_id: str):
+    """
+    Generate and download PDF for an existing garden plan
+    """
+    try:
+        print(f"📄 Generating PDF for garden plan: {plan_id}")
+        
+        # Check if the garden plan exists
+        import json
+        from datetime import datetime, date
+        plan_file = f"generated_plans/garden_plan_{plan_id}.json"
+        
+        if not os.path.exists(plan_file):
+            raise HTTPException(status_code=404, detail=f"Garden plan {plan_id} not found")
+        
+        # Load and convert the garden plan
+        with open(plan_file, 'r') as f:
+            plan_data = json.load(f)
+        
+        # Convert date strings back to date objects
+        def parse_date_string(date_str):
+            if date_str and isinstance(date_str, str):
+                try:
+                    return datetime.fromisoformat(date_str).date()
+                except:
+                    return None
+            return date_str
+        
+        # Fix dates in planting_schedules
+        if 'planting_schedules' in plan_data:
+            for schedule in plan_data['planting_schedules']:
+                schedule['start_indoors_date'] = parse_date_string(schedule.get('start_indoors_date'))
+                schedule['direct_sow_date'] = parse_date_string(schedule.get('direct_sow_date'))
+                schedule['transplant_date'] = parse_date_string(schedule.get('transplant_date'))
+                schedule['harvest_start_date'] = parse_date_string(schedule.get('harvest_start_date'))
+                schedule['harvest_end_date'] = parse_date_string(schedule.get('harvest_end_date'))
+        
+        # Fix dates in location
+        if 'location' in plan_data:
+            plan_data['location']['last_frost_date'] = parse_date_string(plan_data['location'].get('last_frost_date'))
+            plan_data['location']['first_frost_date'] = parse_date_string(plan_data['location'].get('first_frost_date'))
+        
+        # Fix created_date
+        if 'created_date' in plan_data:
+            plan_data['created_date'] = datetime.fromisoformat(plan_data['created_date'])
+        
+        # Convert to GardenPlan object
+        garden_plan = GardenPlan(**plan_data)
+        
+        # Generate PDF
+        pdf_result = await pdf_service.generate_garden_plan_pdf(
+            garden_plan=garden_plan,
+            custom_filename=f"garden_plan_{plan_id}",
+            include_images=True,
+            include_calendar=True,
+            include_layout=True
+        )
+        
+        if pdf_result["success"]:
+            pdf_path = pdf_result["filepath"]
+            return FileResponse(
+                path=pdf_path,
+                filename=pdf_result["filename"],
+                media_type="application/pdf"
+            )
+        else:
+            raise HTTPException(status_code=500, detail=f"PDF generation failed: {pdf_result['error']}")
+            
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail=f"Garden plan {plan_id} not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error generating PDF for plan {plan_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error generating PDF: {str(e)}") 

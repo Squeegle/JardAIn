@@ -91,6 +91,28 @@ class LLMService:
         Check if the current LLM provider is properly configured
         """
         return settings.validate_llm_config()
+    
+    async def test_generation_quality(self, test_prompt: str) -> Dict[str, Any]:
+        """
+        Test LLM generation quality for debugging
+        """
+        try:
+            response = await self.generate_plant_info(test_prompt)
+            
+            return {
+                "prompt_length": len(test_prompt),
+                "response_length": len(response) if response else 0,
+                "response_preview": response[:200] if response else None,
+                "has_json": response and '{' in response and '}' in response if response else False,
+                "provider": self.provider,
+                "success": bool(response and len(response) > 50)
+            }
+        except Exception as e:
+            return {
+                "error": str(e),
+                "provider": self.provider,
+                "success": False
+            }
 
 # Global instance
 llm_service = LLMService()

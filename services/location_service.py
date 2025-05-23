@@ -100,10 +100,10 @@ class LocationService:
     async def _get_basic_location_info(self, postal_code: str, country: str) -> Optional[Dict[str, Any]]:
         """
         Get basic location info (city, state/province) from postal/zip code
-        Uses free geocoding service for both US and Canada
+        Uses multiple fallback methods for comprehensive coverage
         """
         try:
-            # Using zippopotam.us - supports both US and Canada
+            # Primary method: zippopotam.us API
             url = f"http://api.zippopotam.us/{country}/{postal_code}"
             response = await self.client.get(url, timeout=10)
             
@@ -118,7 +118,57 @@ class LocationService:
                     'country': country.upper()
                 }
         except Exception as e:
-            print(f"⚠️  Error getting basic location info: {e}")
+            print(f"⚠️  Primary location API failed: {e}")
+        
+        # Fallback for Canadian postal codes: Use known major city mappings
+        if country == "ca":
+            return self._get_canadian_fallback_location(postal_code)
+        
+        return None
+    
+    def _get_canadian_fallback_location(self, postal_code: str) -> Optional[Dict[str, Any]]:
+        """
+        Fallback location data for Canadian postal codes when API fails
+        Uses first letter (Forward Sortation Area) to determine region
+        """
+        try:
+            first_letter = postal_code[0].upper()
+            
+            # Major Canadian city mappings by FSA
+            canadian_locations = {
+                'A': {'city': 'St. Johns', 'state': 'Newfoundland and Labrador', 'state_code': 'NL'},
+                'B': {'city': 'Halifax', 'state': 'Nova Scotia', 'state_code': 'NS'},
+                'C': {'city': 'Charlottetown', 'state': 'Prince Edward Island', 'state_code': 'PE'},
+                'E': {'city': 'Moncton', 'state': 'New Brunswick', 'state_code': 'NB'},
+                'G': {'city': 'Quebec City', 'state': 'Quebec', 'state_code': 'QC'},
+                'H': {'city': 'Montreal', 'state': 'Quebec', 'state_code': 'QC'},
+                'J': {'city': 'Sherbrooke', 'state': 'Quebec', 'state_code': 'QC'},
+                'K': {'city': 'Ottawa', 'state': 'Ontario', 'state_code': 'ON'},
+                'L': {'city': 'Hamilton', 'state': 'Ontario', 'state_code': 'ON'},
+                'M': {'city': 'Toronto', 'state': 'Ontario', 'state_code': 'ON'},
+                'N': {'city': 'London', 'state': 'Ontario', 'state_code': 'ON'},
+                'P': {'city': 'Sudbury', 'state': 'Ontario', 'state_code': 'ON'},
+                'R': {'city': 'Winnipeg', 'state': 'Manitoba', 'state_code': 'MB'},
+                'S': {'city': 'Saskatoon', 'state': 'Saskatchewan', 'state_code': 'SK'},
+                'T': {'city': 'Calgary', 'state': 'Alberta', 'state_code': 'AB'},
+                'V': {'city': 'Vancouver', 'state': 'British Columbia', 'state_code': 'BC'},
+                'X': {'city': 'Yellowknife', 'state': 'Northwest Territories', 'state_code': 'NT'},
+                'Y': {'city': 'Whitehorse', 'state': 'Yukon', 'state_code': 'YT'},
+            }
+            
+            location_data = canadian_locations.get(first_letter)
+            if location_data:
+                print(f"🇨🇦 Using fallback location data for {postal_code}")
+                return {
+                    'city': location_data['city'],
+                    'state': location_data['state'],
+                    'state_code': location_data['state_code'],
+                    'latitude': 45.0,  # Approximate Canadian latitude
+                    'longitude': -75.0,  # Approximate Canadian longitude
+                    'country': 'CA'
+                }
+        except Exception as e:
+            print(f"❌ Canadian fallback location failed: {e}")
         
         return None
     

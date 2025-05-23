@@ -190,90 +190,102 @@ class GardenPlanService:
         # Generate instructions for each plant individually for better quality
         for plant in plants:
             prompt = f"""
-            You are an expert master gardener with 30+ years of experience. Create DETAILED, SPECIFIC growing instructions for {plant.name} in {location.city}, {location.state}.
+            You are a professional master gardener writing a detailed growing guide. You MUST provide SPECIFIC numbers, temperatures, dates, and measurements - NO generic advice allowed.
 
-            PLANT INFORMATION:
-            - Name: {plant.name} ({plant.scientific_name})
-            - Type: {plant.plant_type}
-            - Days to harvest: {plant.days_to_harvest}
-            - Spacing: {plant.spacing_inches} inches
-            - Sun requirements: {plant.sun_requirements}
-            - Water requirements: {plant.water_requirements}
-            - Soil pH: {plant.soil_ph_range}
-            - Companion plants: {plant.companion_plants}
+            PLANT: {plant.name} ({plant.scientific_name})
+            LOCATION: {location.city}, {location.state} - Zone {location.usda_zone}
+            FROST DATES: Last frost {location.last_frost_date}, First frost {location.first_frost_date}
+            EXPERIENCE: {request.experience_level} gardener
 
-            LOCATION CONDITIONS:
-            - Location: {location.city}, {location.state}
-            - USDA Zone: {location.usda_zone}
-            - Climate: {location.climate_type}
-            - Last frost: {location.last_frost_date}
-            - First frost: {location.first_frost_date}
-            - Growing season: {location.growing_season_days} days
+            EXAMPLES OF REQUIRED DETAIL LEVEL:
+            ❌ BAD: "Water regularly" 
+            ✅ GOOD: "Water 1-1.5 inches per week, checking soil moisture 2 inches deep"
+            
+            ❌ BAD: "Plant after frost danger"
+            ✅ GOOD: "Start seeds indoors on March 15th, transplant outdoors May 20th when soil reaches 60°F"
 
-            GARDENER PROFILE:
-            - Experience: {request.experience_level}
-            - Garden size: {request.garden_size}
+            ❌ BAD: "Fertilize as needed"
+            ✅ GOOD: "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant"
 
-            REQUIREMENTS - BE VERY SPECIFIC AND DETAILED:
-            - Give exact measurements, temperatures, timing
-            - Include specific varieties good for this zone
-            - Mention local climate considerations
-            - Provide troubleshooting for common problems
-            - Include seasonal care schedules
-            - NO generic advice like "follow package directions"
+            REQUIREMENTS - INCLUDE ALL OF THESE SPECIFICS:
+            - Exact dates based on {location.last_frost_date} and {location.first_frost_date}
+            - Specific temperatures in Fahrenheit
+            - Exact measurements (inches, tablespoons, etc.)
+            - Timing intervals (every X days/weeks)
+            - Specific varieties good for zone {location.usda_zone}
+            - Local climate considerations for {location.climate_type} climate
 
-            Provide instructions in this exact JSON format:
+            Respond with ONLY this JSON format with DETAILED instructions:
+
             {{
                 "plant_name": "{plant.name}",
                 "preparation_steps": [
-                    "Test soil pH to 6.0-6.8 range using digital meter",
-                    "Amend clay soil with 2-3 inches compost for drainage",
-                    "Choose location with 6-8 hours direct sunlight"
+                    "Test soil pH to achieve {plant.soil_ph_range or '6.0-6.8'} using digital pH meter - adjust 2-3 weeks before planting",
+                    "Work 2-3 inches of compost into top 8 inches of soil in {location.climate_type} climate conditions",
+                    "Choose location receiving {plant.sun_requirements or 'full sun'} - minimum 6-8 hours direct sunlight for {plant.name}"
                 ],
                 "planting_steps": [
-                    "Start seeds indoors 6-8 weeks before {location.last_frost_date}",
-                    "Sow seeds 1/4 inch deep in seed starting mix",
-                    "Maintain soil temperature at 70-75°F for germination"
+                    "Start {plant.name} seeds indoors on [EXACT DATE] - {plant.days_to_harvest or 60} days before {location.first_frost_date}",
+                    "Sow seeds {plant.planting_depth_inches or 0.5} inches deep in seed starting mix at 70-75°F soil temperature",
+                    "Transplant outdoors on [EXACT DATE] when nighttime temperatures stay above 50°F"
                 ],
                 "care_instructions": [
-                    "Water deeply 1-2 times per week, providing 1-1.5 inches total",
-                    "Apply balanced fertilizer (10-10-10) every 3-4 weeks",
-                    "Mulch around plants with 2-3 inches organic matter"
+                    "Water {plant.name} with 1-1.5 inches per week - check soil moisture 2 inches deep every 3 days",
+                    "Apply balanced 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks during growing season",
+                    "Mulch with 2-3 inches organic matter, keeping 6 inches from plant stem"
                 ],
                 "pest_management": [
-                    "Monitor for hornworms weekly from June-August",
-                    "Use row covers in early season to prevent flea beetles",
-                    "Spray neem oil every 2 weeks if aphids appear"
+                    "Inspect {plant.name} weekly for [specific pests] common in zone {location.usda_zone} from [month] to [month]",
+                    "Apply neem oil spray at 2 tablespoons per gallon every 14 days if pests detected",
+                    "Use floating row covers during first 3 weeks after transplant to prevent early season pests"
                 ],
                 "harvest_instructions": [
-                    "Harvest when fruits are fully colored but still firm",
-                    "Pick in early morning when temperatures are cool",
-                    "Use clean, sharp shears to avoid damaging plant"
+                    "Begin harvest approximately {plant.days_to_harvest or 60} days after transplant - around [EXACT DATE]",
+                    "Harvest in early morning (6-8 AM) when temperatures are below 75°F",
+                    "Use clean, sharp shears cutting 1/4 inch above leaf nodes"
                 ],
                 "storage_tips": [
-                    "Store ripe tomatoes at room temperature for best flavor",
-                    "Green tomatoes can ripen indoors in paper bags",
-                    "Preserve excess by canning, freezing, or dehydrating"
+                    "Store fresh {plant.name} at 55-60°F with 85% humidity for maximum 7-10 days",
+                    "For longer storage, [specific preservation method] within 24 hours of harvest",
+                    "Freeze excess by [specific freezing method] - maintains quality for 8-12 months"
                 ]
             }}
 
-            Make ALL instructions specific to {request.experience_level} gardeners in {location.climate_type} climate zone {location.usda_zone}.
-            Include exact timing based on {location.last_frost_date} and {location.first_frost_date}.
+            CRITICAL: Replace ALL placeholder text with specific information. Calculate exact dates from the frost dates provided. Include numbers, temperatures, and measurements in EVERY instruction.
             """
             
             try:
-                print(f"🤖 Generating detailed instructions for {plant.name}...")
+                print(f"🤖 Generating ultra-detailed instructions for {plant.name}...")
                 response = await llm_service.generate_plant_info(prompt)
                 
-                if response and len(response.strip()) > 100:  # Ensure we got substantial content
+                if response and len(response.strip()) > 200:  # Ensure substantial content
                     try:
-                        instruction_data = json.loads(response.strip())
-                        instructions = GrowingInstructions(**instruction_data)
-                        instructions_list.append(instructions)
-                        print(f"✅ Generated detailed instructions for {plant.name}")
+                        # Clean up the response to ensure valid JSON
+                        cleaned_response = response.strip()
+                        if not cleaned_response.startswith('{'):
+                            # Find the first { and last }
+                            start = cleaned_response.find('{')
+                            end = cleaned_response.rfind('}') + 1
+                            if start != -1 and end > start:
+                                cleaned_response = cleaned_response[start:end]
+                        
+                        instruction_data = json.loads(cleaned_response)
+                        
+                        # Validate that we got detailed content
+                        is_detailed = self._validate_instruction_quality(instruction_data)
+                        
+                        if is_detailed:
+                            instructions = GrowingInstructions(**instruction_data)
+                            instructions_list.append(instructions)
+                            print(f"✅ Generated detailed instructions for {plant.name}")
+                        else:
+                            print(f"⚠️  Instructions for {plant.name} not detailed enough, enhancing...")
+                            enhanced_instructions = self._enhance_basic_instructions(instruction_data, plant, location, request)
+                            instructions_list.append(enhanced_instructions)
+                            
                     except json.JSONDecodeError as e:
                         print(f"⚠️  JSON parsing error for {plant.name}: {e}")
-                        print(f"Raw response: {response[:200]}...")
+                        print(f"Raw response preview: {response[:300]}...")
                         instructions_list.append(self._create_enhanced_default_instructions(plant, location, request))
                 else:
                     print(f"⚠️  Insufficient response for {plant.name}, using enhanced default")
@@ -284,6 +296,86 @@ class GardenPlanService:
                 instructions_list.append(self._create_enhanced_default_instructions(plant, location, request))
         
         return instructions_list
+    
+    def _validate_instruction_quality(self, instruction_data: Dict[str, Any]) -> bool:
+        """
+        Validate that instructions contain specific details, not generic advice
+        """
+        detailed_indicators = [
+            'inches', 'feet', 'cm', 'temperature', '°f', '°c', 'degrees',
+            'tablespoons', 'teaspoons', 'cups', 'gallons', 'liters',
+            'weeks', 'days', 'hours', 'times per', 'every',
+            'march', 'april', 'may', 'june', 'july', 'august', 'september',
+            'ph', 'fertilizer', 'compost', 'mulch', 'soil moisture'
+        ]
+        
+        # Check all instruction categories for specific details
+        all_instructions = []
+        for key in ['preparation_steps', 'planting_steps', 'care_instructions', 'pest_management', 'harvest_instructions', 'storage_tips']:
+            all_instructions.extend(instruction_data.get(key, []))
+        
+        # Convert all instructions to lowercase for checking
+        all_text = ' '.join(all_instructions).lower()
+        
+        # Count how many detailed indicators we found
+        detail_count = sum(1 for indicator in detailed_indicators if indicator in all_text)
+        
+        # Consider it detailed if we have at least 5 specific indicators
+        is_detailed = detail_count >= 5
+        
+        if not is_detailed:
+            print(f"    Quality check: Found {detail_count} detail indicators, need at least 5")
+            print(f"    Sample text: {all_text[:150]}...")
+        
+        return is_detailed
+    
+    def _enhance_basic_instructions(self, instruction_data: Dict[str, Any], plant: PlantInfo, location: LocationInfo, request: PlanRequest) -> GrowingInstructions:
+        """
+        Enhance basic instructions with specific details
+        """
+        from datetime import timedelta
+        
+        # Calculate specific dates
+        if location.last_frost_date:
+            indoor_start = location.last_frost_date - timedelta(weeks=6)
+            transplant_date = location.last_frost_date + timedelta(weeks=2)
+            harvest_date = transplant_date + timedelta(days=plant.days_to_harvest or 60)
+        else:
+            indoor_start = None
+            transplant_date = None
+            harvest_date = None
+        
+        enhanced_data = instruction_data.copy()
+        
+        # Enhance preparation steps
+        enhanced_data['preparation_steps'] = [
+            f"Test soil pH to achieve {plant.soil_ph_range or '6.0-6.8'} using digital pH meter",
+            f"Amend soil with 2-3 inches of compost worked into top 8 inches",
+            f"Select location with {plant.sun_requirements or 'full sun'} - minimum 6-8 hours daily"
+        ]
+        
+        # Enhance planting steps
+        enhanced_data['planting_steps'] = [
+            f"Start seeds indoors on {indoor_start.strftime('%B %d') if indoor_start else 'early spring'} at 70-75°F",
+            f"Plant seeds {plant.planting_depth_inches or 0.5} inches deep with {plant.spacing_inches or 12} inch spacing",
+            f"Transplant outdoors on {transplant_date.strftime('%B %d') if transplant_date else 'after last frost'} when soil is 60°F+"
+        ]
+        
+        # Enhance care instructions
+        enhanced_data['care_instructions'] = [
+            f"Water deeply 1-1.5 inches per week, checking soil moisture 2 inches deep",
+            f"Apply balanced 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks",
+            f"Mulch with 2-3 inches organic matter, keeping 6 inches from plant stem"
+        ]
+        
+        # Enhance harvest instructions
+        enhanced_data['harvest_instructions'] = [
+            f"Begin harvest approximately {plant.days_to_harvest or 60} days after transplant - around {harvest_date.strftime('%B %d') if harvest_date else 'mid-summer'}",
+            f"Harvest in early morning (6-8 AM) when temperatures are below 75°F",
+            f"Use clean, sharp shears cutting 1/4 inch above leaf nodes"
+        ]
+        
+        return GrowingInstructions(**enhanced_data)
     
     def _create_enhanced_default_instructions(self, plant: PlantInfo, location: LocationInfo, request: PlanRequest) -> GrowingInstructions:
         """

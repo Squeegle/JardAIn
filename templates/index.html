@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .status-card {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .status-card h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .config-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .config-item strong {
+            color: #2e7d32;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .next-steps {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .next-steps h3 {
+            color: #ef6c00;
+            margin-bottom: 15px;
+        }
+        
+        .next-steps ol {
+            margin-left: 20px;
+        }
+        
+        .next-steps li {
+            margin-bottom: 8px;
+            color: #5d4037;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+        
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: #2196f3;
+        }
+        
+        .btn-secondary:hover {
+            background: #1976d2;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 JardAIn</h1>
+            <p>AI-Powered Personalized Garden Planning</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="status-card">
+                <h3>✅ FastAPI Application Running Successfully!</h3>
+                <p>Your JardAIn garden planner is up and running. The backend is configured and ready for development.</p>
+                
+                <div class="config-grid">
+                    <div class="config-item">
+                        <strong>🤖 LLM Provider</strong>
+                        {% if debug %}
+                            Ollama (Local Development)
+                        {% else %}
+                            OpenAI (Production)
+                        {% endif %}
+                    </div>
+                    <div class="config-item">
+                        <strong>🌐 Server Status</strong>
+                        Running on localhost:8000
+                    </div>
+                    <div class="config-item">
+                        <strong>🔧 Mode</strong>
+                        {% if debug %}
+                            Development (Debug ON)
+                        {% else %}
+                            Production (Debug OFF)
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="next-steps">
+                <h3>🚀 Development Roadmap</h3>
+                <ol>
+                    <li><strong>Plant Database:</strong> Create the common vegetables database with 50 popular plants</li>
+                    <li><strong>Location Service:</strong> Build zip code to climate zone lookup</li>
+                    <li><strong>LLM Integration:</strong> Connect Ollama for AI-generated garden plans</li>
+                    <li><strong>PDF Generation:</strong> Implement plan export functionality</li>
+                    <li><strong>User Interface:</strong> Build interactive plant selection form</li>
+                </ol>
+            </div>
+            
+            <div class="button-container">
+                {% if debug %}
+                <a href="/docs" class="btn">📚 API Documentation</a>
+                <a href="/health" class="btn btn-secondary">🔍 Health Check</a>
+                <a href="/config" class="btn btn-secondary">⚙️ Configuration</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>{{ app_name }} - Built with FastAPI & ❤️</p>
+        </div>
+    </div>
+</body>
+</html>

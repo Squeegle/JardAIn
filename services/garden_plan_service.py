@@ -5,6 +5,7 @@ Combines location data, plant information, and LLM generation for comprehensive 
 
 import json
 import uuid
+import re
 from datetime import datetime, date, timedelta
 from typing import List, Dict, Any, Optional
 from models.garden_plan import (
@@ -148,11 +149,16 @@ class GardenPlanService:
         try:
             response = await llm_service.generate_plant_info(prompt)
             
-            if not response:
+            if not response or not response.strip():
+                print("⚠️  Empty response from LLM for planting schedules")
                 return self._create_default_schedules(plants, location)
             
-            # Parse the JSON response
-            schedules_data = json.loads(response.strip())
+            # Use universal JSON extraction method
+            schedules_data = self._extract_and_clean_json_universal(response)
+            
+            if not schedules_data:
+                print("⚠️  Could not extract valid JSON from planting schedules response")
+                return self._create_default_schedules(plants, location)
             
             schedules = []
             for schedule_data in schedules_data:
@@ -403,49 +409,68 @@ RESPOND WITH ONLY THE JSON ABOVE - NO OTHER TEXT.
         """
         print("🗺️  Generating layout recommendations...")
         
-        plants_info = []
-        for plant in plants:
-            plants_info.append({
-                "name": plant.name,
-                "spacing_inches": plant.spacing_inches,
-                "companion_plants": plant.companion_plants,
-                "avoid_planting_with": plant.avoid_planting_with
-            })
-        
         prompt = f"""
-        Create garden layout recommendations for a {request.garden_size} garden with {request.experience_level} gardener.
+Create garden layout recommendations for: {[p.name for p in plants]}
+Garden size: {request.garden_size}
 
-        PLANTS TO ARRANGE:
-        {json.dumps(plants_info, indent=2)}
-
-        Provide recommendations in this JSON format:
+Respond with ONLY valid JSON in this exact format:
+{{
+    "garden_dimensions": "Recommended dimensions and area for {request.garden_size} garden",
+    "plant_groupings": [
         {{
-            "garden_dimensions": "Suggested dimensions",
-            "plant_groupings": [
-                {{
-                    "group_name": "Tomato Section", 
-                    "plants": ["Tomato", "Basil"],
-                    "reasoning": "Basil repels pests that affect tomatoes"
-                }}
-            ],
-            "spacing_guide": {{
-                "Tomato": "24 inches apart, 36 inches between rows"
-            }},
-            "companion_planting_tips": [
-                "Plant basil near tomatoes for pest control"
-            ],
-            "layout_tips": [
-                "Place taller plants on north side to avoid shading"
-            ]
+            "group_name": "Main Garden Area",
+            "plants": {[p.name for p in plants]},
+            "spacing_notes": "spacing recommendations for this group"
         }}
+    ],
+    "spacing_guide": {{
+        {', '.join([f'"{p.name}": "{p.spacing_inches or 12} inches apart"' for p in plants])}
+    }},
+    "companion_planting_tips": [
+        "Specific companion planting advice for these plants"
+    ],
+    "layout_tips": [
+        "Place taller plants on north side to avoid shading shorter plants",
+        "Group plants with similar water needs together"
+    ]
+}}
 
-        Focus on companion planting benefits and efficient space usage.
-        """
+Focus on practical layout advice for a {request.garden_size} {request.experience_level}-level garden.
+"""
         
         try:
             response = await llm_service.generate_plant_info(prompt)
-            if response:
-                return json.loads(response.strip())
+            if response and response.strip():
+                # Use universal JSON extraction method
+                layout_data = self._extract_and_clean_json_universal(response)
+                if layout_data:
+                    # Convert array format to dict format if needed
+                    if isinstance(layout_data, list):
+                        # Convert list of plant groupings to expected dict format
+                        converted_layout = {
+                            "garden_dimensions": f"Recommended for {request.garden_size} garden",
+                            "plant_groupings": layout_data,  # Use the LLM's groupings
+                            "spacing_guide": {},
+                            "companion_planting_tips": [],
+                            "layout_tips": []
+                        }
+                        
+                        # Extract tips and spacing from the array if they exist
+                        for group in layout_data:
+                            if isinstance(group, dict):
+                                # Look for spacing information
+                                if "spacing" in group:
+                                    for plant in group.get("plants", []):
+                                        converted_layout["spacing_guide"][plant] = group["spacing"]
+                                
+                                # Look for tips in reasoning
+                                if "reasoning" in group:
+                                    converted_layout["companion_planting_tips"].append(group["reasoning"])
+                        
+                        return converted_layout
+                    else:
+                        # Already in dict format
+                        return layout_data
         except Exception as e:
             print(f"⚠️  Error generating layout recommendations: {e}")
         
@@ -485,8 +510,11 @@ RESPOND WITH ONLY THE JSON ABOVE - NO OTHER TEXT.
         
         try:
             response = await llm_service.generate_plant_info(prompt)
-            if response:
-                return json.loads(response.strip())
+            if response and response.strip():
+                # Use universal JSON extraction method
+                tips_data = self._extract_and_clean_json_universal(response)
+                if tips_data and isinstance(tips_data, list):
+                    return tips_data
         except Exception as e:
             print(f"⚠️  Error generating general tips: {e}")
         
@@ -606,9 +634,17 @@ RESPOND WITH ONLY THE JSON ABOVE - NO OTHER TEXT.
         """
         import re
         
-        # Fix unescaped quotes in strings
-        # This is a basic fix - more complex cases might need better handling
         fixed = json_str
+        
+        # Remove JavaScript-style comments (// comment text)
+        fixed = re.sub(r'\s*//.*?(?=\n|$)', '', fixed, flags=re.MULTILINE)
+        
+        # Remove C-style comments (/* comment */)
+        fixed = re.sub(r'/\*.*?\*/', '', fixed, flags=re.DOTALL)
+        
+        # Fix single quotes to double quotes (but be careful about apostrophes)
+        # This regex looks for single quotes that are likely JSON string delimiters
+        fixed = re.sub(r"'([^']*)'", r'"\1"', fixed)
         
         # Fix trailing commas before closing brackets/braces
         fixed = re.sub(r',(\s*[}\]])', r'\1', fixed)
@@ -623,6 +659,139 @@ RESPOND WITH ONLY THE JSON ABOVE - NO OTHER TEXT.
         fixed = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', fixed)
         
         return fixed
+    
+    def _extract_and_clean_json_universal(self, response: str) -> Optional[Any]:
+        """
+        Extract and clean JSON from LLM response - handles both objects {} and arrays []
+        """
+        if not response:
+            return None
+        
+        import re
+        
+        # Remove common LLM prefixes/suffixes
+        cleaned = response.strip()
+        
+        # Remove common prefixes (more comprehensive)
+        prefixes_to_remove = [
+            "Here's the JSON:",
+            "Here is the JSON:",
+            "Here are three gardening tips for tomatoes:",
+            "Here are",
+            "```json",
+            "```",
+            "JSON:",
+            "Response:",
+            "Here's the detailed information:",
+            "Here are the instructions:",
+            "Here's your",
+            "Based on",
+            "For your garden"
+        ]
+        
+        for prefix in prefixes_to_remove:
+            if cleaned.lower().startswith(prefix.lower()):
+                cleaned = cleaned[len(prefix):].strip()
+        
+        # Remove markdown code blocks more aggressively
+        cleaned = re.sub(r'^```json\s*\n?', '', cleaned, flags=re.IGNORECASE | re.MULTILINE)
+        cleaned = re.sub(r'\n?```\s*$', '', cleaned, flags=re.IGNORECASE | re.MULTILINE)
+        
+        # Smart JSON extraction with proper bracket/brace counting
+        json_str = self._extract_complete_json(cleaned)
+        
+        if not json_str:
+            print(f"⚠️  No valid JSON found in response")
+            print(f"Response preview: {cleaned[:200]}...")
+            return None
+        
+        try:
+            # Try to parse the extracted JSON
+            data = json.loads(json_str)
+            return data
+            
+        except json.JSONDecodeError as e:
+            print(f"⚠️  JSON parsing failed: {e}")
+            print(f"Attempting to fix common JSON issues...")
+            
+            # Try to fix common JSON issues
+            fixed_json = self._fix_common_json_issues(json_str)
+            
+            try:
+                data = json.loads(fixed_json)
+                print("✅ Fixed JSON successfully!")
+                return data
+            except json.JSONDecodeError as e2:
+                print(f"❌ Could not fix JSON. Error: {e2}")
+                print(f"Original JSON preview: {json_str[:200]}...")
+                print(f"Fixed JSON preview: {fixed_json[:200]}...")
+                return None
+
+    def _extract_complete_json(self, text: str) -> Optional[str]:
+        """
+        Extract complete JSON by properly counting brackets/braces
+        """
+        # Try to find array first
+        array_start = text.find('[')
+        if array_start != -1:
+            # Count brackets to find the complete array
+            bracket_count = 0
+            in_string = False
+            escape_next = False
+            
+            for i, char in enumerate(text[array_start:], array_start):
+                if escape_next:
+                    escape_next = False
+                    continue
+                    
+                if char == '\\':
+                    escape_next = True
+                    continue
+                    
+                if char == '"' and not escape_next:
+                    in_string = not in_string
+                    continue
+                    
+                if not in_string:
+                    if char == '[':
+                        bracket_count += 1
+                    elif char == ']':
+                        bracket_count -= 1
+                        if bracket_count == 0:
+                            # Found the end of the complete array
+                            return text[array_start:i+1]
+        
+        # Try to find object
+        object_start = text.find('{')
+        if object_start != -1:
+            # Count braces to find the complete object
+            brace_count = 0
+            in_string = False
+            escape_next = False
+            
+            for i, char in enumerate(text[object_start:], object_start):
+                if escape_next:
+                    escape_next = False
+                    continue
+                    
+                if char == '\\':
+                    escape_next = True
+                    continue
+                    
+                if char == '"' and not escape_next:
+                    in_string = not in_string
+                    continue
+                    
+                if not in_string:
+                    if char == '{':
+                        brace_count += 1
+                    elif char == '}':
+                        brace_count -= 1
+                        if brace_count == 0:
+                            # Found the end of the complete object
+                            return text[object_start:i+1]
+        
+        return None
 
 # Global instance
 garden_plan_service = GardenPlanService()

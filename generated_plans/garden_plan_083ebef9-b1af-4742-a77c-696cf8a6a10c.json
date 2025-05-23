@@ -1,0 +1,173 @@
+{
+  "plan_id": "083ebef9-b1af-4742-a77c-696cf8a6a10c",
+  "created_date": "2025-05-23T17:30:25.720195",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "Lettuce",
+    "Peppers"
+  ],
+  "plant_information": [
+    {
+      "name": "Lettuce",
+      "scientific_name": "Lactuca sativa",
+      "plant_type": "vegetable",
+      "days_to_harvest": 45,
+      "spacing_inches": 6,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "carrots",
+        "radishes",
+        "tomatoes",
+        "onions"
+      ],
+      "avoid_planting_with": [
+        "broccoli"
+      ]
+    },
+    {
+      "name": "Peppers",
+      "scientific_name": "Capsicum annuum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 80,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "tomatoes",
+        "basil",
+        "onions",
+        "carrots"
+      ],
+      "avoid_planting_with": [
+        "fennel",
+        "brassicas"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Lettuce",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-30",
+      "harvest_end_date": "2024-06-14",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Peppers",
+      "start_indoors_date": "2024-04-01",
+      "direct_sow_date": null,
+      "transplant_date": "2024-05-15",
+      "harvest_start_date": "2024-07-25",
+      "harvest_end_date": "2024-09-10",
+      "succession_planting_interval": 14
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Lettuce",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Lettuce seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Lettuce deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Lettuce weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Lettuce approximately 45 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Lettuce at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Peppers",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Peppers seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Peppers deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Peppers weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Peppers approximately 80 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Peppers at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for small garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Lettuce",
+          "Peppers"
+        ],
+        "spacing_notes": "Plant lettuce in rows, with peppers placed at the ends of each row to maximize space"
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Start seeds indoors 4-6 weeks before the last frost date to give them a head start on the growing season.",
+    "Choose varieties of lettuce that are resistant to bolting (going to seed) such as 'Rouge d'Hiver' or 'Lolla Rosa', which can tolerate cooler temperatures and longer days.",
+    "Peppers prefer well-draining soil and full sun, so choose a location with at least 6 hours of direct sunlight per day.",
+    "In Moncton's cool climate, peppers may need protection from frost until the last frost date. Use row covers or bring potted plants under cover to prevent damage.",
+    "Lettuce prefers cooler temperatures and can bolt if exposed to high heat. Plant it in a location with partial shade, especially during warmer months.",
+    "Moncton's growing season is relatively short, so make the most of it by planting cool-season crops like lettuce early in the spring or late in the summer for a fall harvest."
+  ]
+}

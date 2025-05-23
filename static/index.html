@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JardAIn - AI Garden Planner</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">🌱</span>
+                <h1>JardAIn</h1>
+                <span class="tagline">AI Garden Planner</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Landing Page -->
+        <section id="landing-page" class="page active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h2 class="hero-title">Plan Your Perfect Garden with AI</h2>
+                    <p class="hero-subtitle">
+                        Get personalized planting schedules, growing instructions, and layout recommendations 
+                        based on your location and plant selection. Download a beautiful PDF guide!
+                    </p>
+                </div>
+            </div>
+
+            <div class="garden-form-container">
+                <form id="garden-form" class="garden-form">
+                    <div class="form-section">
+                        <h3>📍 Your Location</h3>
+                        <div class="input-group">
+                            <label for="zip-code">Zip Code or Postal Code</label>
+                            <input 
+                                type="text" 
+                                id="zip-code" 
+                                name="zip_code" 
+                                placeholder="e.g., 90210 or K1A 0A6"
+                                required
+                            >
+                            <small>We use this to provide location-specific planting advice</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>🌱 Garden Details</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="garden-size">Garden Size</label>
+                                <select id="garden-size" name="garden_size">
+                                    <option value="small">Small (container/patio)</option>
+                                    <option value="medium" selected>Medium (backyard plot)</option>
+                                    <option value="large">Large (big garden/farm)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="experience-level">Experience Level</label>
+                                <select id="experience-level" name="experience_level">
+                                    <option value="beginner" selected>Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>🥕 Select Your Plants</h3>
+                        <div class="plant-selection">
+                            <div class="plant-search">
+                                <input 
+                                    type="text" 
+                                    id="plant-search" 
+                                    placeholder="Search plants..."
+                                    autocomplete="off"
+                                >
+                            </div>
+                            <div class="plant-grid" id="plant-grid">
+                                <!-- Plants will be loaded here -->
+                            </div>
+                            <div class="selected-plants">
+                                <h4>Selected Plants (<span id="selected-count">0</span>/20)</h4>
+                                <div id="selected-plants-list" class="selected-plants-list">
+                                    <!-- Selected plants will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>📄 PDF Options</h3>
+                        <div class="pdf-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-calendar" checked>
+                                <span class="checkmark"></span>
+                                Include planting calendar
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-layout" checked>
+                                <span class="checkmark"></span>
+                                Include garden layout guide
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-images" checked>
+                                <span class="checkmark"></span>
+                                Include plant images
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="generate-btn" id="generate-btn">
+                        <span class="btn-text">🌱 Generate My Garden Plan</span>
+                        <span class="btn-loading" style="display: none;">
+                            <span class="spinner"></span> Creating your garden plan...
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results Page -->
+        <section id="results-page" class="page">
+            <div class="results-container">
+                <div class="results-header">
+                    <button id="back-btn" class="back-btn">← Back to Form</button>
+                    <h2>Your AI-Generated Garden Plan</h2>
+                </div>
+
+                <div class="garden-summary" id="garden-summary">
+                    <!-- Garden plan summary will be loaded here -->
+                </div>
+
+                <div class="action-buttons">
+                    <button id="download-pdf-btn" class="primary-btn">
+                        📄 Download PDF Guide
+                    </button>
+                    <button id="view-pdf-btn" class="secondary-btn">
+                        👁️ View PDF in Browser
+                    </button>
+                    <button id="create-new-btn" class="secondary-btn">
+                        🔄 Create New Plan
+                    </button>
+                </div>
+
+                <div class="garden-details" id="garden-details">
+                    <!-- Detailed garden plan will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Page -->
+        <section id="loading-page" class="page">
+            <div class="loading-container">
+                <div class="loading-content">
+                    <div class="loading-spinner">🌱</div>
+                    <h2>Creating Your Garden Plan</h2>
+                    <p id="loading-status">Analyzing your location and plant selection...</p>
+                    <div class="loading-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <small id="progress-text">0% complete</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="results-section" style="display: none;">
+            <div class="container">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- PDF Download Section -->
+        <section id="pdfSection" class="pdf-section" style="display: none;">
+            <div class="container">
+                <!-- PDF download options will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 JardAIn - AI-Powered Garden Planning</p>
+            <p>Powered by Ollama + Llama 3.1 and OpenAI</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 

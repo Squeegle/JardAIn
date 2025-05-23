@@ -193,7 +193,8 @@ class PDFService:
         # Generate planting calendar if requested
         calendar_data = None
         if include_calendar:
-            calendar_data = self._generate_planting_calendar(enhanced_plants, location_info)
+            # Pass the garden plan's planting schedules to the calendar generator
+            calendar_data = self._generate_planting_calendar_from_garden_plan(garden_plan, location_info)
         
         # Generate layout recommendations if requested
         layout_data = None
@@ -216,7 +217,7 @@ class PDFService:
         }
     
     def _generate_planting_calendar(self, plants: List[Dict], location_info: Dict) -> Dict[str, Any]:
-        """Generate a monthly planting calendar"""
+        """Generate a monthly planting calendar using actual planting schedule data"""
         months = [
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
@@ -225,26 +226,86 @@ class PDFService:
         calendar = {month: [] for month in months}
         
         for plant in plants:
-            # Extract planting months from growing instructions
-            instructions = plant.get('growing_instructions', {})
+            # Get the actual planting schedule data for this plant
+            schedule_data = plant.get('planting_schedule', {})
             
-            # This is simplified - in real implementation, you'd parse
-            # the AI-generated instructions for specific timing
-            if 'planting_schedule' in instructions:
-                planting_info = instructions['planting_schedule']
-                for month in months:
-                    if month.lower() in planting_info.get('direct_sow', '').lower():
-                        calendar[month].append({
-                            'plant': plant['name'],
-                            'action': 'Direct Sow',
-                            'notes': planting_info.get('notes', '')
+            if schedule_data:
+                plant_name = plant.get('name', 'Unknown Plant')
+                
+                # Add start indoors date
+                if schedule_data.get('start_indoors') and schedule_data['start_indoors'] != 'N/A':
+                    month_name = self._extract_month_from_date(schedule_data['start_indoors'])
+                    if month_name and month_name in calendar:
+                        calendar[month_name].append({
+                            'plant': plant_name,
+                            'action': 'Start Seeds Indoors',
+                            'date': schedule_data['start_indoors']
                         })
-        
+                
+                # Add direct sow date
+                if schedule_data.get('direct_sow') and schedule_data['direct_sow'] != 'N/A':
+                    month_name = self._extract_month_from_date(schedule_data['direct_sow'])
+                    if month_name and month_name in calendar:
+                        calendar[month_name].append({
+                            'plant': plant_name,
+                            'action': 'Direct Sow',
+                            'date': schedule_data['direct_sow']
+                        })
+                
+                # Add transplant date
+                if schedule_data.get('transplant') and schedule_data['transplant'] != 'N/A':
+                    month_name = self._extract_month_from_date(schedule_data['transplant'])
+                    if month_name and month_name in calendar:
+                        calendar[month_name].append({
+                            'plant': plant_name,
+                            'action': 'Transplant Outdoors',
+                            'date': schedule_data['transplant']
+                        })
+                
+                # Add harvest period
+                if schedule_data.get('harvest') and schedule_data['harvest'] != 'See instructions':
+                    # Extract start and end months from "June 15 to September 30" format
+                    harvest_period = schedule_data['harvest']
+                    if ' to ' in harvest_period:
+                        start_harvest, end_harvest = harvest_period.split(' to ')
+                        start_month = self._extract_month_from_date(start_harvest.strip())
+                        end_month = self._extract_month_from_date(end_harvest.strip())
+                        
+                        if start_month and start_month in calendar:
+                            calendar[start_month].append({
+                                'plant': plant_name,
+                                'action': 'Harvest Begins',
+                                'date': start_harvest.strip()
+                            })
+
         return {
             'calendar': calendar,
             'zone_info': location_info.get('climate_zone', 'Unknown'),
             'frost_dates': location_info.get('frost_dates', {})
         }
+    
+    def _extract_month_from_date(self, date_string: str) -> str:
+        """Extract month name from date string like 'March 15' or 'June 15'"""
+        if not date_string:
+            return None
+        
+        # Handle formats like "March 15", "June 15", etc.
+        try:
+            # Split and get first word (should be month)
+            parts = date_string.strip().split()
+            if parts:
+                month_name = parts[0]
+                # Check if it's a valid month
+                months = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ]
+                if month_name in months:
+                    return month_name
+        except:
+            pass
+        
+        return None
     
     def _generate_layout_recommendations(self, plants: List[Dict]) -> Dict[str, Any]:
         """Generate garden layout and spacing recommendations"""
@@ -369,4 +430,59 @@ class PDFService:
             return {
                 "success": False,
                 "error": str(e)
-            } 
+            }
+
+    def _generate_planting_calendar_from_garden_plan(self, garden_plan: GardenPlan, location_info: Dict) -> Dict[str, Any]:
+        """Generate calendar directly from garden plan's planting schedules"""
+        months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ]
+        
+        calendar = {month: [] for month in months}
+        
+        # Use the actual planting schedules from the garden plan
+        for schedule in garden_plan.planting_schedules:
+            plant_name = schedule.plant_name
+            
+            # Add start indoors date
+            if schedule.start_indoors_date:
+                month_name = schedule.start_indoors_date.strftime("%B")
+                calendar[month_name].append({
+                    'plant': plant_name,
+                    'action': 'Start Seeds Indoors',
+                    'date': schedule.start_indoors_date.strftime("%B %d")
+                })
+            
+            # Add direct sow date
+            if schedule.direct_sow_date:
+                month_name = schedule.direct_sow_date.strftime("%B")
+                calendar[month_name].append({
+                    'plant': plant_name,
+                    'action': 'Direct Sow',
+                    'date': schedule.direct_sow_date.strftime("%B %d")
+                })
+            
+            # Add transplant date
+            if schedule.transplant_date:
+                month_name = schedule.transplant_date.strftime("%B")
+                calendar[month_name].append({
+                    'plant': plant_name,
+                    'action': 'Transplant Outdoors',
+                    'date': schedule.transplant_date.strftime("%B %d")
+                })
+            
+            # Add harvest start
+            if schedule.harvest_start_date:
+                month_name = schedule.harvest_start_date.strftime("%B")
+                calendar[month_name].append({
+                    'plant': plant_name,
+                    'action': 'Harvest Begins',
+                    'date': schedule.harvest_start_date.strftime("%B %d")
+                })
+
+        return {
+            'calendar': calendar,
+            'zone_info': location_info.get('climate_zone', 'Unknown'),
+            'frost_dates': location_info.get('frost_dates', {})
+        } 

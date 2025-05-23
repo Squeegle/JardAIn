@@ -81,6 +81,9 @@ class GardenPlanService:
             general_tips=general_tips
         )
         
+        # SAVE THE GARDEN PLAN TO DISK
+        await self._save_garden_plan(garden_plan)
+        
         print(f"✅ Garden plan created successfully with {len(plant_information)} plants")
         return garden_plan
     
@@ -792,6 +795,85 @@ Focus on practical layout advice for a {request.garden_size} {request.experience
                             return text[object_start:i+1]
         
         return None
+
+    async def _save_garden_plan(self, garden_plan: GardenPlan):
+        """Save garden plan to disk for PDF generation"""
+        try:
+            import json
+            from pathlib import Path
+            
+            # Ensure directory exists
+            plans_dir = Path("generated_plans")
+            plans_dir.mkdir(exist_ok=True)
+            
+            # Convert garden plan to dict for JSON serialization
+            plan_dict = {
+                "plan_id": garden_plan.plan_id,
+                "created_date": garden_plan.created_date.isoformat(),
+                "location": {
+                    "zip_code": garden_plan.location.zip_code,
+                    "city": garden_plan.location.city,
+                    "state": garden_plan.location.state,
+                    "usda_zone": garden_plan.location.usda_zone,
+                    "last_frost_date": garden_plan.location.last_frost_date.isoformat() if garden_plan.location.last_frost_date else None,
+                    "first_frost_date": garden_plan.location.first_frost_date.isoformat() if garden_plan.location.first_frost_date else None,
+                    "growing_season_days": garden_plan.location.growing_season_days,
+                    "climate_type": garden_plan.location.climate_type
+                },
+                "selected_plants": garden_plan.selected_plants,
+                "plant_information": [
+                    {
+                        "name": plant.name,
+                        "scientific_name": plant.scientific_name,
+                        "plant_type": plant.plant_type,
+                        "days_to_harvest": plant.days_to_harvest,
+                        "spacing_inches": plant.spacing_inches,
+                        "planting_depth_inches": plant.planting_depth_inches,
+                        "sun_requirements": plant.sun_requirements,
+                        "water_requirements": plant.water_requirements,
+                        "soil_ph_range": plant.soil_ph_range,
+                        "companion_plants": plant.companion_plants,
+                        "avoid_planting_with": plant.avoid_planting_with
+                    } for plant in garden_plan.plant_information
+                ],
+                "planting_schedules": [
+                    {
+                        "plant_name": schedule.plant_name,
+                        "start_indoors_date": schedule.start_indoors_date.isoformat() if schedule.start_indoors_date else None,
+                        "direct_sow_date": schedule.direct_sow_date.isoformat() if schedule.direct_sow_date else None,
+                        "transplant_date": schedule.transplant_date.isoformat() if schedule.transplant_date else None,
+                        "harvest_start_date": schedule.harvest_start_date.isoformat() if schedule.harvest_start_date else None,
+                        "harvest_end_date": schedule.harvest_end_date.isoformat() if schedule.harvest_end_date else None,
+                        "succession_planting_interval": schedule.succession_planting_interval
+                    } for schedule in garden_plan.planting_schedules
+                ],
+                "growing_instructions": [
+                    {
+                        "plant_name": instr.plant_name,
+                        "preparation_steps": instr.preparation_steps,
+                        "planting_steps": instr.planting_steps,
+                        "care_instructions": instr.care_instructions,
+                        "pest_management": instr.pest_management,
+                        "harvest_instructions": instr.harvest_instructions,
+                        "storage_tips": instr.storage_tips
+                    } for instr in garden_plan.growing_instructions
+                ],
+                "layout_recommendations": garden_plan.layout_recommendations,
+                "general_tips": garden_plan.general_tips
+            }
+            
+            # Save to file
+            filename = f"garden_plan_{garden_plan.plan_id}.json"
+            filepath = plans_dir / filename
+            
+            with open(filepath, 'w') as f:
+                json.dump(plan_dict, f, indent=2)
+            
+            print(f"💾 Garden plan saved to {filepath}")
+            
+        except Exception as e:
+            print(f"⚠️  Error saving garden plan: {e}")
+            # Don't fail the whole process if saving fails
 
 # Global instance
 garden_plan_service = GardenPlanService()

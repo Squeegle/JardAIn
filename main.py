@@ -70,7 +70,7 @@ app.include_router(garden_plans.router, prefix="/api/plans", tags=["garden-plans
 # app.include_router(pdf_generator.router, prefix="/api/pdf", tags=["pdf"])
 
 # Add PDF router
-app.include_router(pdf_router)
+app.include_router(pdf_router, prefix="/api")
 
 # ========================
 # Core Routes
@@ -79,84 +79,27 @@ app.include_router(pdf_router)
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     """
-    Homepage - Garden planner interface
-    Renders the main application interface where users can:
-    - Enter their zip code
-    - Select vegetables to grow
-    - Generate their garden plan
+    Homepage - Garden planner user interface
+    Serves the main user frontend for creating garden plans
     """
-    if templates:
-        return templates.TemplateResponse(
-            "index.html", 
-            {
-                "request": request,
-                "app_name": settings.app_name,
-                "debug": settings.debug
-            }
-        )
-    else:
-        # Fallback HTML if templates directory doesn't exist
+    try:
+        # Serve the user frontend from static/index.html
+        with open("static/index.html", "r") as f:
+            html_content = f.read()
+        return HTMLResponse(content=html_content)
+    except FileNotFoundError:
+        # Fallback if static file doesn't exist
         return HTMLResponse(content=f"""
         <!DOCTYPE html>
         <html>
         <head>
             <title>JardAIn Garden Planner</title>
-            <style>
-                body {{ font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }}
-                .header {{ text-align: center; color: #2e7d32; }}
-                .status {{ background: #e8f5e8; padding: 15px; border-radius: 5px; margin: 20px 0; }}
-                .api-section {{ background: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0; }}
-                .endpoint {{ margin: 10px 0; padding: 10px; background: white; border-left: 4px solid #4caf50; }}
-                .method {{ font-weight: bold; color: #2e7d32; }}
-            </style>
+            <style>body {{ font-family: Arial, sans-serif; text-align: center; padding: 50px; }}</style>
         </head>
         <body>
-            <div class="header">
-                <h1>🌱 JardAIn Garden Planner</h1>
-                <p>AI-Powered Personalized Garden Planning</p>
-            </div>
-            <div class="status">
-                <h3>✅ FastAPI Application Running Successfully!</h3>
-                <p><strong>Configuration Status:</strong></p>
-                <ul>
-                    <li>LLM Provider: {settings.llm_provider.upper()}</li>
-                    <li>Debug Mode: {settings.debug}</li>
-                    <li>Server: {settings.host}:{settings.port}</li>
-                </ul>
-            </div>
-            
-            <div class="api-section">
-                <h3>🌿 Available Plant APIs</h3>
-                <div class="endpoint">
-                    <span class="method">GET</span> /api/plants - List all plants
-                </div>
-                <div class="endpoint">
-                    <span class="method">GET</span> /api/plants/search?q=tomato - Search plants
-                </div>
-                <div class="endpoint">
-                    <span class="method">GET</span> /api/plants/tomato - Get specific plant
-                </div>
-                
-                <h3>🧠 Garden Plan APIs</h3>
-                <div class="endpoint">
-                    <span class="method">POST</span> /api/plans - Create garden plan (THE MAIN FEATURE!)
-                </div>
-                <div class="endpoint">
-                    <span class="method">POST</span> /api/plans/validate - Validate request
-                </div>
-                <div class="endpoint">
-                    <span class="method">GET</span> /api/plans/location/90210 - Get location info
-                </div>
-                <div class="endpoint">
-                    <span class="method">GET</span> /api/plans/suggestions/90210 - Get plant suggestions
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="/docs" style="background: #4caf50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-                    📚 View API Documentation
-                </a>
-            </div>
+            <h1>🌱 JardAIn Garden Planner</h1>
+            <p>Frontend files not found. Please check the static directory.</p>
+            <a href="/docs">View API Documentation</a>
         </body>
         </html>
         """)
@@ -263,3 +206,13 @@ if __name__ == "__main__":
         log_level=settings.log_level.lower(),
         access_log=settings.debug
     )
+
+# Mount static files for web frontend
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Serve the main web app
+@app.get("/", response_class=HTMLResponse)
+async def serve_web_app():
+    """Serve the main web application"""
+    with open("static/index.html", "r") as f:
+        return HTMLResponse(content=f.read())

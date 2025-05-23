@@ -494,4 +494,60 @@ body {
 
 /* Utility Classes */
 .hidden { display: none !important; }
-.loading { opacity: 0.7; pointer-events: none; } 
+.loading { opacity: 0.7; pointer-events: none; }
+
+/* PDF Download Button Styling */
+.pdf-download-container {
+    text-align: center;
+    padding: 30px 20px;
+    margin: 30px 0;
+    background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
+    border: 3px solid #66bb6a;
+}
+
+.btn-pdf-download {
+    background: #ffffff;
+    color: #2e7d32;
+    border: none;
+    padding: 18px 36px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 280px;
+}
+
+.btn-pdf-download:hover {
+    background: #f1f8e9;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    color: #1b5e20;
+}
+
+.btn-pdf-download:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Make the PDF section more prominent */
+#pdfSection {
+    margin-top: 40px;
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 

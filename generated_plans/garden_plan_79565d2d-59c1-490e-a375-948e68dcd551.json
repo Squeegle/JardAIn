@@ -1,0 +1,371 @@
+{
+  "plan_id": "79565d2d-59c1-490e-a375-948e68dcd551",
+  "created_date": "2025-05-23T18:06:11.443560",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "Radishes",
+    "Broccoli",
+    "Spinach",
+    "Green Beans",
+    "Swiss Chard"
+  ],
+  "plant_information": [
+    {
+      "name": "Radishes",
+      "scientific_name": "Raphanus sativus",
+      "plant_type": "vegetable",
+      "days_to_harvest": 25,
+      "spacing_inches": 1,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "spinach",
+        "carrots",
+        "cucumbers"
+      ],
+      "avoid_planting_with": [
+        "hyssop"
+      ]
+    },
+    {
+      "name": "Broccoli",
+      "scientific_name": "Brassica oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 65,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "onions",
+        "garlic",
+        "spinach",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "tomatoes",
+        "peppers",
+        "strawberries"
+      ]
+    },
+    {
+      "name": "Spinach",
+      "scientific_name": "Spinacia oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 40,
+      "spacing_inches": 4,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "radishes",
+        "strawberries",
+        "peas"
+      ],
+      "avoid_planting_with": []
+    },
+    {
+      "name": "Green Beans",
+      "scientific_name": "Phaseolus vulgaris",
+      "plant_type": "vegetable",
+      "days_to_harvest": 50,
+      "spacing_inches": 6,
+      "planting_depth_inches": 1.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "corn",
+        "cucumbers",
+        "radishes",
+        "carrots"
+      ],
+      "avoid_planting_with": [
+        "onions",
+        "garlic",
+        "fennel"
+      ]
+    },
+    {
+      "name": "Swiss Chard",
+      "scientific_name": "Beta vulgaris",
+      "plant_type": "vegetable",
+      "days_to_harvest": 50,
+      "spacing_inches": 6,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "tomatoes",
+        "carrots",
+        "onions",
+        "beans"
+      ],
+      "avoid_planting_with": []
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Radishes",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-04-26",
+      "harvest_end_date": "2024-05-01",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Broccoli",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-10",
+      "harvest_end_date": "2024-07-01",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Spinach",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-25",
+      "harvest_end_date": "2024-06-10",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Green Beans",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-07-01",
+      "harvest_end_date": "2024-09-01",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Swiss Chard",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-07-01",
+      "harvest_end_date": "2024-09-01",
+      "succession_planting_interval": 14
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Radishes",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Radishes seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 1 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Radishes deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Radishes weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Radishes approximately 25 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Radishes at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Broccoli",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Broccoli seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Broccoli deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Broccoli weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Broccoli approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Broccoli at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Spinach",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Spinach seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 4 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Spinach deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Spinach weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Spinach approximately 40 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Spinach at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Green Beans",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Green Beans seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 1.5 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Green Beans deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Green Beans weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Green Beans approximately 50 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Green Beans at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Swiss Chard",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Swiss Chard seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Swiss Chard deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Swiss Chard weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Swiss Chard approximately 50 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Swiss Chard at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Radishes",
+          "Broccoli",
+          "Spinach"
+        ],
+        "spacing_notes": "Plant radishes 1 inch apart in rows 12 inches apart. Plant broccoli 18 inches apart, leaving space for spinach to be planted around the base of the broccoli."
+      },
+      {
+        "group_name": "Green Bean and Swiss Chard Area",
+        "plants": [
+          "Green Beans",
+          "Swiss Chard"
+        ],
+        "spacing_notes": "Plant green beans 6 inches apart in rows 12-18 inches apart. Plant swiss chard 6 inches apart, allowing for easy access to harvest leaves."
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Choose a sunny spot with well-draining soil for your garden, as radishes and green beans prefer full sun.",
+    "In Moncton's cool climate, start broccoli seeds indoors 4-6 weeks before the last frost date to give them a head start. Transplant them outside when the weather warms up.",
+    "Spinach is a cool-season crop that does well in Moncton's spring and fall seasons. Sow it as soon as the soil can be worked in the spring, about 2-3 weeks before the last frost date.",
+    "Swiss Chard prefers full sun and well-draining soil, but it's also tolerant of partial shade. Make sure to water it regularly, especially during hot summer days.",
+    "Radishes are quick-growing and can be direct-sown in late spring or early summer, about 2-3 weeks after the last frost date. Sow them every 1-2 weeks for a continuous harvest.",
+    "Green beans prefer well-draining soil and full sun. In Moncton's short growing season, choose bush varieties that mature quickly (about 50 days) to ensure a successful harvest.",
+    "Swiss Chard and broccoli require support as they grow. Use tomato cages or trellises to keep them upright and promote healthy growth."
+  ]
+}

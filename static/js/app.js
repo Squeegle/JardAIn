@@ -174,84 +174,146 @@ class GardenPlannerApp {
     }
 
     displayResults(gardenPlan) {
+        // Store for debugging
+        this.lastGeneratedPlan = gardenPlan;
+        
         const resultsDiv = document.getElementById('results');
         if (!resultsDiv) return;
 
+        // Show only a minimal success message
         resultsDiv.innerHTML = `
-            <h2>🌱 Your Personalized Garden Plan</h2>
             <div class="alert alert-success">
-                <strong>Success!</strong> Generated plan for ${gardenPlan.location.city}, ${gardenPlan.location.state} 
-                (Zone ${gardenPlan.location.hardiness_zone})
+                <strong>✅ Garden Plan Generated Successfully!</strong><br>
+                Your personalized plan for ${gardenPlan.location.city}, ${gardenPlan.location.state} 
+                (Zone ${gardenPlan.location.usda_zone}) is ready.<br>
+                <small>📱 ${gardenPlan.plant_information.length} plants included • Generated ${new Date().toLocaleDateString()}</small>
             </div>
-            
+        `;
+
+        resultsDiv.style.display = 'block';
+        
+        // Don't scroll to results - let user naturally see the download button
+    }
+
+    renderPlantingSchedule(schedules) {
+        console.log('🔍 Rendering planting schedules:', schedules);
+        
+        if (!schedules || !Array.isArray(schedules) || schedules.length === 0) {
+            return '<div class="plan-section"><h3>📅 Planting Schedule</h3><p>No planting schedule available.</p></div>';
+        }
+
+        return `
             <div class="plan-section">
-                <h3>Selected Plants (${gardenPlan.plant_information.length})</h3>
-                <div class="plants-summary">
-                    ${gardenPlan.plant_information.map(plant => `
-                        <div class="plant-summary">
-                            <h4>${plant.name}</h4>
-                            <p><strong>Days to Harvest:</strong> ${plant.days_to_harvest} days</p>
-                            <p><strong>Spacing:</strong> ${plant.spacing_inches} inches apart</p>
-                            <p><strong>Planting Depth:</strong> ${plant.planting_depth_inches} inches</p>
-                            <p><strong>Sun Requirements:</strong> ${plant.sun_requirements}</p>
-                            <p><strong>Water Needs:</strong> ${plant.water_requirements}</p>
+                <h3>📅 Planting Schedule</h3>
+                <div class="schedule-grid">
+                    ${schedules.map(schedule => `
+                        <div class="schedule-item">
+                            <h4>${schedule.plant_name}</h4>
+                            ${schedule.start_indoors_date ? `<p><strong>Start Indoors:</strong> ${schedule.start_indoors_date}</p>` : ''}
+                            ${schedule.direct_sow_date ? `<p><strong>Direct Sow:</strong> ${schedule.direct_sow_date}</p>` : ''}
+                            ${schedule.transplant_date ? `<p><strong>Transplant:</strong> ${schedule.transplant_date}</p>` : ''}
+                            ${schedule.harvest_start_date ? `<p><strong>Harvest Start:</strong> ${schedule.harvest_start_date}</p>` : ''}
+                            ${schedule.harvest_end_date ? `<p><strong>Harvest End:</strong> ${schedule.harvest_end_date}</p>` : ''}
                         </div>
                     `).join('')}
                 </div>
             </div>
-
-            ${gardenPlan.planting_schedules && gardenPlan.planting_schedules.length > 0 ? `
-                <div class="plan-section">
-                    <h3>📅 Planting Schedule</h3>
-                    <div class="schedule-grid">
-                        ${gardenPlan.planting_schedules.map(item => `
-                            <div class="schedule-item">
-                                <strong>${item.plant}:</strong> ${item.optimal_planting_time}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            ` : ''}
-
-            ${gardenPlan.growing_instructions && gardenPlan.growing_instructions.length > 0 ? `
-                <div class="plan-section">
-                    <h3>🌱 Growing Instructions</h3>
-                    <div class="instructions-list">
-                        ${gardenPlan.growing_instructions.map(instruction => `
-                            <div class="instruction-item">
-                                <h4>${instruction.plant}</h4>
-                                <p>${instruction.detailed_instructions}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            ` : ''}
-
-            ${gardenPlan.general_tips && gardenPlan.general_tips.length > 0 ? `
-                <div class="plan-section">
-                    <h3>💡 General Tips</h3>
-                    <ul>
-                        ${gardenPlan.general_tips.map(tip => `<li>${tip}</li>`).join('')}
-                    </ul>
-                </div>
-            ` : ''}
         `;
+    }
 
-        resultsDiv.style.display = 'block';
-        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    renderGrowingInstructions(instructions) {
+        console.log('🔍 Rendering growing instructions:', instructions);
+        
+        if (!instructions || !Array.isArray(instructions) || instructions.length === 0) {
+            return '<div class="plan-section"><h3>🌱 Growing Instructions</h3><p>No growing instructions available.</p></div>';
+        }
+
+        return `
+            <div class="plan-section">
+                <h3>🌱 Growing Instructions</h3>
+                <div class="instructions-list">
+                    ${instructions.map(instruction => `
+                        <div class="instruction-item">
+                            <h4>${instruction.plant_name}</h4>
+                            
+                            ${instruction.preparation_steps && instruction.preparation_steps.length > 0 ? `
+                                <div class="instruction-section">
+                                    <h5>🏗️ Preparation Steps</h5>
+                                    <ul>
+                                        ${instruction.preparation_steps.map(step => `<li>${step}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                            
+                            ${instruction.planting_steps && instruction.planting_steps.length > 0 ? `
+                                <div class="instruction-section">
+                                    <h5>🌱 Planting Steps</h5>
+                                    <ul>
+                                        ${instruction.planting_steps.map(step => `<li>${step}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                            
+                            ${instruction.care_instructions && instruction.care_instructions.length > 0 ? `
+                                <div class="instruction-section">
+                                    <h5>🌿 Care Instructions</h5>
+                                    <ul>
+                                        ${instruction.care_instructions.map(step => `<li>${step}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    renderGeneralTips(tips) {
+        if (!tips || !Array.isArray(tips) || tips.length === 0) {
+            return '';
+        }
+
+        return `
+            <div class="plan-section">
+                <h3>💡 General Tips</h3>
+                <ul>
+                    ${tips.map(tip => `<li>${tip}</li>`).join('')}
+                </ul>
+            </div>
+        `;
     }
 
     showPDFOption(planId) {
         const pdfSection = document.getElementById('pdfSection');
         if (pdfSection) {
             pdfSection.innerHTML = `
-                <h3>📄 Download Your Plan</h3>
-                <p>Get a beautiful PDF copy of your garden plan:</p>
-                <button class="btn btn-primary" onclick="app.downloadPDF('${planId}')">
-                    📥 Download PDF Plan
-                </button>
+                <div class="pdf-download-container" style="text-align: center; margin: 2rem 0; padding: 2rem; background: #f8fffe; border-radius: 12px; border: 2px solid #4a7c59;">
+                    <h3 style="color: #2d5a2d; margin-bottom: 1rem;">📄 Your Garden Plan is Ready!</h3>
+                    <button class="btn btn-pdf-download" onclick="app.downloadPDF('${planId}')" 
+                            style="background: #4a7c59; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
+                        📥 Download PDF Garden Plan
+                    </button>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        Your complete garden plan with planting schedules, growing instructions, and layout recommendations.
+                    </p>
+                </div>
             `;
             pdfSection.style.display = 'block';
+            
+            // Add hover effect to button
+            const button = pdfSection.querySelector('.btn-pdf-download');
+            button.addEventListener('mouseenter', () => {
+                button.style.background = '#2d5a2d';
+                button.style.transform = 'translateY(-2px)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.background = '#4a7c59';
+                button.style.transform = 'translateY(0)';
+            });
+            
+            // Scroll to the download section smoothly
+            pdfSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 

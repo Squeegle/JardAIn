@@ -1,0 +1,176 @@
+{
+  "plan_id": "9fe64095-978e-4c72-a93a-d109cc0735d4",
+  "created_date": "2025-05-23T20:05:57.801310",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "Tomato",
+    "Broccoli"
+  ],
+  "plant_information": [
+    {
+      "name": "Tomato",
+      "scientific_name": "Solanum lycopersicum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 75,
+      "spacing_inches": 24,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "basil",
+        "parsley",
+        "carrots",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "fennel",
+        "brassicas",
+        "corn"
+      ]
+    },
+    {
+      "name": "Broccoli",
+      "scientific_name": "Brassica oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 65,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "onions",
+        "garlic",
+        "spinach",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "tomatoes",
+        "peppers",
+        "strawberries"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Tomato",
+      "start_indoors_date": "2024-03-15",
+      "direct_sow_date": null,
+      "transplant_date": "2024-05-10",
+      "harvest_start_date": "2024-07-15",
+      "harvest_end_date": "2024-09-30",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Broccoli",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-15",
+      "harvest_end_date": "2024-07-20",
+      "succession_planting_interval": 21
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Tomato",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Tomato seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 24 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Tomato deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Tomato weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Tomato approximately 75 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Tomato at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Broccoli",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Broccoli seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Broccoli deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Broccoli weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Broccoli approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Broccoli at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Tomato",
+          "Broccoli"
+        ],
+        "spacing_notes": "Plant tomatoes in rows, with broccoli spaced between the rows"
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Start seedlings indoors 4-6 weeks before the last frost date to give them a head start on the growing season.",
+    "Choose varieties of Tomato and Broccoli that are specifically bred for cooler climates and shorter growing seasons, such as 'Early Girl' or 'Deep Purple' Tomatoes and 'Waltham 29' or 'Packman' Broccolis.",
+    "Prepare your soil by adding compost or well-rotted manure to improve its structure and fertility. Moncton's cold climate can lead to compacted soil, so make sure to loosen it up before planting.",
+    "Tomatoes need full sun (at least 6 hours of direct sunlight) to produce well, so choose a location that gets plenty of sunlight. Broccoli prefers partial shade, especially in warmer weather, so consider providing some afternoon shade for your broccoli plants.",
+    "Water your plants regularly, but avoid overwatering, which can lead to disease and root rot. Tomatoes need about 1-2 inches of water per week, while broccoli needs about 1 inch of water per week.",
+    "Watch out for common pests in Moncton's climate, such as aphids, whiteflies, and slugs, and take action promptly if you notice any infestations."
+  ]
+}

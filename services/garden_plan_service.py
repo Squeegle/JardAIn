@@ -45,8 +45,19 @@ class GardenPlanService:
         # Step 2: Get plant information (using our hybrid service)
         plant_information = await plant_service.get_multiple_plants(request.selected_plants)
         
+        # Log detailed results for debugging
+        found_plants = [p.name for p in plant_information]
+        missing_plants = [name for name in request.selected_plants if name not in found_plants]
+        
+        if missing_plants:
+            print(f"⚠️  Missing plants from selection: {missing_plants}")
+            print(f"✅ Found plants: {found_plants}")
+        
         if not plant_information:
-            raise ValueError("No plant information could be retrieved for the selected plants")
+            raise ValueError(f"No plant information could be retrieved for any of the selected plants: {request.selected_plants}")
+        
+        if len(plant_information) < len(request.selected_plants):
+            print(f"⚠️  Only {len(plant_information)}/{len(request.selected_plants)} plants found, proceeding with available plants")
         
         # Step 3: Generate planting schedules using AI
         planting_schedules = await self._generate_planting_schedules(

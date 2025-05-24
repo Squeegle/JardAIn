@@ -7,158 +7,448 @@
     <link rel="stylesheet" href="static/css/pdf_styles.css">
 </head>
 <body>
-    <!-- Garden Overview (first page) -->
-    <div class="overview-page">
-        <h2 class="section-title">🌿 Garden Overview</h2>
-        
-        <div class="location-details">
-            <h3>📍 Location Information</h3>
-            <table class="info-table">
-                <tr>
-                    <td><strong>Location:</strong></td>
-                    <td>{{ location_info.city }}, {{ location_info.state }} {{ location_info.zip_code }}</td>
-                </tr>
-                {% if location_info.climate_zone %}
-                <tr>
-                    <td><strong>Climate Zone:</strong></td>
-                    <td>{{ location_info.climate_zone }}</td>
-                </tr>
-                {% endif %}
-                {% if location_info.frost_dates %}
-                <tr>
-                    <td><strong>Last Spring Frost:</strong></td>
-                    <td>{{ location_info.frost_dates.last_spring_frost or 'N/A' }}</td>
-                </tr>
-                <tr>
-                    <td><strong>First Fall Frost:</strong></td>
-                    <td>{{ location_info.frost_dates.first_fall_frost or 'N/A' }}</td>
-                </tr>
-                {% endif %}
-            </table>
-        </div>
-        
-        <div class="plants-overview">
-            <h3>🌱 Selected Plants ({{ total_plants }} varieties)</h3>
-            <div class="plants-grid">
-                {% for plant in enhanced_plants %}
-                <div class="plant-card-mini">
-                    <div class="plant-name">{{ plant.name }}</div>
-                </div>
-                {% endfor %}
+    <!-- COVER PAGE -->
+    <div class="cover-page">
+        <div class="cover-header">
+            <div class="logo-section">
+                <div class="app-logo">🌱</div>
+                <h1 class="app-name">{{ app_name or 'JardAIn' }}</h1>
+                <div class="tagline">AI-Powered Garden Planning</div>
             </div>
         </div>
         
-        <div class="generation-info">
-            <p><small>Generated on {{ generation_date }} at {{ generation_time }} by {{ app_name }}</small></p>
+        <div class="cover-main">
+            <div class="plan-title">
+                <h1>Your Personal Garden Plan</h1>
+                <div class="location-hero">
+                    <div class="location-icon">📍</div>
+                    <div class="location-text">
+                        <div class="city-state">{{ location_info.city }}, {{ location_info.state }}</div>
+                        <div class="zone-info">USDA Zone {{ location_info.climate_zone }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cover-stats">
+                <div class="stat-card">
+                    <div class="stat-number">{{ total_plants }}</div>
+                    <div class="stat-label">Plant Varieties</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ location_info.climate_zone }}</div>
+                    <div class="stat-label">USDA Zone</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ calendar_data.growing_season_length if calendar_data else '180' }}</div>
+                    <div class="stat-label">Growing Days</div>
+                </div>
+            </div>
+            
+            <div class="cover-preview">
+                <h3>Your Selected Plants</h3>
+                <div class="plants-preview-grid">
+                    {% for plant in enhanced_plants[:9] %}
+                    <div class="preview-plant-card">
+                        <div class="plant-emoji">{{ plant.emoji or '🌱' }}</div>
+                        <div class="plant-preview-name">{{ plant.name }}</div>
+                    </div>
+                    {% endfor %}
+                    {% if enhanced_plants|length > 9 %}
+                    <div class="preview-plant-card more-plants">
+                        <div class="plant-emoji">+</div>
+                        <div class="plant-preview-name">{{ enhanced_plants|length - 9 }} more</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="cover-footer">
+            <div class="generation-details">
+                <div class="generated-on">Generated on {{ generation_date }}</div>
+                <div class="frost-info-mini">
+                    <span class="frost-item">🌡️ Last Frost: {{ location_info.frost_dates.last_spring_frost }}</span>
+                    <span class="frost-item">❄️ First Frost: {{ location_info.frost_dates.first_fall_frost }}</span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Individual Plant Pages (each starts on a new page) -->
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc-page">
+        <h2 class="section-title">📋 Table of Contents</h2>
+        
+        <div class="toc-content">
+            <div class="toc-section">
+                <h3>🌍 Garden Overview</h3>
+                <div class="toc-items">
+                    <div class="toc-item">
+                        <span class="toc-text">Location & Climate Information</span>
+                        <span class="toc-dots"></span>
+                        <span class="toc-page">3</span>
+                    </div>
+                    <div class="toc-item">
+                        <span class="toc-text">Planting Calendar</span>
+                        <span class="toc-dots"></span>
+                        <span class="toc-page">4</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="toc-section">
+                <h3>🌱 Plant Profiles</h3>
+                <div class="toc-items">
+                    {% for plant in enhanced_plants %}
+                    <div class="toc-item">
+                        <span class="toc-text">{{ plant.name }}</span>
+                        <span class="toc-dots"></span>
+                        <span class="toc-page">{{ loop.index + 4 }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="toc-section">
+                <h3>📊 Garden Planning Tools</h3>
+                <div class="toc-items">
+                    {% if include_layout %}
+                    <div class="toc-item">
+                        <span class="toc-text">Garden Layout Recommendations</span>
+                        <span class="toc-dots"></span>
+                        <span class="toc-page">{{ enhanced_plants|length + 5 }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="toc-item">
+                        <span class="toc-text">General Gardening Tips</span>
+                        <span class="toc-dots"></span>
+                        <span class="toc-page">{{ enhanced_plants|length + 6 }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GARDEN OVERVIEW PAGE -->
+    <div class="overview-page">
+        <h2 class="section-title">🌍 Garden Overview</h2>
+        
+        <div class="overview-grid">
+            <div class="location-card">
+                <h3>📍 Your Location</h3>
+                <div class="location-details-enhanced">
+                    <div class="detail-row">
+                        <div class="detail-icon">🏠</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value">{{ location_info.city }}, {{ location_info.state }} {{ location_info.zip_code }}</div>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-icon">🌡️</div>
+                        <div class="detail-content">
+                            <div class="detail-label">USDA Hardiness Zone</div>
+                            <div class="detail-value">Zone {{ location_info.climate_zone }}</div>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-icon">🌱</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Last Spring Frost</div>
+                            <div class="detail-value">{{ location_info.frost_dates.last_spring_frost }}</div>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-icon">❄️</div>
+                        <div class="detail-content">
+                            <div class="detail-label">First Fall Frost</div>
+                            <div class="detail-value">{{ location_info.frost_dates.first_fall_frost }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="plants-summary-card">
+                <h3>🌱 Plant Selection Summary</h3>
+                <div class="plants-by-category">
+                    {% set plant_categories = {} %}
+                    {% for plant in enhanced_plants %}
+                        {% set category = plant.database_info.category if plant.database_info else 'Other' %}
+                        {% if category in plant_categories %}
+                            {% set _ = plant_categories[category].append(plant.name) %}
+                        {% else %}
+                            {% set _ = plant_categories.update({category: [plant.name]}) %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% for category, plants in plant_categories.items() %}
+                    <div class="category-row">
+                        <div class="category-header">
+                            <span class="category-icon">{{ '🥬' if category == 'Leafy Green' else '🍅' if category == 'Fruit' else '🥕' if category == 'Root Vegetable' else '🌿' if category == 'Herb' else '🌱' }}</span>
+                            <span class="category-name">{{ category }}</span>
+                            <span class="category-count">({{ plants|length }})</span>
+                        </div>
+                        <div class="category-plants">{{ plants|join(', ') }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="quick-reference">
+            <h3>⚡ Quick Reference</h3>
+            <div class="reference-grid">
+                <div class="reference-card">
+                    <div class="reference-icon">📅</div>
+                    <div class="reference-title">Start Planning</div>
+                    <div class="reference-text">Begin indoor seedlings 6-8 weeks before last frost</div>
+                </div>
+                <div class="reference-card">
+                    <div class="reference-icon">🌡️</div>
+                    <div class="reference-title">Temperature Watch</div>
+                    <div class="reference-text">Monitor night temperatures before transplanting outdoors</div>
+                </div>
+                <div class="reference-card">
+                    <div class="reference-icon">💧</div>
+                    <div class="reference-title">Watering Guide</div>
+                    <div class="reference-text">Deep, infrequent watering promotes strong root systems</div>
+                </div>
+                <div class="reference-card">
+                    <div class="reference-icon">🌞</div>
+                    <div class="reference-title">Sun Requirements</div>
+                    <div class="reference-text">Most vegetables need 6-8 hours of direct sunlight daily</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENHANCED PLANTING CALENDAR -->
+    {% if include_calendar and calendar_data %}
+    <div class="calendar-page">
+        <h2 class="section-title">📅 Your Personalized Planting Calendar</h2>
+        
+        <div class="calendar-hero">
+            <div class="season-overview">
+                <div class="season-stat">
+                    <div class="season-number">{{ calendar_data.growing_season_length or '180' }}</div>
+                    <div class="season-label">Growing Season Days</div>
+                </div>
+                <div class="season-timeline">
+                    <div class="timeline-bar">
+                        <div class="timeline-segment spring">
+                            <div class="segment-label">Spring</div>
+                        </div>
+                        <div class="timeline-segment summer">
+                            <div class="segment-label">Summer</div>
+                        </div>
+                        <div class="timeline-segment fall">
+                            <div class="segment-label">Fall</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="calendar-grid">
+            {% for month, activities in calendar_data.calendar.items() %}
+            {% if activities %}
+            <div class="month-card {{ 'spring' if month in ['March', 'April', 'May'] else 'summer' if month in ['June', 'July', 'August'] else 'fall' if month in ['September', 'October', 'November'] else 'winter' }}">
+                <div class="month-header">
+                    <div class="month-name">{{ month }}</div>
+                    <div class="month-emoji">{{ '🌱' if month in ['March', 'April', 'May'] else '☀️' if month in ['June', 'July', 'August'] else '🍂' if month in ['September', 'October', 'November'] else '❄️' }}</div>
+                </div>
+                <div class="month-activities">
+                    {% for activity in activities %}
+                    <div class="activity-item enhanced">
+                        <div class="activity-icon">{{ '🌱' if 'sow' in activity.action.lower() or 'plant' in activity.action.lower() else '🌿' if 'transplant' in activity.action.lower() else '🥕' if 'harvest' in activity.action.lower() else '🌱' }}</div>
+                        <div class="activity-content">
+                            <div class="activity-plant">{{ activity.plant }}</div>
+                            <div class="activity-action">{{ activity.action }}</div>
+                            {% if activity.date %}
+                            <div class="activity-date">{{ activity.date }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="calendar-legend">
+            <h4>📖 Legend</h4>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="legend-icon">🌱</span>
+                    <span class="legend-text">Sowing/Planting</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">🌿</span>
+                    <span class="legend-text">Transplanting</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">🥕</span>
+                    <span class="legend-text">Harvesting</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- ENHANCED INDIVIDUAL PLANT PAGES -->
     {% for plant in enhanced_plants %}
     <div class="plant-page">
-        <div class="plant-header">
-            <h2 class="plant-title">🌱 {{ plant.name }}</h2>
+        <div class="plant-header-enhanced">
+            <div class="plant-title-section">
+                <div class="plant-emoji-large">{{ plant.emoji or '🌱' }}</div>
+                <div class="plant-title-content">
+                    <h2 class="plant-title">{{ plant.name }}</h2>
+                    <div class="plant-subtitle">{{ plant.database_info.category if plant.database_info else 'Vegetable' }}</div>
+                </div>
+            </div>
+            <div class="plant-quick-stats">
+                <div class="quick-stat">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value">{{ plant.database_info.days_to_maturity if plant.database_info else 'See below' }}</div>
+                    <div class="stat-label">Days to Harvest</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="stat-icon">📏</div>
+                    <div class="stat-value">{{ plant.database_info.spacing if plant.database_info else 'See below' }}</div>
+                    <div class="stat-label">Plant Spacing</div>
+                </div>
+            </div>
         </div>
 
-        <div class="plant-content">
-            <!-- Basic Information Table -->
-            {% if plant.database_info %}
-            <div class="plant-section">
-                <h3>📋 Plant Information</h3>
-                <table class="plant-info-table">
-                    <tr>
-                        <td><strong>Sun Requirements:</strong></td>
-                        <td>{{ plant.database_info.sun_requirement or 'Full sun' }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Water Needs:</strong></td>
-                        <td>{{ plant.database_info.water_needs or 'Regular watering' }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Days to Harvest:</strong></td>
-                        <td>{{ plant.database_info.days_to_maturity or 'See growing instructions' }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Plant Spacing:</strong></td>
-                        <td>{{ plant.database_info.spacing or 'See growing instructions' }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Planting Depth:</strong></td>
-                        <td>{{ plant.database_info.planting_depth or 'See growing instructions' }}</td>
-                    </tr>
-                </table>
+        <div class="plant-content-enhanced">
+            <!-- Visual Info Cards -->
+            <div class="info-cards-grid">
+                {% if plant.database_info %}
+                <div class="info-card sun-card">
+                    <div class="card-header">
+                        <div class="card-icon">☀️</div>
+                        <div class="card-title">Sun Requirements</div>
+                    </div>
+                    <div class="card-content">{{ plant.database_info.sun_requirement }}</div>
+                </div>
+                
+                <div class="info-card water-card">
+                    <div class="card-header">
+                        <div class="card-icon">💧</div>
+                        <div class="card-title">Water Needs</div>
+                    </div>
+                    <div class="card-content">{{ plant.database_info.water_needs }}</div>
+                </div>
+                
+                <div class="info-card depth-card">
+                    <div class="card-header">
+                        <div class="card-icon">📏</div>
+                        <div class="card-title">Planting Depth</div>
+                    </div>
+                    <div class="card-content">{{ plant.database_info.planting_depth }}</div>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
 
-            <!-- Planting Schedule -->
+            <!-- Enhanced Schedule Timeline -->
             {% if plant.planting_schedule %}
-            <div class="plant-section">
-                <h3>📅 Planting Schedule</h3>
-                <table class="schedule-table">
+            <div class="schedule-section">
+                <h3>📅 Planting Timeline</h3>
+                <div class="timeline-visual">
                     {% if plant.planting_schedule.start_indoors and plant.planting_schedule.start_indoors != 'N/A' %}
-                    <tr>
-                        <td><strong>Start Seeds Indoors:</strong></td>
-                        <td>{{ plant.planting_schedule.start_indoors }}</td>
-                    </tr>
+                    <div class="timeline-event start-indoors">
+                        <div class="event-icon">🏠</div>
+                        <div class="event-content">
+                            <div class="event-title">Start Seeds Indoors</div>
+                            <div class="event-date">{{ plant.planting_schedule.start_indoors }}</div>
+                        </div>
+                    </div>
                     {% endif %}
+                    
                     {% if plant.planting_schedule.direct_sow and plant.planting_schedule.direct_sow != 'N/A' %}
-                    <tr>
-                        <td><strong>Direct Sow Outdoors:</strong></td>
-                        <td>{{ plant.planting_schedule.direct_sow }}</td>
-                    </tr>
+                    <div class="timeline-event direct-sow">
+                        <div class="event-icon">🌱</div>
+                        <div class="event-content">
+                            <div class="event-title">Direct Sow Outdoors</div>
+                            <div class="event-date">{{ plant.planting_schedule.direct_sow }}</div>
+                        </div>
+                    </div>
                     {% endif %}
+                    
                     {% if plant.planting_schedule.transplant and plant.planting_schedule.transplant != 'N/A' %}
-                    <tr>
-                        <td><strong>Transplant Outdoors:</strong></td>
-                        <td>{{ plant.planting_schedule.transplant }}</td>
-                    </tr>
+                    <div class="timeline-event transplant">
+                        <div class="event-icon">🌿</div>
+                        <div class="event-content">
+                            <div class="event-title">Transplant Outdoors</div>
+                            <div class="event-date">{{ plant.planting_schedule.transplant }}</div>
+                        </div>
+                    </div>
                     {% endif %}
+                    
                     {% if plant.planting_schedule.harvest and plant.planting_schedule.harvest != 'See instructions' %}
-                    <tr>
-                        <td><strong>Harvest Period:</strong></td>
-                        <td>{{ plant.planting_schedule.harvest }}</td>
-                    </tr>
+                    <div class="timeline-event harvest">
+                        <div class="event-icon">🥕</div>
+                        <div class="event-content">
+                            <div class="event-title">Harvest Period</div>
+                            <div class="event-date">{{ plant.planting_schedule.harvest }}</div>
+                        </div>
+                    </div>
                     {% endif %}
-                </table>
+                </div>
             </div>
             {% endif %}
 
-            <!-- Growing Instructions -->
+            <!-- Enhanced Growing Instructions -->
             {% if plant.growing_instructions %}
-            <div class="plant-section">
-                <h3>🌿 Growing Instructions</h3>
+            <div class="instructions-section">
+                <h3>🌿 Complete Growing Guide</h3>
                 
                 {% if plant.growing_instructions.soil_preparation %}
-                <div class="instruction-block">
-                    <h4>🏗️ Soil Preparation</h4>
+                <div class="instruction-card prep-card">
+                    <div class="instruction-header">
+                        <div class="instruction-icon">🏗️</div>
+                        <div class="instruction-title">Soil Preparation</div>
+                    </div>
                     <div class="instruction-content">{{ plant.growing_instructions.soil_preparation }}</div>
                 </div>
                 {% endif %}
 
                 {% if plant.growing_instructions.planting_instructions %}
-                <div class="instruction-block">
-                    <h4>🌱 Planting</h4>
+                <div class="instruction-card plant-card">
+                    <div class="instruction-header">
+                        <div class="instruction-icon">🌱</div>
+                        <div class="instruction-title">Planting Instructions</div>
+                    </div>
                     <div class="instruction-content">{{ plant.growing_instructions.planting_instructions }}</div>
                 </div>
                 {% endif %}
 
                 {% if plant.growing_instructions.care_instructions %}
-                <div class="instruction-block">
-                    <h4>🚿 Care & Maintenance</h4>
+                <div class="instruction-card care-card">
+                    <div class="instruction-header">
+                        <div class="instruction-icon">🚿</div>
+                        <div class="instruction-title">Care & Maintenance</div>
+                    </div>
                     <div class="instruction-content">{{ plant.growing_instructions.care_instructions }}</div>
                 </div>
                 {% endif %}
 
                 {% if plant.growing_instructions.harvest_instructions %}
-                <div class="instruction-block">
-                    <h4>🥕 Harvesting</h4>
+                <div class="instruction-card harvest-card">
+                    <div class="instruction-header">
+                        <div class="instruction-icon">🥕</div>
+                        <div class="instruction-title">Harvesting Guide</div>
+                    </div>
                     <div class="instruction-content">{{ plant.growing_instructions.harvest_instructions }}</div>
                 </div>
                 {% endif %}
 
                 {% if plant.growing_instructions.common_problems %}
-                <div class="instruction-block">
-                    <h4>🐛 Pest & Disease Management</h4>
+                <div class="instruction-card problems-card">
+                    <div class="instruction-header">
+                        <div class="instruction-icon">🐛</div>
+                        <div class="instruction-title">Pest & Disease Management</div>
+                    </div>
                     <div class="instruction-content">{{ plant.growing_instructions.common_problems }}</div>
                 </div>
                 {% endif %}
@@ -168,83 +458,93 @@
     </div>
     {% endfor %}
 
-    <!-- Planting Calendar (starts on new page) -->
-    {% if include_calendar and calendar_data %}
-    <div class="calendar-page">
-        <h2 class="section-title">📅 Planting Calendar for {{ calendar_data.zone_info }}</h2>
+    <!-- ENHANCED LAYOUT RECOMMENDATIONS -->
+    {% if include_layout and layout_data %}
+    <div class="layout-page">
+        <h2 class="section-title">🗺️ Garden Layout Recommendations</h2>
         
-        {% for month, activities in calendar_data.calendar.items() %}
-        {% if activities %}
-        <div class="month-section">
-            <h3 class="month-title">{{ month }}</h3>
-            <ul class="activity-list">
-                {% for activity in activities %}
-                <li class="activity-item">
-                    <strong>{{ activity.plant }}:</strong> {{ activity.action }}
-                    {% if activity.date %} ({{ activity.date }}){% endif %}
-                </li>
-                {% endfor %}
-            </ul>
+        <div class="layout-content">
+            <div class="layout-intro">
+                <h3>🎯 Optimized Plant Placement</h3>
+                <p>Based on your plant selection, here are AI-powered recommendations for optimal garden layout considering companion planting, spacing requirements, and growth patterns.</p>
+            </div>
+            
+            <div class="spacing-guide">
+                <h4>📏 Plant Spacing Guide</h4>
+                <div class="spacing-grid">
+                    {% for plant in enhanced_plants %}
+                    {% if plant.database_info and plant.database_info.spacing %}
+                    <div class="spacing-item">
+                        <div class="spacing-plant">{{ plant.name }}</div>
+                        <div class="spacing-value">{{ plant.database_info.spacing }}</div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% if layout_data.companion_plants %}
+            <div class="companion-section">
+                <h4>🤝 Companion Planting Suggestions</h4>
+                <div class="companion-grid">
+                    {% for group in layout_data.companion_plants %}
+                    <div class="companion-group">
+                        <div class="companion-title">{{ group.title }}</div>
+                        <div class="companion-plants">{{ group.plants|join(', ') }}</div>
+                        <div class="companion-benefit">{{ group.benefit }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-        {% endfor %}
-        
-        {% if calendar_data.frost_dates %}
-        <div class="frost-info">
-            <h3>❄️ Important Frost Dates</h3>
-            <ul>
-                <li><strong>Last Spring Frost:</strong> {{ calendar_data.frost_dates.last_spring_frost or 'N/A' }}</li>
-                <li><strong>First Fall Frost:</strong> {{ calendar_data.frost_dates.first_fall_frost or 'N/A' }}</li>
-            </ul>
-        </div>
-        {% endif %}
     </div>
     {% endif %}
 
-    <!-- Layout Guide (starts on new page) -->
-    {% if include_layout and layout_data %}
-    <div class="layout-page">
-        <h2 class="section-title">🗺️ Garden Layout Guide</h2>
+    <!-- ENHANCED TIPS PAGE -->
+    <div class="tips-page">
+        <h2 class="section-title">💡 Expert Gardening Tips</h2>
         
-        {% if layout_data.spacing_guide %}
-        <div class="spacing-section">
-            <h3>📏 Plant Spacing Guide</h3>
-            <table class="spacing-table">
-                <thead>
-                    <tr>
-                        <th>Plant</th>
-                        <th>Spacing</th>
-                        <th>Depth</th>
-                        <th>Sun</th>
-                        <th>Water</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for guide in layout_data.spacing_guide %}
-                    <tr>
-                        <td><strong>{{ guide.plant }}</strong></td>
-                        <td>{{ guide.spacing }}</td>
-                        <td>{{ guide.depth }}</td>
-                        <td>{{ guide.sun_requirement }}</td>
-                        <td>{{ guide.water_needs }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="tips-grid">
+            {% if general_tips %}
+            {% for tip in general_tips %}
+            <div class="tip-card">
+                <div class="tip-icon">💡</div>
+                <div class="tip-content">{{ tip }}</div>
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>
-        {% endif %}
         
-        {% if layout_data.layout_tips %}
-        <div class="tips-section">
-            <h3>💡 Layout Tips</h3>
-            <ul class="tips-list">
-                {% for tip in layout_data.layout_tips %}
-                <li>{{ tip }}</li>
-                {% endfor %}
-            </ul>
+        <div class="final-message">
+            <div class="message-content">
+                <h3>🌱 Happy Gardening!</h3>
+                <p>Your garden plan has been carefully crafted using AI technology and expert gardening knowledge. Remember that gardening is both an art and a science – use this plan as your guide, but don't hesitate to adapt based on your local conditions and observations.</p>
+                <div class="success-quote">
+                    <em>"The best time to plant a tree was 20 years ago. The second best time is now."</em>
+                    <div class="quote-author">- Chinese Proverb</div>
+                </div>
+            </div>
         </div>
-        {% endif %}
     </div>
-    {% endif %}
+
+    <!-- FOOTER -->
+    <div class="plan-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="app-branding">
+                    <span class="footer-logo">🌱</span>
+                    <span class="footer-app-name">{{ app_name or 'JardAIn' }}</span>
+                </div>
+                <div class="footer-tagline">AI-Powered Garden Planning</div>
+            </div>
+            <div class="footer-right">
+                <div class="generation-info">
+                    <div>Generated: {{ generation_date }} at {{ generation_time }}</div>
+                    <div>Plan ID: {{ plan_id or 'N/A' }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html> 

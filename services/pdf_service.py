@@ -143,18 +143,34 @@ class PDFService:
             }
         }
         
-        # Enhance plant data with additional info
+        # Enhance plant data with additional info and visual elements
         enhanced_plants = []
         for plant_info in garden_plan.plant_information:
             plant_data = plant_info.dict()
             
-            # Add basic database info from the PlantInfo model itself
+            # Add visual emoji based on plant type
+            plant_emoji_map = {
+                'fruit': '🍅',
+                'leafy_green': '🥬',
+                'root_vegetable': '🥕',
+                'herb': '🌿',
+                'legume': '🌱',
+                'vine': '🥒',
+                'bulb': '🧅',
+                'cruciferous': '🥦',
+                'grain': '🌾',
+                'flower': '🌻'
+            }
+            
+            plant_data['emoji'] = plant_emoji_map.get(plant_info.plant_type.lower(), '🌱')
+            
+            # Add enhanced database info from the PlantInfo model itself
             plant_data['database_info'] = {
                 'name': plant_info.name,
-                'category': plant_info.plant_type.title(),
+                'category': plant_info.plant_type.replace('_', ' ').title(),
                 'sun_requirement': plant_info.sun_requirements or 'Full sun',
-                'water_needs': plant_info.water_requirements or 'Regular',
-                'days_to_maturity': plant_info.days_to_harvest or 'See instructions',
+                'water_needs': plant_info.water_requirements or 'Regular watering',
+                'days_to_maturity': f"{plant_info.days_to_harvest} days" if plant_info.days_to_harvest else 'See instructions',
                 'spacing': f"{plant_info.spacing_inches} inches" if plant_info.spacing_inches else "See instructions",
                 'planting_depth': f"{plant_info.planting_depth_inches} inches" if plant_info.planting_depth_inches else "See instructions"
             }
@@ -201,19 +217,35 @@ class PDFService:
         if include_layout:
             layout_data = self._generate_layout_recommendations(enhanced_plants)
         
+        # Add expert gardening tips for the tips page
+        general_tips = [
+            "💧 Water in the early morning to reduce evaporation and prevent disease",
+            "🌱 Start with healthy soil - add compost regularly to improve structure and nutrients",
+            "🐛 Encourage beneficial insects by planting flowers among your vegetables",
+            "📏 Give plants proper spacing to ensure good air circulation and prevent disease",
+            "🌱 Succession plant lettuce and radishes every 2-3 weeks for continuous harvest",
+            "🔄 Rotate crops annually to prevent soil depletion and reduce pest problems",
+            "🌡️ Use mulch to regulate soil temperature and retain moisture",
+            "✂️ Regular harvesting encourages plants to produce more",
+            "📝 Keep a garden journal to track what works in your specific location",
+            "🌿 Harvest herbs in the morning after dew evaporates for best flavor"
+        ]
+        
         return {
             'garden_plan': garden_plan.dict(),
             'location_info': location_info,
             'enhanced_plants': enhanced_plants,
             'calendar_data': calendar_data,
             'layout_data': layout_data,
+            'general_tips': general_tips,
             'generation_date': datetime.now().strftime("%B %d, %Y"),
             'generation_time': datetime.now().strftime("%I:%M %p"),
             'include_images': include_images,
             'include_calendar': include_calendar,
             'include_layout': include_layout,
             'total_plants': len(enhanced_plants),
-            'app_name': "JardAIn - AI Garden Planner"
+            'app_name': "JardAIn - AI Garden Planner",
+            'plan_id': getattr(garden_plan, 'plan_id', None)
         }
     
     def _generate_planting_calendar(self, plants: List[Dict], location_info: Dict) -> Dict[str, Any]:

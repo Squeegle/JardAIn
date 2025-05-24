@@ -1,4 +1,7 @@
-/* Professional Garden Plan PDF Styling */
+/* 
+Enhanced Garden Plan PDF Styling
+Beautiful, professional design for AI-powered garden plans
+*/
 
 /* Reset and Base Styles */
 * {
@@ -8,305 +11,1224 @@
 }
 
 body {
-    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
     color: #2d4a22;
-    font-size: 12pt;
+    font-size: 11pt;
+    background: #ffffff;
 }
 
-/* Page Layout */
+/* Color Palette */
+:root {
+    --primary-green: #2d5a2d;
+    --secondary-green: #4a7c59;
+    --light-green: #e8f5e8;
+    --accent-green: #6fa66f;
+    --spring-green: #8bc34a;
+    --summer-gold: #ffc107;
+    --fall-orange: #ff9800;
+    --winter-blue: #03a9f4;
+    --text-dark: #2d4a22;
+    --text-medium: #5d7c5d;
+    --text-light: #8fa68f;
+    --border-light: #e0f0e0;
+    --shadow-color: rgba(45, 90, 45, 0.1);
+}
+
+/* Page Setup */
 @page {
     size: A4;
-    margin: 0.75in;
+    margin: 0.6in;
+    @top-center {
+        content: "";
+    }
     @bottom-center {
         content: counter(page);
-        font-size: 10pt;
-        color: #666;
+        font-size: 9pt;
+        color: var(--text-light);
+        font-family: 'Inter', sans-serif;
     }
 }
 
-/* FORCE PAGE BREAKS - Multiple approaches for WeasyPrint compatibility */
-
-/* Method 1: Strong page break enforcement */
-.plant-page {
-    page-break-before: always !important;
-    break-before: page !important;
-    page-break-after: auto;
-    break-after: auto;
-    padding: 0.5in 0;
-    min-height: 4in;
-}
-
-/* Method 2: Individual plant title enforcement */
-.plant-title {
-    page-break-before: always !important;
-    break-before: page !important;
-    page-break-after: avoid !important;
-    break-after: avoid !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    font-size: 18pt;
-    color: #2d5a2d;
-    margin-bottom: 0.5in;
-    margin-top: 0;
-    padding-top: 0;
-}
-
-/* Method 3: Force new pages for major sections */
-.calendar-page {
-    page-break-before: always !important;
-    break-before: page !important;
-    padding: 0.5in 0;
-}
-
-.layout-page {
-    page-break-before: always !important;
-    break-before: page !important;
-    padding: 0.5in 0;
-}
-
-/* Method 4: Ensure first plant doesn't force page break */
-.plant-page:first-of-type .plant-title {
-    page-break-before: auto !important;
-    break-before: auto !important;
-}
-
-/* Prevent breaking within important sections */
-.plant-section {
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 0.5in;
-    padding: 0.3in;
-    background: #f8fffe;
-    border-left: 4px solid #4a7c59;
-}
-
-.instruction-block {
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 0.3in;
-    padding: 0.2in;
-    background: white;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-/* Keep table rows together */
-.plant-info-table tr,
-.schedule-table tr,
-.spacing-table tr {
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-/* Remove any conflicting page break rules */
-.page-break {
-    display: none; /* Remove manual page breaks since CSS handles it */
-}
-
-/* Overview Page (first page) */
-.overview-page {
-    padding: 0.5in 0;
+/* Page Breaks */
+.cover-page,
+.toc-page,
+.overview-page,
+.calendar-page,
+.layout-page,
+.tips-page {
     page-break-after: always !important;
     break-after: page !important;
 }
 
-/* Section titles */
-.section-title {
-    font-size: 20pt;
-    color: #2d5a2d;
-    margin-bottom: 0.5in;
-    border-bottom: 2px solid #4a7c59;
-    padding-bottom: 0.2in;
-    page-break-after: avoid;
-    break-after: avoid;
+.plant-page {
+    page-break-before: always !important;
+    break-before: page !important;
+    min-height: 80vh;
 }
 
-/* Plant header styling */
-.plant-header {
-    background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);
-    padding: 0.3in;
-    border-radius: 8px;
-    margin-bottom: 0.5in;
-    border: 2px solid #4a7c59;
+/* Avoid breaks within important content */
+.stat-card,
+.info-card,
+.timeline-event,
+.instruction-card,
+.tip-card,
+.reference-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
 }
 
-/* Location and overview styling */
-.location-details, .plants-overview {
-    margin-bottom: 1in;
-    padding: 0.5in;
-    background: #f8fffe;
-    border-left: 4px solid #4a7c59;
-}
+/* =================================
+   COVER PAGE STYLING
+   ================================= */
 
-.location-details h3, .plants-overview h3 {
-    color: #2d5a2d;
-    font-size: 16pt;
-    margin-bottom: 0.3in;
-}
-
-.plants-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.2in;
-    margin-top: 0.3in;
-}
-
-.plant-card-mini {
-    background: white;
-    padding: 0.2in;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+.cover-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--light-green) 0%, #f8fffe 50%, var(--light-green) 100%);
+    padding: 2rem;
     text-align: center;
 }
 
-.plant-name {
+.cover-header {
+    padding-top: 1rem;
+}
+
+.logo-section {
+    margin-bottom: 2rem;
+}
+
+.app-logo {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
     display: block;
+}
+
+.app-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+}
+
+.tagline {
+    font-size: 1rem;
+    color: var(--secondary-green);
     font-weight: 500;
-    color: #2d5a2d;
-    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
-.plant-category {
-    color: #666;
-    font-size: 8pt;
+.cover-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
 }
 
-/* Plant content styling */
-.plant-content {
-    margin-top: 0.3in;
+.plan-title h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
 }
 
-.plant-section h3 {
-    color: #2d5a2d;
-    font-size: 14pt;
-    margin-bottom: 0.3in;
-    border-bottom: 1px solid #4a7c59;
-    padding-bottom: 0.1in;
+.location-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
 }
 
-/* Table styling */
-.plant-info-table, .schedule-table, .info-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 0.3in;
+.location-icon {
+    font-size: 2rem;
 }
 
-.plant-info-table td, .schedule-table td, .info-table td {
-    padding: 0.1in;
-    border-bottom: 1px solid #ddd;
-    vertical-align: top;
+.city-state {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-green);
 }
 
-.plant-info-table td:first-child, 
-.schedule-table td:first-child, 
-.info-table td:first-child {
-    width: 30%;
+.zone-info {
+    font-size: 1rem;
+    color: var(--secondary-green);
     font-weight: 500;
-    color: #2d5a2d;
 }
 
-/* Instruction styling */
-.instruction-block h4 {
-    color: #4a7c59;
-    font-size: 12pt;
-    margin-bottom: 0.2in;
+.cover-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
 }
 
-.instruction-content {
-    line-height: 1.5;
-    color: #333;
-}
-
-/* Calendar styling */
-.month-section {
-    margin-bottom: 0.5in;
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-.month-title {
-    color: #2d5a2d;
-    font-size: 14pt;
-    margin-bottom: 0.3in;
-    background: #f8fffe;
-    padding: 0.2in;
-    border-left: 4px solid #4a7c59;
-}
-
-.activity-list {
-    list-style: none;
-    margin-left: 0.3in;
-}
-
-.activity-item {
-    margin-bottom: 0.2in;
-    padding: 0.1in;
+.stat-card {
     background: white;
-    border-radius: 3px;
-    border: 1px solid #eee;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    text-align: center;
+    min-width: 120px;
+    border: 2px solid var(--border-light);
 }
 
-/* Layout page styling */
-.spacing-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 0.5in;
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin-bottom: 0.25rem;
 }
 
-.spacing-table th,
-.spacing-table td {
-    padding: 0.1in;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.spacing-table th {
-    background: #4a7c59;
+.cover-preview {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.cover-preview h3 {
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.plants-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    justify-items: center;
+}
+
+.preview-plant-card {
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--light-green);
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+}
+
+.preview-plant-card.more-plants {
+    background: var(--secondary-green);
     color: white;
-    font-weight: bold;
 }
 
-.spacing-table tr:nth-child(even) {
-    background: #f8fffe;
+.plant-emoji {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
 }
 
-.tips-section {
-    margin-top: 0.5in;
+.plant-preview-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    line-height: 1.2;
 }
 
-.tips-list {
-    list-style-type: disc;
-    margin-left: 0.5in;
+.cover-footer {
+    padding-bottom: 1rem;
 }
 
-.tips-list li {
-    margin-bottom: 0.2in;
+.generation-details {
+    text-align: center;
+    color: var(--text-medium);
+    font-size: 0.9rem;
+}
+
+.generated-on {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.frost-info-mini {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.frost-item {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* =================================
+   TABLE OF CONTENTS STYLING
+   ================================= */
+
+.toc-page {
+    padding: 2rem 0;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--secondary-green);
+}
+
+.toc-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.toc-section {
+    margin-bottom: 2rem;
+}
+
+.toc-section h3 {
+    font-size: 1.25rem;
+    color: var(--secondary-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.toc-items {
+    background: var(--light-green);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.toc-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.toc-item:last-child {
+    border-bottom: none;
+}
+
+.toc-text {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.toc-dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--text-light);
+    margin: 0 1rem;
+    height: 1px;
+}
+
+.toc-page {
+    font-weight: 600;
+    color: var(--secondary-green);
+}
+
+/* =================================
+   OVERVIEW PAGE STYLING
+   ================================= */
+
+.overview-page {
+    padding: 2rem 0;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.location-card,
+.plants-summary-card {
+    background: var(--light-green);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+}
+
+.location-card h3,
+.plants-summary-card h3 {
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.location-details-enhanced {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.detail-icon {
+    font-size: 1.25rem;
+    width: 2rem;
+    text-align: center;
+}
+
+.detail-content {
+    flex: 1;
+}
+
+.detail-label {
+    font-size: 0.8rem;
+    color: var(--text-medium);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.detail-value {
+    font-size: 1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.plants-by-category {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.category-row {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.category-icon {
+    font-size: 1.25rem;
+}
+
+.category-name {
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.category-count {
+    color: var(--text-medium);
+    font-size: 0.9rem;
+}
+
+.category-plants {
+    font-size: 0.9rem;
+    color: var(--text-medium);
     line-height: 1.4;
 }
 
-/* Generation info */
+.quick-reference {
+    margin-top: 2rem;
+}
+
+.quick-reference h3 {
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.reference-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.reference-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.reference-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.reference-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.25rem;
+}
+
+.reference-text {
+    font-size: 0.8rem;
+    color: var(--text-medium);
+    line-height: 1.4;
+}
+
+/* =================================
+   CALENDAR PAGE STYLING
+   ================================= */
+
+.calendar-page {
+    padding: 2rem 0;
+}
+
+.calendar-hero {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.season-overview {
+    background: var(--light-green);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+}
+
+.season-stat {
+    margin-bottom: 1rem;
+}
+
+.season-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-green);
+}
+
+.season-label {
+    font-size: 1rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+.season-timeline {
+    margin-top: 1rem;
+}
+
+.timeline-bar {
+    display: flex;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.timeline-segment {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.timeline-segment.spring {
+    background: var(--spring-green);
+}
+
+.timeline-segment.summer {
+    background: var(--summer-gold);
+}
+
+.timeline-segment.fall {
+    background: var(--fall-orange);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.month-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.month-card.spring {
+    border-left: 5px solid var(--spring-green);
+}
+
+.month-card.summer {
+    border-left: 5px solid var(--summer-gold);
+}
+
+.month-card.fall {
+    border-left: 5px solid var(--fall-orange);
+}
+
+.month-card.winter {
+    border-left: 5px solid var(--winter-blue);
+}
+
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.month-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.month-emoji {
+    font-size: 1.25rem;
+}
+
+.month-activities {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.activity-item.enhanced {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--light-green);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.activity-icon {
+    font-size: 1rem;
+    width: 1.5rem;
+    text-align: center;
+    margin-top: 0.1rem;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-plant {
+    font-weight: 600;
+    color: var(--primary-green);
+    font-size: 0.9rem;
+    margin-bottom: 0.1rem;
+}
+
+.activity-action {
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    margin-bottom: 0.1rem;
+}
+
+.activity-date {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.calendar-legend {
+    background: var(--light-green);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+}
+
+.calendar-legend h4 {
+    font-size: 1rem;
+    color: var(--primary-green);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.legend-items {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-icon {
+    font-size: 1rem;
+}
+
+.legend-text {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+/* =================================
+   ENHANCED PLANT PAGE STYLING
+   ================================= */
+
+.plant-page {
+    padding: 1rem 0;
+}
+
+.plant-header-enhanced {
+    background: linear-gradient(135deg, var(--light-green) 0%, white 100%);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plant-title-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.plant-emoji-large {
+    font-size: 3rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 50%;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.plant-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin-bottom: 0.25rem;
+}
+
+.plant-subtitle {
+    font-size: 1rem;
+    color: var(--text-medium);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.plant-quick-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.quick-stat {
+    text-align: center;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    min-width: 100px;
+}
+
+.stat-icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.1rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+.plant-content-enhanced {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.card-icon {
+    font-size: 1.25rem;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.card-content {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+.schedule-section {
+    background: var(--light-green);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+}
+
+.schedule-section h3 {
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.timeline-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.timeline-event {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.event-icon {
+    font-size: 1.25rem;
+    background: var(--light-green);
+    padding: 0.75rem;
+    border-radius: 50%;
+    border: 2px solid var(--border-light);
+}
+
+.event-content {
+    flex: 1;
+}
+
+.event-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.1rem;
+}
+
+.event-date {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+.instructions-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+}
+
+.instructions-section h3 {
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.instruction-card {
+    background: var(--light-green);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 1rem;
+}
+
+.instruction-card:last-child {
+    margin-bottom: 0;
+}
+
+.instruction-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.instruction-icon {
+    font-size: 1.25rem;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.instruction-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.instruction-content {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    line-height: 1.5;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+/* =================================
+   LAYOUT PAGE STYLING
+   ================================= */
+
+.layout-page {
+    padding: 2rem 0;
+}
+
+.layout-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.layout-intro {
+    background: var(--light-green);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+    text-align: center;
+}
+
+.layout-intro h3 {
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.layout-intro p {
+    font-size: 1rem;
+    color: var(--text-medium);
+    line-height: 1.5;
+}
+
+.spacing-guide {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+}
+
+.spacing-guide h4 {
+    font-size: 1.1rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.spacing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.spacing-item {
+    background: var(--light-green);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    text-align: center;
+}
+
+.spacing-plant {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.25rem;
+}
+
+.spacing-value {
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+.companion-section {
+    background: var(--light-green);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+}
+
+.companion-section h4 {
+    font-size: 1.1rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.companion-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.companion-group {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+}
+
+.companion-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+}
+
+.companion-plants {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.companion-benefit {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* =================================
+   TIPS PAGE STYLING
+   ================================= */
+
+.tips-page {
+    padding: 2rem 0;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.tip-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid var(--border-light);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.tip-icon {
+    font-size: 1.5rem;
+    background: var(--light-green);
+    padding: 0.75rem;
+    border-radius: 50%;
+    border: 2px solid var(--border-light);
+}
+
+.tip-content {
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--text-medium);
+    line-height: 1.5;
+}
+
+.final-message {
+    background: linear-gradient(135deg, var(--light-green) 0%, white 100%);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 2px solid var(--border-light);
+    text-align: center;
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.message-content h3 {
+    font-size: 1.5rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.message-content p {
+    font-size: 1rem;
+    color: var(--text-medium);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.success-quote {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.success-quote em {
+    font-size: 1.1rem;
+    color: var(--primary-green);
+    font-style: italic;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.quote-author {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+/* =================================
+   FOOTER STYLING
+   ================================= */
+
+.plan-footer {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--light-green);
+    border-radius: 15px;
+    border: 2px solid var(--border-light);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.app-branding {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-logo {
+    font-size: 1.25rem;
+}
+
+.footer-app-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.footer-tagline {
+    font-size: 0.8rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+.footer-right {
+    text-align: right;
+}
+
 .generation-info {
-    margin-top: 1in;
-    padding-top: 0.3in;
-    border-top: 1px solid #ccc;
-    text-align: center;
-    color: #666;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.4;
 }
 
-/* Utility classes */
-.text-center {
-    text-align: center;
+/* =================================
+   RESPONSIVE ADJUSTMENTS
+   ================================= */
+
+@media print {
+    .cover-page,
+    .toc-page,
+    .overview-page,
+    .calendar-page,
+    .plant-page,
+    .layout-page,
+    .tips-page {
+        page-break-after: always !important;
+    }
+    
+    .stat-card,
+    .info-card,
+    .timeline-event,
+    .instruction-card,
+    .tip-card {
+        page-break-inside: avoid !important;
+    }
 }
 
-.color-primary {
-    color: #2d5a2d;
+/* Ensure proper spacing and alignment */
+h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
 }
 
-.color-secondary {
-    color: #4a7c59;
-}
-
-.bg-light {
-    background: #f8fffe;
+/* Final polish for professional appearance */
+.plant-page:first-of-type .plant-title {
+    page-break-before: auto !important;
+    break-before: auto !important;
 } 

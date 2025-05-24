@@ -1,0 +1,237 @@
+{
+  "plan_id": "90ebe9e0-eb03-482b-bf6a-e7f9828b9488",
+  "created_date": "2025-05-23T22:19:59.399441",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "Beets",
+    "Green Onions",
+    "Lettuce"
+  ],
+  "plant_information": [
+    {
+      "name": "Beets",
+      "scientific_name": "Beta vulgaris",
+      "plant_type": "vegetable",
+      "days_to_harvest": 55,
+      "spacing_inches": 3,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "onions",
+        "garlic",
+        "brassicas"
+      ],
+      "avoid_planting_with": [
+        "pole beans"
+      ]
+    },
+    {
+      "name": "Green Onions",
+      "scientific_name": "Allium fistulosum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 65,
+      "spacing_inches": 2,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "tomatoes",
+        "carrots",
+        "lettuce",
+        "peppers"
+      ],
+      "avoid_planting_with": [
+        "peas",
+        "beans"
+      ]
+    },
+    {
+      "name": "Lettuce",
+      "scientific_name": "Lactuca sativa",
+      "plant_type": "vegetable",
+      "days_to_harvest": 45,
+      "spacing_inches": 6,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "carrots",
+        "radishes",
+        "tomatoes",
+        "onions"
+      ],
+      "avoid_planting_with": [
+        "broccoli"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Beets",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-15",
+      "harvest_end_date": "2024-07-10",
+      "succession_planting_interval": 21
+    },
+    {
+      "plant_name": "Green Onions",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-20",
+      "harvest_end_date": "2024-08-15",
+      "succession_planting_interval": 21
+    },
+    {
+      "plant_name": "Lettuce",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-20",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-25",
+      "harvest_end_date": "2024-07-01",
+      "succession_planting_interval": 14
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Beets",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Beets seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 3 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Beets deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Beets weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Beets approximately 55 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Beets at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Green Onions",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Green Onions seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 2 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Green Onions deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Green Onions weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Green Onions approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Green Onions at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Lettuce",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Lettuce seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Lettuce deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Lettuce weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Lettuce approximately 45 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Lettuce at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for small garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Beets",
+          "Green Onions",
+          "Lettuce"
+        ],
+        "spacing_notes": "Plant beets and lettuce in the center, with green onions on either side. Leave about 3 inches between each beet plant and 6 inches between each lettuce plant."
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Start seedlings indoors 4-6 weeks before the last frost date to give them a head start on the growing season.",
+    "Choose varieties of beets and lettuce that are specifically bred for cooler climates and have a shorter maturation period (around 50-60 days).",
+    "Beet seeds can be direct-sown in late spring, when the soil has warmed up to at least 7\u00b0C (45\u00b0F).",
+    "Green onions prefer well-draining soil and full sun. Sow seeds thinly and evenly, about 1/4 inch deep.",
+    "Lettuce prefers cooler temperatures and consistent moisture. Avoid sowing in areas with standing water or where water may collect.",
+    "Beets and lettuce benefit from a balanced fertilizer (10-10-10 NPK) applied once a month. Green onions can be fertilized with a high-phosphorus fertilizer to promote healthy growth."
+  ]
+}

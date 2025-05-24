@@ -1,0 +1,628 @@
+{
+  "plan_id": "2413a2f9-6bf5-4f74-9b7a-1e979abe0c89",
+  "created_date": "2025-05-23T22:51:46.867993",
+  "location": {
+    "zip_code": "90210",
+    "city": "Beverly Hills",
+    "state": "California",
+    "usda_zone": "8a-11",
+    "last_frost_date": "2025-02-01",
+    "first_frost_date": "2025-12-15",
+    "growing_season_days": 317,
+    "climate_type": "warm"
+  },
+  "selected_plants": [
+    "Tomato",
+    "Basil",
+    "Lettuce",
+    "Carrots",
+    "Spinach",
+    "Radishes",
+    "Parsley",
+    "Zucchini",
+    "Bell Peppers"
+  ],
+  "plant_information": [
+    {
+      "name": "Tomato",
+      "scientific_name": "Solanum lycopersicum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 75,
+      "spacing_inches": 24,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "basil",
+        "parsley",
+        "carrots",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "fennel",
+        "brassicas",
+        "corn"
+      ]
+    },
+    {
+      "name": "Basil",
+      "scientific_name": "Ocimum basilicum",
+      "plant_type": "herb",
+      "days_to_harvest": 65,
+      "spacing_inches": 8,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.5",
+      "companion_plants": [
+        "tomatoes",
+        "peppers",
+        "oregano",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "rue",
+        "sage"
+      ]
+    },
+    {
+      "name": "Lettuce",
+      "scientific_name": "Lactuca sativa",
+      "plant_type": "vegetable",
+      "days_to_harvest": 45,
+      "spacing_inches": 6,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "carrots",
+        "radishes",
+        "tomatoes",
+        "onions"
+      ],
+      "avoid_planting_with": [
+        "broccoli"
+      ]
+    },
+    {
+      "name": "Carrots",
+      "scientific_name": "Daucus carota",
+      "plant_type": "vegetable",
+      "days_to_harvest": 70,
+      "spacing_inches": 2,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "tomatoes",
+        "lettuce",
+        "onions",
+        "chives"
+      ],
+      "avoid_planting_with": [
+        "dill",
+        "parsnips"
+      ]
+    },
+    {
+      "name": "Spinach",
+      "scientific_name": "Spinacia oleracea",
+      "plant_type": "vegetable",
+      "days_to_harvest": 40,
+      "spacing_inches": 4,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "radishes",
+        "strawberries",
+        "peas"
+      ],
+      "avoid_planting_with": []
+    },
+    {
+      "name": "Radishes",
+      "scientific_name": "Raphanus sativus",
+      "plant_type": "vegetable",
+      "days_to_harvest": 25,
+      "spacing_inches": 1,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "spinach",
+        "carrots",
+        "cucumbers"
+      ],
+      "avoid_planting_with": [
+        "hyssop"
+      ]
+    },
+    {
+      "name": "Parsley",
+      "scientific_name": "Petroselinum crispum",
+      "plant_type": "herb",
+      "days_to_harvest": 70,
+      "spacing_inches": 6,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "tomatoes",
+        "carrots",
+        "corn",
+        "peppers"
+      ],
+      "avoid_planting_with": [
+        "lettuce"
+      ]
+    },
+    {
+      "name": "Zucchini",
+      "scientific_name": "Cucurbita pepo",
+      "plant_type": "vegetable",
+      "days_to_harvest": 50,
+      "spacing_inches": 36,
+      "planting_depth_inches": 1.0,
+      "sun_requirements": "full sun",
+      "water_requirements": "high",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "radishes",
+        "nasturtiums",
+        "corn",
+        "beans"
+      ],
+      "avoid_planting_with": [
+        "potatoes"
+      ]
+    },
+    {
+      "name": "Bell Peppers",
+      "scientific_name": "Capsicum annuum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 70,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "Tomatoes",
+        "Cucumbers",
+        "Carrots"
+      ],
+      "avoid_planting_with": [
+        "Fennel"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Tomato",
+      "start_indoors_date": "2024-03-15",
+      "direct_sow_date": null,
+      "transplant_date": "2024-05-15",
+      "harvest_start_date": "2024-07-15",
+      "harvest_end_date": "2024-10-01",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Basil",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-01",
+      "harvest_end_date": "2024-09-30",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Lettuce",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-03-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-04-15",
+      "harvest_end_date": "2024-11-30",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Carrots",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-02-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-04-15",
+      "harvest_end_date": "2024-11-30",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Spinach",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-01-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-03-01",
+      "harvest_end_date": "2024-06-30",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Radishes",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-02-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-03-15",
+      "harvest_end_date": "2024-06-30",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Parsley",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-15",
+      "harvest_end_date": "2025-02-28",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Zucchini",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-07-15",
+      "harvest_end_date": "2025-01-31",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Bell Peppers",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-08-01",
+      "harvest_end_date": "2025-02-28",
+      "succession_planting_interval": 14
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Tomato",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Tomato seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 24 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Tomato deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Tomato weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Tomato approximately 75 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Tomato at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Basil",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.5 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Basil seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 8 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Basil deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Basil weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Basil approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Basil at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for herb type"
+      ]
+    },
+    {
+      "plant_name": "Lettuce",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Lettuce seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Lettuce deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Lettuce weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Lettuce approximately 45 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Lettuce at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Carrots",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Carrots seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 2 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Carrots deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Carrots weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Carrots approximately 70 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Carrots at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Spinach",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Spinach seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 4 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Spinach deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Spinach weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Spinach approximately 40 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Spinach at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Radishes",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Radishes seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 1 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Radishes deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Radishes weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Radishes approximately 25 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Radishes at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Parsley",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Parsley seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Parsley deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Parsley weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Parsley approximately 70 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Parsley at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for herb type"
+      ]
+    },
+    {
+      "plant_name": "Zucchini",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Zucchini seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 1.0 inches deep with 36 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Zucchini deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Zucchini weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Zucchini approximately 50 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Zucchini at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Bell Peppers",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Bell Peppers seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Bell Peppers deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Bell Peppers weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Bell Peppers approximately 70 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Bell Peppers at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Tomato",
+          "Basil",
+          "Lettuce",
+          "Carrots",
+          "Spinach",
+          "Radishes"
+        ],
+        "spacing_notes": "Plant tomatoes and zucchini in the north side to avoid shading smaller plants. Plant basil, lettuce, carrots, spinach, and radishes around the base of the taller plants."
+      },
+      {
+        "group_name": "Herb and Pepper Garden",
+        "plants": [
+          "Parsley",
+          "Bell Peppers"
+        ],
+        "spacing_notes": "Plant parsley near the north side to avoid shading. Plant bell peppers on the south side, providing enough space for growth"
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Beverly Hills has a Mediterranean climate with warm summers and mild winters. Choose varieties of plants that thrive in these conditions.",
+    "Soil preparation is key: Beverly Hills' soil tends to be alkaline, so add organic matter like compost or well-rotted manure to improve drainage and fertility.",
+    "Water wisely: Tomatoes and peppers need about 1 inch of water per week, while lettuce and herbs prefer moist but not soggy conditions. Check the soil daily and adjust your watering schedule accordingly.",
+    "Tomato plants can grow quite large in Beverly Hills' warm climate. Provide support with tomato cages or trellises to keep them upright and encourage fruiting.",
+    "Basil is a warm-season crop that loves the sun. Plant it after the last frost date (usually around February 15th) for optimal growth.",
+    "Carrots, lettuce, and radishes prefer cooler temperatures and can be planted in early spring or late summer/early fall to avoid heat stress.",
+    "Spinach and parsley are cool-season crops that thrive in Beverly Hills' mild winters. Plant them from September to November or February to April for a bountiful harvest.",
+    "Zucchini is a warm-season crop that loves the sun and can be planted after the last frost date. Provide plenty of space between plants (about 3-4 feet) to prevent overcrowding and promote healthy growth."
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "plan_id": "bc7e39bc-299f-4deb-aa23-4deb56137d3b",
+  "created_date": "2025-05-23T22:26:20.374224",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "Beets",
+    "Green Onions",
+    "Lettuce",
+    "purple kale"
+  ],
+  "plant_information": [
+    {
+      "name": "Beets",
+      "scientific_name": "Beta vulgaris",
+      "plant_type": "vegetable",
+      "days_to_harvest": 55,
+      "spacing_inches": 3,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "lettuce",
+        "onions",
+        "garlic",
+        "brassicas"
+      ],
+      "avoid_planting_with": [
+        "pole beans"
+      ]
+    },
+    {
+      "name": "Green Onions",
+      "scientific_name": "Allium fistulosum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 65,
+      "spacing_inches": 2,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "tomatoes",
+        "carrots",
+        "lettuce",
+        "peppers"
+      ],
+      "avoid_planting_with": [
+        "peas",
+        "beans"
+      ]
+    },
+    {
+      "name": "Lettuce",
+      "scientific_name": "Lactuca sativa",
+      "plant_type": "vegetable",
+      "days_to_harvest": 45,
+      "spacing_inches": 6,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "carrots",
+        "radishes",
+        "tomatoes",
+        "onions"
+      ],
+      "avoid_planting_with": [
+        "broccoli"
+      ]
+    },
+    {
+      "name": "purple kale",
+      "scientific_name": "Brassica oleracea var. sabellica",
+      "plant_type": "vegetable",
+      "days_to_harvest": 50,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun to partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "broccoli",
+        "cauliflower",
+        "carrots"
+      ],
+      "avoid_planting_with": [
+        "strawberries"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Beets",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-15",
+      "harvest_end_date": "2024-07-30",
+      "succession_planting_interval": null
+    },
+    {
+      "plant_name": "Green Onions",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-15",
+      "harvest_end_date": "2024-06-30",
+      "succession_planting_interval": null
+    },
+    {
+      "plant_name": "Lettuce",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-15",
+      "harvest_end_date": "2024-06-30",
+      "succession_planting_interval": null
+    },
+    {
+      "plant_name": "Purple Kale",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-15",
+      "harvest_end_date": "2024-06-30",
+      "succession_planting_interval": null
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Beets",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Beets seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 3 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Beets deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Beets weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Beets approximately 55 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Beets at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Green Onions",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Green Onions seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 2 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Green Onions deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Green Onions weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Green Onions approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Green Onions at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Lettuce",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Lettuce seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Lettuce deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Lettuce weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Lettuce approximately 45 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Lettuce at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "purple kale",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun to partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start purple kale seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water purple kale deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect purple kale weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting purple kale approximately 50 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh purple kale at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for small garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Beets",
+          "Green Onions",
+          "Lettuce"
+        ],
+        "spacing_notes": "Plant Beets, Green Onions, and Lettuce in a grid pattern, 2-3 inches apart. This will allow for easy access and air circulation."
+      },
+      {
+        "group_name": "North Side",
+        "plants": [
+          "purple kale"
+        ],
+        "spacing_notes": "Place purple kale on the north side of the garden to avoid shading shorter plants. Space at least 18 inches apart to accommodate its mature size."
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Start seeds indoors 4-6 weeks before the last frost date to give them a head start on the growing season.",
+    "Choose varieties of lettuce and kale that are bred for cooler temperatures and shorter growing seasons, such as 'Red Leaf' or 'Lacinato'.",
+    "Beets prefer well-draining soil and full sun, so choose a spot with good sunlight and avoid areas where water tends to collect.",
+    "Green onions can be grown in containers or directly in the ground, but make sure they have at least 6 hours of direct sunlight per day.",
+    "In Moncton's cool climate, it's essential to provide support for tall plants like kale and lettuce using stakes or a trellis.",
+    "Beets and green onions are ready to harvest when the roots are between 1-2 inches in diameter, while lettuce is ready when the leaves are 4-6 inches long.",
+    "To extend the growing season, consider using row covers or cold frames to protect plants from frost and freezing temperatures."
+  ]
+}

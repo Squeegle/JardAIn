@@ -39,10 +39,17 @@ class PlantCache:
         return self._cache[key]
     
     def store(self, plant_name: str, plant_info: PlantInfo):
-        """Store plant info in cache"""
-        key = plant_name.lower()
+        """Store plant info in cache with multiple key variations for robust lookup"""
+        key = plant_name.lower().strip()
         self._cache[key] = plant_info
         self._timestamps[key] = datetime.now()
+        
+        # Also store under the actual plant name from the PlantInfo for robust lookup
+        actual_key = plant_info.name.lower().strip()
+        if actual_key != key:
+            self._cache[actual_key] = plant_info
+            self._timestamps[actual_key] = datetime.now()
+            print(f"💾 Cached plant under both '{key}' and '{actual_key}'")
     
     def clear(self):
         """Clear all cached data"""
@@ -105,12 +112,19 @@ class PlantService:
             print(f"💾 Found {plant_name} in cache")
             return cached_plant
         
+        # Step 2.5: Try alternative cache lookups for robustness
+        for variant in [plant_name.title(), plant_name.capitalize(), plant_name.upper()]:
+            cached_plant = self.cache.get(variant)
+            if cached_plant:
+                print(f"💾 Found {plant_name} in cache under variant '{variant}'")
+                return cached_plant
+        
         # Step 3: Generate via LLM
         print(f"🤖 Generating plant info for {plant_name} via LLM")
         try:
             generated_plant = await self._generate_plant_info_via_llm(plant_name)
             if generated_plant:
-                # Cache the result
+                # Cache the result with robust key storage
                 self.cache.store(plant_name, generated_plant)
                 print(f"✅ Generated and cached plant info for {plant_name}")
                 return generated_plant
@@ -185,6 +199,7 @@ class PlantService:
         Get information for multiple plants efficiently
         Uses asyncio to parallelize LLM calls when needed
         """
+        print(f"🔍 get_multiple_plants called with: {plant_names}")
         plants = []
         
         # Separate into static and potential LLM plants
@@ -194,26 +209,37 @@ class PlantService:
         for name in plant_names:
             if name.lower() in self.static_plants:
                 static_plants.append(name)
+                print(f"📖 {name} found in static database")
             else:
                 llm_plants.append(name)
+                print(f"🤖 {name} needs LLM lookup or cache check")
+        
+        print(f"Static plants: {static_plants}")
+        print(f"LLM plants: {llm_plants}")
         
         # Get static plants immediately
         for name in static_plants:
             plant = self.static_plants[name.lower()]
             if plant:
                 plants.append(plant)
+                print(f"✅ Added static plant: {plant.name}")
         
         # Get LLM plants in parallel
         if llm_plants:
+            print(f"🔍 Checking cache/LLM for: {llm_plants}")
             llm_tasks = [self.get_plant_info(name) for name in llm_plants]
             llm_results = await asyncio.gather(*llm_tasks, return_exceptions=True)
             
-            for result in llm_results:
+            for i, result in enumerate(llm_results):
                 if isinstance(result, PlantInfo):
                     plants.append(result)
+                    print(f"✅ Added LLM/cached plant: {result.name}")
                 elif isinstance(result, Exception):
-                    print(f"Error getting plant info: {result}")
+                    print(f"❌ Error getting plant info for {llm_plants[i]}: {result}")
+                else:
+                    print(f"❌ No plant info found for {llm_plants[i]}")
         
+        print(f"🏁 Returning {len(plants)} plants: {[p.name for p in plants]}")
         return plants
 
     def get_plants_by_type(self, plant_type: str) -> List[PlantInfo]:

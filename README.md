@@ -52,26 +52,72 @@ source jardain_env/bin/activate  # On Windows: jardain_env\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. **Set up environment variables**
+4. **Set up PostgreSQL Database**
+
+**Option A: Automated Setup (Recommended)**
+```bash
+python scripts/setup_database_enhanced.py
+```
+This interactive script will guide you through setting up PostgreSQL with your preferred method (Docker, native, or cloud).
+
+**Option B: Quick Docker Setup**
+```bash
+# Start PostgreSQL with docker-compose
+docker-compose up -d postgres
+
+# Or use standalone Docker container
+docker run -d --name jardain_postgres \
+  -e POSTGRES_DB=jardain \
+  -e POSTGRES_USER=jardain_user \
+  -e POSTGRES_PASSWORD=jardain_password \
+  -p 5432:5432 \
+  postgres:15
+```
+
+**Option C: Manual Setup**
+See the detailed [Database Setup Guide](DATABASE_SETUP.md) for native installation instructions.
+
+5. **Set up environment variables**
 Create a `.env` file in the root directory:
 ```env
 # App Configuration
-APP_NAME=JardAIn
+APP_NAME=JardAIn Garden Planner
 DEBUG=true
 HOST=0.0.0.0
 PORT=8000
 
-# LLM Configuration - Choose one or both
-OPENAI_API_KEY=your_openai_api_key_here  # For production
-OLLAMA_HOST=http://localhost:11434       # For local development
+# Database Configuration (PostgreSQL)
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=jardain
+POSTGRES_USER=jardain_user
+POSTGRES_PASSWORD=your_secure_password_here
 
-# PDF Configuration
-PDF_OUTPUT_DIR=generated_plans
-STATIC_FILES_DIR=static
-TEMPLATES_DIR=templates
+# LLM Configuration - Choose one or both
+LLM_PROVIDER=ollama                          # Use 'ollama' or 'openai'
+OLLAMA_BASE_URL=http://localhost:11434       # For local development
+OLLAMA_MODEL=llama3.1
+OPENAI_API_KEY=your_openai_api_key_here      # For production
+OPENAI_MODEL=gpt-3.5-turbo
+
+# File Paths
+PLANT_DATA_PATH=data/common_vegetables.json
+GENERATED_PLANS_PATH=generated_plans/
+LOGS_PATH=logs/
 ```
 
-5. **Install Ollama (for local development)**
+**Note:** If you used the automated database setup script, your `.env` file will be created automatically with the correct database settings.
+
+6. **Set up database schema**
+```bash
+# Run database migrations to create tables
+alembic upgrade head
+
+# Verify database setup
+python scripts/setup_database.py
+```
+
+7. **Install Ollama (for local development)**
 ```bash
 # Install Ollama
 curl -fsSL https://ollama.ai/install.sh | sh
@@ -226,6 +272,38 @@ brew install pango
 - Check `data/vegetables.json` exists and is valid JSON
 - Verify file permissions
 - Check application logs in `logs/`
+
+**Database Connection Issues**
+```bash
+# Quick database health check
+python scripts/quick_health_check.py
+
+# Test database connection specifically
+python scripts/test_db_integration.py
+
+# Check if PostgreSQL is running (Docker)
+docker ps | grep postgres
+
+# Check if PostgreSQL is running (Native)
+sudo systemctl status postgresql
+```
+
+**Database Setup Problems**
+- Run the automated setup: `python scripts/setup_database_enhanced.py`
+- Check the detailed guide: [Database Setup Guide](DATABASE_SETUP.md)
+- Verify `.env` file has correct database settings
+- Ensure database user has proper permissions
+
+**Migration Errors**
+```bash
+# Reset and rerun migrations
+alembic downgrade base
+alembic upgrade head
+
+# Check migration status
+alembic current
+alembic history
+```
 
 ## 🚀 Deployment
 

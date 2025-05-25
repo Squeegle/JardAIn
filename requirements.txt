@@ -16,6 +16,12 @@ requests==2.31.0
 # Ollama (for local LLM)
 ollama==0.1.7
 
+# Database (PostgreSQL)
+sqlalchemy==2.0.23
+asyncpg==0.29.0
+alembic==1.13.0
+psycopg2-binary==2.9.9
+
 # Data Validation and Handling
 pydantic==2.5.0
 pydantic-settings==2.1.0

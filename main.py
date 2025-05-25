@@ -16,6 +16,9 @@ from routers.pdf_router import router as pdf_router
 # Import our configuration
 from config import settings
 
+# Import database functionality
+from models.database import init_database, get_database_manager
+
 # Import routers
 from routers import plants
 
@@ -110,12 +113,32 @@ async def health_check():
     Health check endpoint for monitoring and deployment
     Returns application status and configuration info
     """
+    # Check database connectivity
+    database_status = "disconnected"
+    database_error = None
+    
+    try:
+        if settings.validate_database_config():
+            from sqlalchemy import text
+            db_manager = get_database_manager()
+            # Simple connection test
+            async with db_manager.async_session_maker() as session:
+                await session.execute(text("SELECT 1"))
+            database_status = "connected"
+        else:
+            database_status = "not_configured"
+    except Exception as e:
+        database_error = str(e)
+        database_status = "error"
+    
     return {
         "status": "healthy",
         "service": settings.app_name,
         "version": "1.0.0",
         "llm_provider": settings.llm_provider,
         "llm_configured": settings.validate_llm_config(),
+        "database_status": database_status,
+        "database_error": database_error,
         "debug": settings.debug,
         "environment": "development" if settings.debug else "production",
         "available_endpoints": {
@@ -174,6 +197,27 @@ async def startup_event():
     if not settings.validate_llm_config():
         print("⚠️  Warning: LLM configuration incomplete")
     
+    # Initialize database connection
+    print("🗄️  Initializing database connection...")
+    if settings.validate_database_config():
+        try:
+            db_manager = init_database(settings.database_url_computed, **settings.database_config)
+            print(f"✅ Database connected: {settings.postgres_db}")
+            
+            # Create tables if they don't exist
+            await db_manager.create_tables()
+            print("🏗️  Database tables ready")
+            
+            # Notify plant service that database is now available
+            from services.plant_service import plant_service
+            plant_service.refresh_database_status()
+            
+        except Exception as e:
+            print(f"❌ Database initialization failed: {e}")
+            print("⚠️  Application will continue with limited functionality")
+    else:
+        print("⚠️  Database configuration incomplete - using JSON fallback only")
+    
     # Check if required directories exist
     required_dirs = [
         settings.generated_plans_path,
@@ -191,6 +235,14 @@ async def shutdown_event():
     Application shutdown tasks
     """
     print(f"🛑 Shutting down {settings.app_name}")
+    
+    # Close database connections
+    try:
+        db_manager = get_database_manager()
+        await db_manager.close()
+        print("🗄️  Database connections closed")
+    except Exception as e:
+        print(f"⚠️  Error closing database: {e}")
 
 # ========================
 # Development Server

@@ -29,11 +29,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# Environment files (keep templates)
-.env.local
-.env.production
-.env.staging
-
 # IDE
 .vscode/
 .idea/
@@ -50,28 +45,41 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Logs
-logs/*.log
-*.log
-
-# Database
-*.db
-*.sqlite
-
-# Generated files
-generated_plans/*.pdf
-generated_plans/*.png
+# Git
+.git/
+.gitignore
 
 # Docker
-get-docker.sh
+Dockerfile
+docker-compose*.yml
+.dockerignore
 
-# Backup files
-backup_*.sql
+# Documentation
+README.md
+*.md
+
+# Logs (will be mounted as volume)
+logs/*.log
+
+# Generated files (will be mounted as volume)
+generated_plans/*.pdf
+
+# Development files
+test_*.py
+scripts/test_*.py
+scripts/migrate_*.py
+
+# Database files (using external DB)
+*.db
+*.sqlite
 
 # Temporary files
 tmp/
 temp/
 *.tmp
+
+# Node modules (if any)
+node_modules/
 
 # Coverage reports
 htmlcov/
@@ -80,13 +88,4 @@ htmlcov/
 coverage.xml
 *.cover
 .hypothesis/
-.pytest_cache/
-
-# Node modules (if any)
-node_modules/
-
-# SSL certificates (if any)
-ssl/
-*.pem
-*.key
-*.crt
+.pytest_cache/ 

@@ -550,20 +550,18 @@ Focus on practical layout advice for a {request.garden_size} {request.experience
             return None
     
     def _create_default_schedules(self, plants: List[PlantInfo], location: LocationInfo) -> List[PlantingSchedule]:
-        """Create basic schedules if AI generation fails"""
+        """Create default schedules when LLM fails"""
         schedules = []
-        base_date = location.last_frost_date or date.today()
-        
         for plant in plants:
+            # Calculate reasonable default dates based on location
             schedule = PlantingSchedule(
                 plant_name=plant.name,
-                direct_sow_date=base_date + timedelta(days=14),
-                harvest_start_date=base_date + timedelta(days=(plant.days_to_harvest or 60) + 14),
-                harvest_end_date=base_date + timedelta(days=(plant.days_to_harvest or 60) + 60),
-                succession_planting_interval=14 if plant.plant_type == "vegetable" else None
+                start_indoors_date=self._calculate_indoor_start_date(plant, location),
+                direct_sow_date=self._calculate_direct_sow_date(plant, location),
+                transplant_date=self._calculate_transplant_date(plant, location),
+                # ... etc
             )
             schedules.append(schedule)
-        
         return schedules
     
     def _create_default_instructions(self, plant: PlantInfo) -> GrowingInstructions:

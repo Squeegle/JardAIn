@@ -1,0 +1,175 @@
+{
+  "plan_id": "302e1752-74cb-44b4-9067-b9fdf4f8c7aa",
+  "created_date": "2025-05-25T00:14:58.063149",
+  "location": {
+    "zip_code": "90210",
+    "city": "Beverly Hills",
+    "state": "California",
+    "usda_zone": "8a-11",
+    "last_frost_date": "2025-02-01",
+    "first_frost_date": "2025-12-15",
+    "growing_season_days": 317,
+    "climate_type": "warm"
+  },
+  "selected_plants": [
+    "Basil",
+    "Tomato"
+  ],
+  "plant_information": [
+    {
+      "name": "Basil",
+      "scientific_name": "Ocimum basilicum",
+      "plant_type": "herb",
+      "days_to_harvest": 65,
+      "spacing_inches": 8,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.5",
+      "companion_plants": [
+        "tomatoes",
+        "peppers",
+        "oregano",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "rue",
+        "sage"
+      ]
+    },
+    {
+      "name": "Tomato",
+      "scientific_name": "Solanum lycopersicum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 75,
+      "spacing_inches": 24,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "basil",
+        "parsley",
+        "carrots",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "fennel",
+        "brassicas",
+        "corn"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Basil",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-15",
+      "harvest_end_date": "2024-09-30",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Tomato",
+      "start_indoors_date": "2024-03-01",
+      "direct_sow_date": null,
+      "transplant_date": "2024-05-15",
+      "harvest_start_date": "2024-07-15",
+      "harvest_end_date": "2024-10-01",
+      "succession_planting_interval": 14
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Basil",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.5 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Basil seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 8 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Basil deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Basil weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Basil approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Basil at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for herb type"
+      ]
+    },
+    {
+      "plant_name": "Tomato",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Tomato seeds indoors 6-8 weeks before 2025-02-01 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 24 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-02-01 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Tomato deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Tomato weekly for common zone 8a-11 pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Tomato approximately 75 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Tomato at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Basil",
+          "Tomato"
+        ],
+        "spacing_notes": "Plant Basil 8 inches apart, and Tomatoes 24-36 inches apart to allow for air circulation"
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Basil is a warm-season crop that thrives in the long growing season of Beverly Hills. Plant it in well-draining soil with full sun (at least 6 hours of direct sunlight) and keep the temperature between 60-80\u00b0F.",
+    "Tomatoes love the warm weather in Beverly Hills, but they need support to grow upright. Use tomato cages or trellises to keep them off the ground and promote healthy growth.",
+    "In the hot summer months, water your plants deeply but infrequently to encourage deep root growth. This will help them survive during periods of drought.",
+    "Basil is a heavy feeder and needs regular fertilization. Use a balanced fertilizer (10-10-10) once a month to keep it healthy and pest-free.",
+    "Tomatoes are prone to pests like hornworms and aphids in the Beverly Hills area. Keep an eye out for these pests and use organic pesticides if necessary.",
+    "In the cooler winter months, protect your plants from frost by covering them with a sheet or bringing potted plants indoors."
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "plan_id": "f36312f3-c8c3-43e5-95db-565e0b404ba0",
+  "created_date": "2025-05-24T22:19:01.756804",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "purple kale",
+    "Tomato"
+  ],
+  "plant_information": [
+    {
+      "name": "purple kale",
+      "scientific_name": "Brassica oleracea var. sabellica",
+      "plant_type": "vegetable",
+      "days_to_harvest": 50,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun to partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "carrots",
+        "beets",
+        "spinach"
+      ],
+      "avoid_planting_with": []
+    },
+    {
+      "name": "Tomato",
+      "scientific_name": "Solanum lycopersicum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 75,
+      "spacing_inches": 24,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "basil",
+        "parsley",
+        "carrots",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "fennel",
+        "brassicas",
+        "corn"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "purple kale",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-20",
+      "harvest_end_date": "2024-08-10",
+      "succession_planting_interval": 21
+    },
+    {
+      "plant_name": "Tomato",
+      "start_indoors_date": "2024-03-15",
+      "direct_sow_date": null,
+      "transplant_date": "2024-05-15",
+      "harvest_start_date": "2024-07-15",
+      "harvest_end_date": "2024-10-01",
+      "succession_planting_interval": 14
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "purple kale",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun to partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start purple kale seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water purple kale deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect purple kale weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting purple kale approximately 50 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh purple kale at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Tomato",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Tomato seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 24 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Tomato deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Tomato weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Tomato approximately 75 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Tomato at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for small garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "purple kale",
+          "Tomato"
+        ],
+        "spacing_notes": "Plant the tomato in the center of the bed, with the purple kale spaced around it to avoid shading. Keep about 18 inches between each kale plant."
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Choose a sunny spot with well-draining soil for your tomato plants, as they prefer full sun and can be susceptible to fungal diseases in wet conditions.",
+    "In Moncton's cool climate, start your tomato seeds indoors 6-8 weeks before the last frost date (around May 15th) to give them a head start on the growing season.",
+    "Purple kale is a cold-hardy crop that can thrive in Moncton's climate. Sow its seeds directly into the garden in late spring, around June 1st, when the soil has warmed up to at least 7\u00b0C (45\u00b0F).",
+    "To protect your plants from frost, wait until the last frost date (May 15th) before transplanting seedlings outdoors and provide them with a cold frame or row covers if necessary.",
+    "Tomatoes need support as they grow. Use tomato cages or trellises to keep them upright and promote even fruiting.",
+    "Keep your garden consistently watered, but avoid overwatering, which can lead to disease and root rot in both tomatoes and kale."
+  ]
+}

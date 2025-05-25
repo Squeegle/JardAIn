@@ -70,6 +70,42 @@ class Settings(BaseSettings):
     )
     
     # ========================
+    # Database Configuration (PostgreSQL)
+    # ========================
+    database_url: str = Field(
+        default="", 
+        description="Complete PostgreSQL database URL (overrides individual settings)"
+    )
+    postgres_host: str = Field(
+        default="localhost", 
+        description="PostgreSQL host address"
+    )
+    postgres_port: int = Field(
+        default=5432, 
+        description="PostgreSQL port"
+    )
+    postgres_db: str = Field(
+        default="jardain", 
+        description="PostgreSQL database name"
+    )
+    postgres_user: str = Field(
+        default="jardain_user", 
+        description="PostgreSQL username"
+    )
+    postgres_password: str = Field(
+        default="", 
+        description="PostgreSQL password"
+    )
+    database_pool_size: int = Field(
+        default=5, 
+        description="Database connection pool size"
+    )
+    database_max_overflow: int = Field(
+        default=10, 
+        description="Database connection pool max overflow"
+    )
+    
+    # ========================
     # File Paths
     # ========================
     plant_data_path: str = Field(
@@ -201,6 +237,45 @@ class Settings(BaseSettings):
             return bool(self.openai_api_key)
         else:  # ollama
             return bool(self.ollama_base_url and self.ollama_model)
+    
+    @property
+    def database_url_computed(self) -> str:
+        """
+        Get the complete database URL, either from DATABASE_URL env var 
+        or constructed from individual components
+        """
+        if self.database_url:
+            return self.database_url
+        
+        return (
+            f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
+            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
+        )
+    
+    def validate_database_config(self) -> bool:
+        """
+        Validate that required database configuration is present
+        """
+        if self.database_url:
+            return True
+        
+        return bool(
+            self.postgres_host and 
+            self.postgres_user and 
+            self.postgres_password and 
+            self.postgres_db
+        )
+    
+    @property
+    def database_config(self) -> dict:
+        """
+        Get database configuration for SQLAlchemy (without URL since it's passed separately)
+        """
+        return {
+            "pool_size": self.database_pool_size,
+            "max_overflow": self.database_max_overflow,
+            "echo": self.debug  # SQL logging in debug mode
+        }
 
 # ========================
 # Global Settings Instance

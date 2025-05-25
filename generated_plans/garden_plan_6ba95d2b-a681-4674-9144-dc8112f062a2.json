@@ -1,0 +1,307 @@
+{
+  "plan_id": "6ba95d2b-a681-4674-9144-dc8112f062a2",
+  "created_date": "2025-05-24T22:47:33.551436",
+  "location": {
+    "zip_code": "12345",
+    "city": "Schenectady",
+    "state": "New York",
+    "usda_zone": "5a-7a",
+    "last_frost_date": "2025-04-15",
+    "first_frost_date": "2025-10-15",
+    "growing_season_days": 183,
+    "climate_type": "temperate"
+  },
+  "selected_plants": [
+    "Tomato",
+    "Lettuce",
+    "Basil",
+    "Dragon Fruit"
+  ],
+  "plant_information": [
+    {
+      "name": "Tomato",
+      "scientific_name": "Solanum lycopersicum",
+      "plant_type": "vegetable",
+      "days_to_harvest": 75,
+      "spacing_inches": 24,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate to high",
+      "soil_ph_range": "6.0-6.8",
+      "companion_plants": [
+        "basil",
+        "parsley",
+        "carrots",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "fennel",
+        "brassicas",
+        "corn"
+      ]
+    },
+    {
+      "name": "Lettuce",
+      "scientific_name": "Lactuca sativa",
+      "plant_type": "vegetable",
+      "days_to_harvest": 45,
+      "spacing_inches": 6,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "carrots",
+        "radishes",
+        "tomatoes",
+        "onions"
+      ],
+      "avoid_planting_with": [
+        "broccoli"
+      ]
+    },
+    {
+      "name": "Basil",
+      "scientific_name": "Ocimum basilicum",
+      "plant_type": "herb",
+      "days_to_harvest": 65,
+      "spacing_inches": 8,
+      "planting_depth_inches": 0.25,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.5",
+      "companion_plants": [
+        "tomatoes",
+        "peppers",
+        "oregano",
+        "lettuce"
+      ],
+      "avoid_planting_with": [
+        "rue",
+        "sage"
+      ]
+    },
+    {
+      "name": "Dragon Fruit",
+      "scientific_name": "Hylocereus spp.",
+      "plant_type": "fruit",
+      "days_to_harvest": 60,
+      "spacing_inches": 12,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "Passion Fruit",
+        "Ginger",
+        "Basil"
+      ],
+      "avoid_planting_with": []
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Tomato",
+      "start_indoors_date": "2024-03-15",
+      "direct_sow_date": null,
+      "transplant_date": "2024-05-15",
+      "harvest_start_date": "2024-07-15",
+      "harvest_end_date": "2024-10-01",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Lettuce",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-15",
+      "transplant_date": null,
+      "harvest_start_date": "2024-05-01",
+      "harvest_end_date": "2024-06-30",
+      "succession_planting_interval": 7
+    },
+    {
+      "plant_name": "Basil",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-05-01",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-15",
+      "harvest_end_date": "2024-09-30",
+      "succession_planting_interval": 14
+    },
+    {
+      "plant_name": "Dragon Fruit",
+      "start_indoors_date": null,
+      "direct_sow_date": null,
+      "transplant_date": null,
+      "harvest_start_date": "2025-06-01",
+      "harvest_end_date": "2026-05-31",
+      "succession_planting_interval": null
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "Tomato",
+      "preparation_steps": [
+        "Test soil pH to 6.0-6.8 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Tomato seeds indoors 6-8 weeks before 2025-04-15 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 24 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-04-15 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Tomato deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Tomato weekly for common zone 5a-7a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Tomato approximately 75 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Tomato at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Lettuce",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Lettuce seeds indoors 6-8 weeks before 2025-04-15 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 6 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-04-15 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Lettuce deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Lettuce weekly for common zone 5a-7a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Lettuce approximately 45 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Lettuce at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    },
+    {
+      "plant_name": "Basil",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.5 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Basil seeds indoors 6-8 weeks before 2025-04-15 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.25 inches deep with 8 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-04-15 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Basil deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Basil weekly for common zone 5a-7a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Basil approximately 65 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Basil at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for herb type"
+      ]
+    },
+    {
+      "plant_name": "Dragon Fruit",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start Dragon Fruit seeds indoors 6-8 weeks before 2025-04-15 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 12 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-04-15 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water Dragon Fruit deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect Dragon Fruit weekly for common zone 5a-7a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting Dragon Fruit approximately 60 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh Dragon Fruit at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for fruit type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "Tomato",
+          "Lettuce",
+          "Basil"
+        ],
+        "spacing_notes": "Plant tomatoes in the north side, spaced 24 inches apart. Lettuce and basil can be interspersed between tomato plants, with lettuce at 6 inches and basil at 8 inches apart"
+      },
+      {
+        "group_name": "Dragon Fruit",
+        "plants": [
+          "Dragon Fruit"
+        ],
+        "spacing_notes": "Place dragon fruit on the south side of the garden, spaced 12 inches apart to allow for proper growth and sunlight exposure"
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Start seedlings indoors 4-6 weeks before the last frost date (around May 15th) to give them a head start on the growing season.",
+    "Choose disease-resistant tomato varieties such as 'Early Girl' or 'Patio' to combat common issues in our region.",
+    "Lettuce and other leafy greens prefer cooler temperatures, so plant them in early spring or late summer/early fall when it's around 60-70\u00b0F (15-21\u00b0C).",
+    "Basil is a warm-season crop and should be planted after the last frost date. Make sure to provide it with full sun (at least 6 hours of direct sunlight) and well-draining soil.",
+    "Dragon Fruit requires a long growing season, so plant it in late spring or early summer when the soil has warmed up to at least 65\u00b0F (18\u00b0C).",
+    "In our region's temperate climate, be prepared for occasional frosts and freezes. Use row covers or bring potted plants under cover if necessary.",
+    "Water your plants deeply but infrequently to encourage deep root growth and make them more resistant to drought."
+  ]
+}

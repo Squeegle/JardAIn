@@ -31,6 +31,11 @@ If you prefer to set up the database manually, choose one of these options:
 
 **Using existing docker-compose.yml:**
 ```bash
+# First, create .env file with secure database password
+# Copy env.docker.example to .env and update POSTGRES_PASSWORD
+cp env.docker.example .env
+# Edit .env and replace 'generate_a_secure_password_here' with a strong password
+
 # Start PostgreSQL container
 docker-compose up -d postgres
 
@@ -39,12 +44,13 @@ docker-compose up -d postgres
 # Port: 5432
 # Database: jardain
 # Username: jardain_user
-# Password: jardain_password
+# Password: (from your .env file)
 ```
 
 **Using standalone Docker container:**
 ```bash
 # Create and start PostgreSQL container
+# IMPORTANT: Replace 'your_secure_password' with a strong password
 docker run -d \
   --name jardain_postgres \
   -e POSTGRES_DB=jardain \

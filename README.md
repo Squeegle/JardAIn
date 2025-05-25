@@ -62,14 +62,14 @@ This interactive script will guide you through setting up PostgreSQL with your p
 
 **Option B: Quick Docker Setup**
 ```bash
-# Start PostgreSQL with docker-compose
+# Start PostgreSQL with docker-compose (requires .env file with POSTGRES_PASSWORD)
 docker-compose up -d postgres
 
 # Or use standalone Docker container
 docker run -d --name jardain_postgres \
   -e POSTGRES_DB=jardain \
   -e POSTGRES_USER=jardain_user \
-  -e POSTGRES_PASSWORD=jardain_password \
+  -e POSTGRES_PASSWORD=your_secure_password_here \
   -p 5432:5432 \
   postgres:15
 ```
@@ -107,6 +107,8 @@ LOGS_PATH=logs/
 ```
 
 **Note:** If you used the automated database setup script, your `.env` file will be created automatically with the correct database settings.
+
+**⚠️ Security Note:** Never commit your `.env` file to version control. It contains sensitive information like database passwords and API keys. See [SECURITY.md](SECURITY.md) for detailed security guidelines.
 
 6. **Set up database schema**
 ```bash

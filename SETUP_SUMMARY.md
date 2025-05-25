@@ -83,14 +83,14 @@ python scripts/setup_database_enhanced.py
 
 ### Option 3: Docker Quick Start
 ```bash
-# If you have docker-compose.yml
+# If you have docker-compose.yml (requires .env file with POSTGRES_PASSWORD)
 docker-compose up -d postgres
 
 # Or standalone Docker
 docker run -d --name jardain_postgres \
   -e POSTGRES_DB=jardain \
   -e POSTGRES_USER=jardain_user \
-  -e POSTGRES_PASSWORD=jardain_password \
+  -e POSTGRES_PASSWORD=your_secure_password_here \
   -p 5432:5432 postgres:15
 ```
 

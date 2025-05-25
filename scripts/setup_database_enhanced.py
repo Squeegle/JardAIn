@@ -240,20 +240,53 @@ def setup_docker_postgres():
             else:
                 print_error("Please enter 'y' or 'n'")
         
+        # Generate secure password for docker-compose
+        import secrets
+        import string
+        password = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(16))
+        
         print_info("Starting PostgreSQL with docker-compose...")
         try:
+            # Set environment variables for docker-compose
+            env = os.environ.copy()
+            env.update({
+                'POSTGRES_DB': 'jardain',
+                'POSTGRES_USER': 'jardain_user',
+                'POSTGRES_PASSWORD': password,
+                'POSTGRES_PORT': '5432'
+            })
+            
             result = subprocess.run([
                 'docker-compose', 'up', '-d', 'postgres'
-            ], cwd=project_root, capture_output=True, text=True)
+            ], cwd=project_root, capture_output=True, text=True, env=env)
             
             if result.returncode == 0:
                 print_success("PostgreSQL container started successfully")
+                
+                # Wait for PostgreSQL to be ready
+                print_info("Waiting for PostgreSQL to be ready...")
+                import time
+                for i in range(30):
+                    check_cmd = [
+                        'docker', 'exec', 'jardain_postgres',
+                        'pg_isready', '-U', 'jardain_user', '-d', 'jardain'
+                    ]
+                    result = subprocess.run(check_cmd, capture_output=True, text=True)
+                    if result.returncode == 0:
+                        print_success("PostgreSQL is ready!")
+                        break
+                    time.sleep(1)
+                    print(".", end="", flush=True)
+                else:
+                    print_error("PostgreSQL failed to start within 30 seconds")
+                    return None
+                
                 return {
                     'host': 'localhost',
                     'port': 5432,
                     'database': 'jardain',
                     'username': 'jardain_user',
-                    'password': 'jardain_password'
+                    'password': password
                 }
             else:
                 print_error(f"Failed to start container: {result.stderr}")

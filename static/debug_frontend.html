@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Plant Loading</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .plant-card { border: 1px solid #ddd; padding: 10px; margin: 5px; display: inline-block; width: 200px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Plant Loading</h1>
+    
+    <div class="debug-section">
+        <h2>API Test Results</h2>
+        <div id="api-results">Testing...</div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Plant Grid</h2>
+        <div id="plant-grid">Loading...</div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const resultsDiv = document.getElementById('api-results');
+            
+            try {
+                // Test the corrected endpoint
+                console.log('🔍 Testing /api/plants/ endpoint...');
+                const response = await fetch('/api/plants/');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ API Response:', data);
+                
+                resultsDiv.innerHTML = `
+                    <div class="success">✅ API Success!</div>
+                    <p><strong>Status:</strong> ${response.status}</p>
+                    <p><strong>Total plants:</strong> ${data.plants ? data.plants.length : 'No plants array'}</p>
+                    <p><strong>First plant:</strong> ${data.plants && data.plants[0] ? JSON.stringify(data.plants[0], null, 2) : 'No first plant'}</p>
+                `;
+                
+                return data.plants || [];
+                
+            } catch (error) {
+                console.error('❌ API Error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="error">❌ API Error: ${error.message}</div>
+                `;
+                return [];
+            }
+        }
+        
+        function getPlantEmoji(type) {
+            const emojis = {
+                'fruit': '🍅',
+                'vegetable': '🥕',
+                'herb': '🌿',
+                'leafy_green': '🥬',
+                'root_vegetable': '🥕',
+                'legume': '🌱',
+                'vine': '🥒',
+                'bulb': '🧅',
+                'cruciferous': '🥦'
+            };
+            return emojis[type] || '🌱';
+        }
+        
+        function renderPlants(plants) {
+            const plantGrid = document.getElementById('plant-grid');
+            
+            if (!plants || plants.length === 0) {
+                plantGrid.innerHTML = '<div class="error">No plants to display</div>';
+                return;
+            }
+            
+            plantGrid.innerHTML = plants.slice(0, 10).map(plant => `
+                <div class="plant-card">
+                    <div style="font-size: 2rem;">${getPlantEmoji(plant.plant_type)}</div>
+                    <div><strong>${plant.name}</strong></div>
+                    <div>Type: ${plant.plant_type || 'UNDEFINED'}</div>
+                    <div>Days: ${plant.days_to_harvest || 'N/A'}</div>
+                </div>
+            `).join('');
+            
+            console.log(`✅ Rendered ${plants.length} plants`);
+        }
+        
+        async function init() {
+            console.log('🚀 Starting debug test...');
+            const plants = await testAPI();
+            renderPlants(plants);
+        }
+        
+        // Start when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html> 

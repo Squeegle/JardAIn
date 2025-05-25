@@ -83,7 +83,6 @@ async def test_enhanced_pdf():
             
             print("✨ Enhanced PDF Features:")
             print("   🎨 Beautiful cover page with stats")
-            print("   📋 Professional table of contents")
             print("   🌍 Enhanced overview with visual cards")
             print("   📅 Color-coded planting calendar")
             print("   🌱 Individual plant profiles with timelines")
@@ -114,7 +113,6 @@ async def test_enhanced_pdf():
             print("🎯 Success! Enhanced PDF Features Verified:")
             print("   ✅ Professional cover page with location hero")
             print("   ✅ Visual plant preview grid")
-            print("   ✅ Comprehensive table of contents")
             print("   ✅ Enhanced overview with detail cards")
             print("   ✅ Visual planting calendar with seasons")
             print("   ✅ Individual plant profiles with timelines")

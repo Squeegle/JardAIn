@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main App Test</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        .debug-info {
+            background: #f0f0f0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>🧪 Main App Structure Test</h1>
+        
+        <div class="debug-info" id="debug-info">
+            Initializing...
+        </div>
+        
+        <div class="form-section">
+            <h3>🥕 Select Your Plants</h3>
+            <div class="plant-selection">
+                <div class="plant-search">
+                    <input 
+                        type="text" 
+                        id="plant-search" 
+                        placeholder="Search plants..."
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="plant-grid" id="plant-grid">
+                    <!-- Plants will be loaded here -->
+                </div>
+                <div class="selected-plants">
+                    <h4>Selected Plants (<span id="selected-count">0</span>/20)</h4>
+                    <div id="selected-plants-list" class="selected-plants-list">
+                        <!-- Selected plants will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Debug logging
+        function debugLog(message) {
+            const debugDiv = document.getElementById('debug-info');
+            const timestamp = new Date().toLocaleTimeString();
+            debugDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            console.log(message);
+        }
+        
+        // Simplified version of the main app
+        class TestApp {
+            constructor() {
+                this.selectedPlants = new Set();
+                this.availablePlants = [];
+                debugLog('🚀 TestApp constructor called');
+                this.init();
+            }
+
+            async init() {
+                debugLog('🔧 TestApp init() called');
+                await this.loadPlants();
+                debugLog('✅ TestApp init() completed');
+            }
+
+            async loadPlants() {
+                try {
+                    debugLog('🔍 Loading plants from /api/plants/...');
+                    const response = await fetch('/api/plants/');
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    debugLog(`✅ API Response received: ${data.plants ? data.plants.length : 0} plants`);
+                    
+                    if (data.plants && data.plants.length > 0) {
+                        debugLog(`🌱 First plant sample: ${JSON.stringify(data.plants[0])}`);
+                    }
+                    
+                    this.availablePlants = data.plants || [];
+                    this.renderPlantGrid();
+                } catch (error) {
+                    debugLog(`❌ Error loading plants: ${error.message}`);
+                }
+            }
+
+            renderPlantGrid() {
+                const plantGrid = document.getElementById('plant-grid');
+                if (!plantGrid) {
+                    debugLog('❌ Plant grid element not found');
+                    return;
+                }
+
+                debugLog(`🎨 Rendering ${this.availablePlants.length} plants...`);
+                
+                if (this.availablePlants.length === 0) {
+                    plantGrid.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">No plants to display</div>';
+                    return;
+                }
+
+                plantGrid.innerHTML = this.availablePlants.map(plant => {
+                    const emoji = this.getPlantEmoji(plant.plant_type);
+                    const plantType = plant.plant_type || 'UNDEFINED';
+                    
+                    debugLog(`🌱 Rendering ${plant.name}: type="${plantType}", emoji="${emoji}"`);
+                    
+                    return `
+                        <div class="plant-card" data-plant="${plant.name}" onclick="testApp.togglePlant('${plant.name}')">
+                            <div class="plant-emoji">${emoji}</div>
+                            <div class="plant-name">${plant.name}</div>
+                            <div class="plant-type">${plantType}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                debugLog(`✅ Rendered ${this.availablePlants.length} plant cards`);
+            }
+
+            getPlantEmoji(type) {
+                const emojis = {
+                    'fruit': '🍅',
+                    'vegetable': '🥕',
+                    'herb': '🌿',
+                    'leafy_green': '🥬',
+                    'root_vegetable': '🥕',
+                    'legume': '🌱',
+                    'vine': '🥒',
+                    'bulb': '🧅',
+                    'cruciferous': '🥦'
+                };
+                return emojis[type] || '🌱';
+            }
+
+            togglePlant(plantName) {
+                debugLog(`🔄 Toggling plant: ${plantName}`);
+                if (this.selectedPlants.has(plantName)) {
+                    this.selectedPlants.delete(plantName);
+                } else {
+                    this.selectedPlants.add(plantName);
+                }
+                
+                const plantCard = document.querySelector(`[data-plant="${plantName}"]`);
+                if (plantCard) {
+                    plantCard.classList.toggle('selected');
+                }
+                
+                this.updateSelectedCount();
+            }
+
+            updateSelectedCount() {
+                const countElement = document.getElementById('selected-count');
+                if (countElement) {
+                    countElement.textContent = this.selectedPlants.size;
+                }
+                debugLog(`📊 Selected plants count: ${this.selectedPlants.size}`);
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            debugLog('📄 DOM loaded, creating TestApp...');
+            window.testApp = new TestApp();
+        });
+    </script>
+</body>
+</html> 

@@ -3,7 +3,6 @@ PDF Generation Service for Garden Plans
 
 This service creates beautiful, professional PDFs with:
 - Cover pages with location info
-- Table of contents
 - Individual plant sections with images
 - Planting calendar and timeline
 - Garden layout recommendations
@@ -25,7 +24,6 @@ class PDFService:
     
     Features:
     - Professional layout with cover page
-    - Table of contents
     - Individual plant sections
     - Planting calendar
     - Garden spacing diagrams

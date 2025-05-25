@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Loading Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .plant-card { border: 1px solid #ddd; padding: 10px; margin: 5px; display: inline-block; width: 150px; text-align: center; }
+        .plant-emoji { font-size: 2rem; }
+        .plant-name { font-weight: bold; }
+        .plant-type { color: #666; font-size: 0.9rem; }
+        .error { color: red; }
+        .success { color: green; }
+        .log { background: #f5f5f5; padding: 10px; margin: 10px 0; font-family: monospace; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Plant Loading Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>Step 1: API Test</h2>
+        <div id="api-status">Testing API...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Step 2: Plant Grid Simulation</h2>
+        <div class="plant-grid" id="plant-grid">Loading plants...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Step 3: Debug Logs</h2>
+        <div id="debug-logs" class="log">Initializing...</div>
+    </div>
+
+    <script>
+        // Debug logging function
+        function log(message) {
+            const debugLogs = document.getElementById('debug-logs');
+            const timestamp = new Date().toLocaleTimeString();
+            debugLogs.innerHTML += `[${timestamp}] ${message}<br>`;
+            console.log(message);
+        }
+        
+        // Simulate the exact same plant loading logic as the main app
+        class PlantLoadingTest {
+            constructor() {
+                this.availablePlants = [];
+                this.init();
+            }
+            
+            async init() {
+                log('🚀 Starting plant loading test...');
+                await this.loadPlants();
+                log('✅ Test completed');
+            }
+            
+            async loadPlants() {
+                try {
+                    log('🔍 Loading plants from /api/plants/...');
+                    const response = await fetch('/api/plants/');
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    log(`✅ API Response received: ${data.plants ? data.plants.length : 0} plants`);
+                    
+                    if (data.plants && data.plants.length > 0) {
+                        log(`🌱 First plant sample: ${JSON.stringify(data.plants[0])}`);
+                    }
+                    
+                    this.availablePlants = data.plants || [];
+                    
+                    // Update API status
+                    document.getElementById('api-status').innerHTML = `
+                        <div class="success">✅ API Success!</div>
+                        <p>Loaded ${this.availablePlants.length} plants</p>
+                    `;
+                    
+                    this.renderPlantGrid();
+                } catch (error) {
+                    log(`❌ Error loading plants: ${error.message}`);
+                    document.getElementById('api-status').innerHTML = `
+                        <div class="error">❌ API Error: ${error.message}</div>
+                    `;
+                }
+            }
+            
+            renderPlantGrid() {
+                const plantGrid = document.getElementById('plant-grid');
+                if (!plantGrid) {
+                    log('❌ Plant grid element not found');
+                    return;
+                }
+
+                log(`🎨 Rendering ${this.availablePlants.length} plants...`);
+                
+                if (this.availablePlants.length === 0) {
+                    plantGrid.innerHTML = '<div class="error">No plants to display</div>';
+                    return;
+                }
+
+                plantGrid.innerHTML = this.availablePlants.slice(0, 12).map(plant => {
+                    const emoji = this.getPlantEmoji(plant.plant_type);
+                    const plantType = plant.plant_type || 'UNDEFINED';
+                    
+                    log(`🌱 Rendering ${plant.name}: type="${plantType}", emoji="${emoji}"`);
+                    
+                    return `
+                        <div class="plant-card">
+                            <div class="plant-emoji">${emoji}</div>
+                            <div class="plant-name">${plant.name}</div>
+                            <div class="plant-type">${plantType}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                log(`✅ Rendered ${Math.min(this.availablePlants.length, 12)} plant cards (showing first 12)`);
+            }
+            
+            getPlantEmoji(type) {
+                const emojis = {
+                    'fruit': '🍅',
+                    'vegetable': '🥕',
+                    'herb': '🌿',
+                    'leafy_green': '🥬',
+                    'root_vegetable': '🥕',
+                    'legume': '🌱',
+                    'vine': '🥒',
+                    'bulb': '🧅',
+                    'cruciferous': '🥦'
+                };
+                return emojis[type] || '🌱';
+            }
+        }
+        
+        // Start the test when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            log('📄 DOM loaded, starting test...');
+            new PlantLoadingTest();
+        });
+    </script>
+</body>
+</html> 

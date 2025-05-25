@@ -74,59 +74,7 @@
         </div>
     </div>
 
-    <!-- TABLE OF CONTENTS -->
-    <div class="toc-page">
-        <h2 class="section-title">📋 Table of Contents</h2>
-        
-        <div class="toc-content">
-            <div class="toc-section">
-                <h3>🌍 Garden Overview</h3>
-                <div class="toc-items">
-                    <div class="toc-item">
-                        <span class="toc-text">Location & Climate Information</span>
-                        <span class="toc-dots"></span>
-                        <span class="toc-page">3</span>
-                    </div>
-                    <div class="toc-item">
-                        <span class="toc-text">Planting Calendar</span>
-                        <span class="toc-dots"></span>
-                        <span class="toc-page">4</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="toc-section">
-                <h3>🌱 Plant Profiles</h3>
-                <div class="toc-items">
-                    {% for plant in enhanced_plants %}
-                    <div class="toc-item">
-                        <span class="toc-text">{{ plant.name }}</span>
-                        <span class="toc-dots"></span>
-                        <span class="toc-page">{{ loop.index + 4 }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            
-            <div class="toc-section">
-                <h3>📊 Garden Planning Tools</h3>
-                <div class="toc-items">
-                    {% if include_layout %}
-                    <div class="toc-item">
-                        <span class="toc-text">Garden Layout Recommendations</span>
-                        <span class="toc-dots"></span>
-                        <span class="toc-page">{{ enhanced_plants|length + 5 }}</span>
-                    </div>
-                    {% endif %}
-                    <div class="toc-item">
-                        <span class="toc-text">General Gardening Tips</span>
-                        <span class="toc-dots"></span>
-                        <span class="toc-page">{{ enhanced_plants|length + 6 }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- GARDEN OVERVIEW PAGE -->
     <div class="overview-page">

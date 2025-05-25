@@ -86,10 +86,10 @@ async def get_all_plants(
     try:
         if plant_type:
             # Filter by plant type
-            plants = plant_service.get_plants_by_type(plant_type)
+            plants = await plant_service.get_plants_by_type(plant_type)
         else:
-            # Get all static plants
-            plants = plant_service.get_all_static_plants()
+            # Get all plants (database first, then JSON fallback)
+            plants = await plant_service.get_all_plants()
         
         # Convert to response format
         plant_responses = [plant_info_to_response(plant) for plant in plants]
@@ -97,7 +97,7 @@ async def get_all_plants(
         return PlantListResponse(
             plants=plant_responses,
             total_count=len(plant_responses),
-            source="static"
+            source="database" if plant_service.database_available else "static"
         )
         
     except Exception as e:
@@ -112,7 +112,7 @@ async def get_plant_types():
     - List of unique plant types in the database
     """
     try:
-        plants = plant_service.get_all_static_plants()
+        plants = await plant_service.get_all_plants()
         plant_types = list(set(plant.plant_type for plant in plants))
         return sorted(plant_types)
         
@@ -143,10 +143,10 @@ async def search_plants(
     start_time = time.time()
     
     try:
-        # Search static database first
-        static_results = plant_service.search_static_plants(q)
+        # Search database first (includes both static and LLM plants)
+        search_results = await plant_service.search_plants(q)
         
-        plants_found = [plant_info_to_response(plant) for plant in static_results]
+        plants_found = [plant_info_to_response(plant) for plant in search_results]
         
         # If no results and include_generated is True, try LLM generation
         if not plants_found and include_generated:
@@ -216,7 +216,7 @@ async def get_plants_by_type(plant_type: str):
     - List of plants matching the specified type
     """
     try:
-        plants = plant_service.get_plants_by_type(plant_type)
+        plants = await plant_service.get_plants_by_type(plant_type)
         
         if not plants:
             raise HTTPException(
@@ -229,7 +229,7 @@ async def get_plants_by_type(plant_type: str):
         return PlantListResponse(
             plants=plant_responses,
             total_count=len(plant_responses),
-            source="static"
+            source="database" if plant_service.database_available else "static"
         )
         
     except HTTPException:

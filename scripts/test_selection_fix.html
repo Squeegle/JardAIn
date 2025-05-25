@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Selection Fix Test</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(45, 90, 45, 0.1);
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #e8f5e8;
+            border-radius: 10px;
+        }
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .demo-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background: #4a7c59;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .demo-btn:hover {
+            background: #2d5a2d;
+        }
+        .status-info {
+            background: #f0f8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Plant Selection Visual Fix Test</h1>
+        <p>This test demonstrates the fix for the visual confusion between search matches and selected plants.</p>
+        
+        <div class="test-section">
+            <h3>🔍 Search Simulation</h3>
+            <div class="demo-controls">
+                <button class="demo-btn" onclick="simulateSearch()">Simulate Search for "pear"</button>
+                <button class="demo-btn" onclick="clearSearch()">Clear Search</button>
+                <button class="demo-btn" onclick="toggleSelection()">Toggle Pear Selection</button>
+            </div>
+            
+            <div class="plant-grid" style="max-height: none;">
+                <div class="plant-card" data-plant="pear">
+                    <div class="plant-emoji">🍐</div>
+                    <div class="plant-name">pear</div>
+                    <div class="plant-type">Fruit</div>
+                </div>
+                <div class="plant-card" data-plant="apple">
+                    <div class="plant-emoji">🍎</div>
+                    <div class="plant-name">apple</div>
+                    <div class="plant-type">Fruit</div>
+                </div>
+                <div class="plant-card" data-plant="carrot">
+                    <div class="plant-emoji">🥕</div>
+                    <div class="plant-name">carrot</div>
+                    <div class="plant-type">Vegetable</div>
+                </div>
+            </div>
+            
+            <div class="status-info" id="status-info">
+                Status: Ready for testing
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📋 Visual States Explanation</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                    <h4>🔍 Search Match (Orange)</h4>
+                    <div class="plant-card search-match" style="margin-bottom: 0.5rem;">
+                        <div class="plant-emoji">🍐</div>
+                        <div class="plant-name">Example Plant</div>
+                        <div class="plant-type">Search Match</div>
+                    </div>
+                    <small>Orange border indicates this plant matches your search query</small>
+                </div>
+                <div>
+                    <h4>✅ Selected (Green)</h4>
+                    <div class="plant-card selected" style="margin-bottom: 0.5rem;">
+                        <div class="plant-emoji">🍐</div>
+                        <div class="plant-name">Example Plant</div>
+                        <div class="plant-type">Selected</div>
+                    </div>
+                    <small>Green border and background indicates this plant is selected for your garden</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isSelected = false;
+        let isSearchMatch = false;
+        
+        function updateStatus() {
+            const statusEl = document.getElementById('status-info');
+            const pearCard = document.querySelector('[data-plant="pear"]');
+            const classes = Array.from(pearCard.classList);
+            
+            statusEl.innerHTML = `
+                Pear card classes: ${classes.join(', ')}<br>
+                Selected: ${isSelected}<br>
+                Search Match: ${isSearchMatch}<br>
+                Visual State: ${getVisualState()}
+            `;
+        }
+        
+        function getVisualState() {
+            if (isSelected && isSearchMatch) return "Selected (green) - takes precedence over search match";
+            if (isSelected) return "Selected (green)";
+            if (isSearchMatch) return "Search Match (orange)";
+            return "Default (neutral)";
+        }
+        
+        function simulateSearch() {
+            const pearCard = document.querySelector('[data-plant="pear"]');
+            pearCard.classList.add('search-match');
+            isSearchMatch = true;
+            updateStatus();
+        }
+        
+        function clearSearch() {
+            const pearCard = document.querySelector('[data-plant="pear"]');
+            pearCard.classList.remove('search-match');
+            isSearchMatch = false;
+            updateStatus();
+        }
+        
+        function toggleSelection() {
+            const pearCard = document.querySelector('[data-plant="pear"]');
+            if (isSelected) {
+                pearCard.classList.remove('selected');
+                isSelected = false;
+            } else {
+                pearCard.classList.add('selected');
+                isSelected = true;
+            }
+            updateStatus();
+        }
+        
+        // Initialize
+        updateStatus();
+    </script>
+</body>
+</html> 

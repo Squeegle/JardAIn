@@ -1,61 +1,115 @@
-# FastAPI and Web Framework
+# ================================
+# JardAIn Garden Planner - Python Dependencies
+# ================================
+# Updated for organized workspace structure
+# Supports both development and production environments
+
+# ================================
+# Core Web Framework
+# ================================
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 jinja2==3.1.2
 python-multipart==0.0.6
 
-# PDF Generation
-weasyprint==61.2
-pydyf==0.10.0
-pillow==10.1.0
-
-# LLM Integration
-openai==1.3.6
-requests==2.31.0
-
-# Ollama (for local LLM)
-ollama==0.1.7
-
+# ================================
 # Database (PostgreSQL)
+# ================================
 sqlalchemy==2.0.23
 asyncpg==0.29.0
 alembic==1.13.0
 psycopg2-binary==2.9.9
 
-# Data Validation and Handling
+# ================================
+# Data Validation and Models
+# ================================
 pydantic==2.5.0
 pydantic-settings==2.1.0
 
-# HTTP Client
+# ================================
+# LLM Integration
+# ================================
+openai==1.3.6
+ollama==0.1.7
+
+# ================================
+# HTTP Clients and Networking
+# ================================
 httpx==0.25.2
+requests==2.31.0
 
-# Environment Management
-python-dotenv==1.0.0
-
-# Date and Time Handling
-python-dateutil==2.8.2
-
-# JSON Processing
-ujson==5.8.0
-
-# File and OS Operations
-pathlib2==2.3.7
-
-# Async Support
-aiofiles==23.2.1
-
-# Development and Testing
-pytest==7.4.3
-pytest-asyncio==0.21.1
-black==23.11.0
-flake8==6.1.0
-
-# Logging
-python-json-logger==2.0.7
-
-# Static File Serving
-aiofiles==23.2.1
-
-# HTML/CSS Processing (for PDF generation)
+# ================================
+# PDF Generation
+# ================================
+weasyprint==61.2
+pydyf==0.10.0
+pillow==10.1.0
 cssselect2==0.7.0
 html5lib==1.1
+
+# ================================
+# Environment and Configuration
+# ================================
+python-dotenv==1.0.0
+
+# ================================
+# Date and Time Handling
+# ================================
+python-dateutil==2.8.2
+
+# ================================
+# JSON and Data Processing
+# ================================
+ujson==5.8.0
+
+# ================================
+# File and Async Operations
+# ================================
+aiofiles==23.2.1
+pathlib2==2.3.7
+
+# ================================
+# Development and Testing
+# ================================
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+
+# ================================
+# Code Quality and Formatting
+# ================================
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
+
+# ================================
+# Logging and Monitoring
+# ================================
+python-json-logger==2.0.7
+
+# ================================
+# Security and Validation
+# ================================
+email-validator==2.1.0
+
+# ================================
+# Additional Utilities
+# ================================
+# For enhanced CLI scripts and utilities
+click==8.1.7
+rich==13.7.0
+tabulate==0.9.0
+
+# ================================
+# Production Dependencies
+# ================================
+# WSGI server for production deployment
+gunicorn==21.2.0
+
+# ================================
+# Optional Development Tools
+# ================================
+# Uncomment for enhanced development experience
+# jupyter==1.0.0
+# ipython==8.17.2
+# pre-commit==3.5.0

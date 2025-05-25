@@ -52,7 +52,6 @@ body {
 
 /* Page Breaks */
 .cover-page,
-.toc-page,
 .overview-page,
 .calendar-page,
 .layout-page,
@@ -271,14 +270,6 @@ body {
     font-weight: 500;
 }
 
-/* =================================
-   TABLE OF CONTENTS STYLING
-   ================================= */
-
-.toc-page {
-    padding: 2rem 0;
-}
-
 .section-title {
     font-size: 2rem;
     font-weight: 700;
@@ -286,57 +277,6 @@ body {
     margin-bottom: 2rem;
     padding-bottom: 0.5rem;
     border-bottom: 3px solid var(--secondary-green);
-}
-
-.toc-content {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.toc-section {
-    margin-bottom: 2rem;
-}
-
-.toc-section h3 {
-    font-size: 1.25rem;
-    color: var(--secondary-green);
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.toc-items {
-    background: var(--light-green);
-    padding: 1rem;
-    border-radius: 10px;
-}
-
-.toc-item {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0;
-    font-size: 0.95rem;
-    border-bottom: 1px solid var(--border-light);
-}
-
-.toc-item:last-child {
-    border-bottom: none;
-}
-
-.toc-text {
-    font-weight: 500;
-    color: var(--text-dark);
-}
-
-.toc-dots {
-    flex: 1;
-    border-bottom: 1px dotted var(--text-light);
-    margin: 0 1rem;
-    height: 1px;
-}
-
-.toc-page {
-    font-weight: 600;
-    color: var(--secondary-green);
 }
 
 /* =================================
@@ -1203,7 +1143,6 @@ body {
 
 @media print {
     .cover-page,
-    .toc-page,
     .overview-page,
     .calendar-page,
     .plant-page,

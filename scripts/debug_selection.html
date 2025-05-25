@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Selection Debug</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        .debug-panel {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-family: monospace;
+        }
+        .debug-info {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .test-btn {
+            padding: 10px 20px;
+            background: #4a7c59;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .test-btn:hover {
+            background: #2d5a2d;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>🧪 Plant Selection State Debug</h1>
+        
+        <div class="debug-panel">
+            <h3>Debug Information</h3>
+            <div class="debug-info" id="debug-info">
+                Initializing...
+            </div>
+            <div class="debug-info" id="selection-state">
+                Selection state will appear here...
+            </div>
+        </div>
+        
+        <div class="test-buttons">
+            <button class="test-btn" onclick="debugApp.testPineapple()">Test Pineapple Selection</button>
+            <button class="test-btn" onclick="debugApp.syncState()">Sync Visual State</button>
+            <button class="test-btn" onclick="debugApp.clearAll()">Clear All Selections</button>
+            <button class="test-btn" onclick="debugApp.showState()">Show Current State</button>
+        </div>
+        
+        <div class="form-section">
+            <h3>🥕 Plant Selection Test</h3>
+            <div class="plant-selection">
+                <div class="plant-search">
+                    <input 
+                        type="text" 
+                        id="plant-search" 
+                        placeholder="Search plants (try 'pineapple')..."
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="plant-grid" id="plant-grid">
+                    <!-- Plants will be loaded here -->
+                </div>
+                <div class="selected-plants">
+                    <h4>Selected Plants (<span id="selected-count">0</span>/20)</h4>
+                    <div id="selected-plants-list" class="selected-plants-list">
+                        <!-- Selected plants will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        class DebugApp extends GardenPlannerApp {
+            constructor() {
+                super();
+                this.debugLog('🧪 Debug app initialized');
+            }
+            
+            debugLog(message) {
+                const debugInfo = document.getElementById('debug-info');
+                const timestamp = new Date().toLocaleTimeString();
+                debugInfo.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+                console.log(`[DEBUG] ${message}`);
+            }
+            
+            updateSelectionState() {
+                const stateDiv = document.getElementById('selection-state');
+                const selectedArray = Array.from(this.selectedPlants);
+                const visuallySelected = Array.from(document.querySelectorAll('.plant-card.selected'))
+                    .map(card => card.getAttribute('data-plant'));
+                
+                stateDiv.innerHTML = `
+                    <strong>Selection State:</strong><br>
+                    • Selected in Set: [${selectedArray.join(', ')}] (${selectedArray.length})<br>
+                    • Visually Selected: [${visuallySelected.join(', ')}] (${visuallySelected.length})<br>
+                    • State Match: ${JSON.stringify(selectedArray.sort()) === JSON.stringify(visuallySelected.sort()) ? '✅ YES' : '❌ NO'}
+                `;
+            }
+            
+            togglePlant(plantName) {
+                this.debugLog(`🔄 Toggling plant: ${plantName}`);
+                super.togglePlant(plantName);
+                this.updateSelectionState();
+            }
+            
+            testPineapple() {
+                this.debugLog('🍍 Testing Pineapple selection...');
+                
+                // Find pineapple in available plants
+                const pineapple = this.availablePlants.find(p => 
+                    p.name.toLowerCase().includes('pineapple')
+                );
+                
+                if (pineapple) {
+                    this.debugLog(`Found pineapple: ${pineapple.name}`);
+                    this.togglePlant(pineapple.name);
+                } else {
+                    this.debugLog('❌ Pineapple not found in available plants');
+                    // Try to search for it
+                    this.performSearch('pineapple');
+                }
+            }
+            
+            syncState() {
+                this.debugLog('🔄 Syncing visual state...');
+                this.syncVisualSelectionState();
+                this.updateSelectionState();
+            }
+            
+            clearAll() {
+                this.debugLog('🧹 Clearing all selections...');
+                this.selectedPlants.clear();
+                this.syncVisualSelectionState();
+                this.updateSelectionState();
+            }
+            
+            showState() {
+                this.updateSelectionState();
+                this.debugLog('📊 Current state displayed');
+            }
+            
+            async loadPlants() {
+                this.debugLog('📥 Loading plants...');
+                await super.loadPlants();
+                this.updateSelectionState();
+                this.debugLog(`✅ Loaded ${this.availablePlants.length} plants`);
+            }
+        }
+        
+        // Initialize debug app
+        document.addEventListener('DOMContentLoaded', () => {
+            window.debugApp = new DebugApp();
+            window.app = window.debugApp; // For autocomplete compatibility
+        });
+    </script>
+</body>
+</html> 

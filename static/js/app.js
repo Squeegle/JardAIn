@@ -24,12 +24,25 @@ class GardenPlannerApp {
 
     async loadPlants() {
         try {
-            const response = await fetch('/api/plants');
+            console.log('🔍 Loading plants from /api/plants/...');
+            const response = await fetch('/api/plants/');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
             const data = await response.json();
+            console.log('✅ API Response received:', data);
+            console.log('📊 Plants data:', data.plants ? `${data.plants.length} plants` : 'No plants array');
+            
+            if (data.plants && data.plants.length > 0) {
+                console.log('🌱 First plant sample:', data.plants[0]);
+            }
+            
             this.availablePlants = data.plants || [];
             this.renderPlantGrid();
         } catch (error) {
-            console.error('Error loading plants:', error);
+            console.error('❌ Error loading plants:', error);
             this.showError('Failed to load plant database. Please refresh the page.');
         }
     }
@@ -37,27 +50,63 @@ class GardenPlannerApp {
     renderPlantGrid() {
         const plantGrid = document.getElementById('plant-grid');
         if (!plantGrid) {
-            console.warn('Plant grid element not found');
+            console.warn('❌ Plant grid element not found');
             return;
         }
 
-        plantGrid.innerHTML = this.availablePlants.map(plant => `
-            <div class="plant-card" data-plant="${plant.name}" onclick="app.togglePlant('${plant.name}')">
-                <div class="plant-emoji">${this.getPlantEmoji(plant.type)}</div>
-                <div class="plant-name">${plant.name}</div>
-                <div class="plant-type">${plant.type}</div>
-            </div>
-        `).join('');
+        console.log(`🎨 Rendering ${this.availablePlants.length} plants...`);
         
-        console.log(`✅ Loaded ${this.availablePlants.length} plants`);
+        if (this.availablePlants.length > 0) {
+            console.log('🔍 Sample plant for rendering:', this.availablePlants[0]);
+        }
+
+        plantGrid.innerHTML = this.availablePlants.map(plant => {
+            const emoji = this.getPlantEmoji(plant.plant_type);
+            const plantType = plant.plant_type || 'UNDEFINED';
+            
+            console.log(`🌱 Rendering ${plant.name}: type="${plantType}", emoji="${emoji}"`);
+            
+            return `
+                <div class="plant-card" data-plant="${plant.name}" onclick="app.togglePlant('${plant.name}')">
+                    <div class="plant-emoji">${emoji}</div>
+                    <div class="plant-name">${plant.name}</div>
+                    <div class="plant-type">${plantType}</div>
+                </div>
+            `;
+        }).join('');
+        
+        // Ensure visual state matches selection state
+        this.syncVisualSelectionState();
+        
+        console.log(`✅ Rendered ${this.availablePlants.length} plant cards`);
+    }
+    
+    syncVisualSelectionState() {
+        // Ensure all plant cards' visual state matches the selectedPlants Set
+        const plantCards = document.querySelectorAll('.plant-card');
+        plantCards.forEach(card => {
+            const plantName = card.getAttribute('data-plant');
+            const isSelected = this.selectedPlants.has(plantName);
+            
+            if (isSelected) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        });
+        
+        // Update the counter
+        this.updateSelectedCount();
     }
 
     getPlantEmoji(type) {
         const emojis = {
             'fruit': '🍅',
+            'vegetable': '🥕',
+            'herb': '🌿',
+            // Legacy support for more specific types
             'leafy_green': '🥬',
             'root_vegetable': '🥕',
-            'herb': '🌿',
             'legume': '🌱',
             'vine': '🥒',
             'bulb': '🧅',
@@ -67,22 +116,29 @@ class GardenPlannerApp {
     }
 
     togglePlant(plantName) {
-        if (this.selectedPlants.has(plantName)) {
+        const isCurrentlySelected = this.selectedPlants.has(plantName);
+        
+        if (isCurrentlySelected) {
             this.selectedPlants.delete(plantName);
         } else {
             this.selectedPlants.add(plantName);
         }
         
-        // Update visual selection
+        // Update visual selection - ensure it matches the actual state
         const plantCard = document.querySelector(`[data-plant="${plantName}"]`);
         if (plantCard) {
-            plantCard.classList.toggle('selected');
+            if (isCurrentlySelected) {
+                plantCard.classList.remove('selected');
+            } else {
+                plantCard.classList.add('selected');
+            }
         }
         
         // Update selected count
         this.updateSelectedCount();
         
-        console.log(`Selected plants: ${Array.from(this.selectedPlants).join(', ')}`);
+        console.log(`${isCurrentlySelected ? 'Deselected' : 'Selected'} plant: ${plantName}`);
+        console.log(`Total selected plants: ${Array.from(this.selectedPlants).join(', ')}`);
     }
 
     updateSelectedCount() {
@@ -336,7 +392,10 @@ class GardenPlannerApp {
         // If plant is already in grid, just select it
         const existingCard = document.querySelector(`[data-plant="${plantName}"]`);
         if (existingCard) {
-            this.togglePlant(plantName);
+            // Ensure the plant gets selected (not toggled)
+            if (!this.selectedPlants.has(plantName)) {
+                this.togglePlant(plantName);
+            }
             this.hideAutocomplete();
             return;
         }
@@ -358,7 +417,7 @@ class GardenPlannerApp {
             
             const plant = await response.json();
             this.addAIPlantToGrid(plant);
-            this.togglePlant(plantName); // Auto-select it
+            // Note: addAIPlantToGrid already auto-selects the plant, no need to toggle again
             
         } catch (error) {
             console.error('Error fetching plant:', error);
@@ -371,6 +430,8 @@ class GardenPlannerApp {
         const plantCards = document.querySelectorAll('.plant-card');
         plantCards.forEach(card => {
             card.style.display = 'block';
+            // Clear search match highlighting when showing all plants
+            card.classList.remove('search-match');
         });
     }
     

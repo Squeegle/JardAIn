@@ -75,7 +75,7 @@ docker run -d --name jardain_postgres \
 ```
 
 **Option C: Manual Setup**
-See the detailed [Database Setup Guide](DATABASE_SETUP.md) for native installation instructions.
+See the detailed [Database Setup Guide](docs/DATABASE_SETUP.md) for native installation instructions.
 
 5. **Set up environment variables**
 Create a `.env` file in the root directory:
@@ -108,7 +108,7 @@ LOGS_PATH=logs/
 
 **Note:** If you used the automated database setup script, your `.env` file will be created automatically with the correct database settings.
 
-**⚠️ Security Note:** Never commit your `.env` file to version control. It contains sensitive information like database passwords and API keys. See [SECURITY.md](SECURITY.md) for detailed security guidelines.
+**⚠️ Security Note:** Never commit your `.env` file to version control. It contains sensitive information like database passwords and API keys. See [SECURITY.md](docs/SECURITY.md) for detailed security guidelines.
 
 6. **Set up database schema**
 ```bash
@@ -170,6 +170,88 @@ curl -X GET "http://localhost:8000/api/pdf/garden-plan/{plan_id}" \
 
 ## 🏗️ Project Structure
 
+### 📂 Organized Workspace
+The project has been organized into logical directories for better maintainability:
+
+- **`/config`** - All configuration files and environment templates
+- **`/docs`** - Complete documentation and setup guides  
+- **`/deployment`** - Deployment scripts and infrastructure tools
+- **`/scripts`** - Testing scripts, utilities, and development tools
+- **`/models`** - Database models and data structures
+- **`/services`** - Business logic and core functionality
+- **`/routers`** - API endpoints and route handlers
+- **`/templates`** - HTML templates for the web interface
+- **`/static`** - CSS, JavaScript, and static assets
+
+### 📁 Directory Structure
+
+```
+JardAIn/
+├── 📁 config/                    # Configuration files
+│   ├── env.example              # Environment template
+│   ├── env.docker.example       # Docker environment template
+│   ├── env.production           # Production environment config
+│   └── nginx.conf               # Nginx configuration
+├── 📁 docs/                     # Documentation
+│   ├── DATABASE_SETUP.md        # Database setup guide
+│   ├── DEPLOYMENT.md            # Deployment documentation
+│   ├── PRODUCTION_READY.md      # Production readiness guide
+│   ├── SECURITY.md              # Security guidelines
+│   └── SETUP_SUMMARY.md         # Setup summary
+├── 📁 deployment/               # Deployment scripts
+│   ├── deploy.sh                # Application deployment script
+│   ├── get-docker.sh            # Docker installation script
+│   └── setup_db.sh              # Database setup script
+├── 📁 scripts/                  # Testing & utility scripts
+│   ├── test_*.py                # Various test scripts
+│   ├── debug_*.py               # Debug utilities
+│   ├── setup_database*.py       # Database setup utilities
+│   ├── db_viewer.py             # Database viewer utility
+│   ├── verify_fix.py            # Verification scripts
+│   └── README.md                # Scripts documentation
+├── 📁 models/                   # SQLAlchemy data models
+│   ├── __init__.py
+│   ├── base.py                  # Base model class
+│   ├── garden_plan.py           # Garden plan model
+│   ├── plant.py                 # Plant model
+│   └── user.py                  # User model
+├── 📁 services/                 # Business logic services
+│   ├── __init__.py
+│   ├── garden_plan_service.py   # Garden planning logic
+│   ├── llm_service.py           # LLM integration
+│   ├── location_service.py      # Location/climate data
+│   ├── pdf_service.py           # PDF generation
+│   └── plant_service.py         # Plant data management
+├── 📁 routers/                  # FastAPI route handlers
+│   ├── __init__.py
+│   ├── garden_plans.py          # Garden plan endpoints
+│   ├── pdf.py                   # PDF generation endpoints
+│   └── plants.py                # Plant data endpoints
+├── 📁 templates/                # Jinja2 HTML templates
+│   ├── base.html                # Base template
+│   ├── index.html               # Main page
+│   └── garden_plan.html         # Garden plan display
+├── 📁 static/                   # Static web assets
+│   ├── css/                     # Stylesheets
+│   ├── js/                      # JavaScript files
+│   └── images/                  # Images and icons
+├── 📁 data/                     # Data files
+│   └── common_vegetables.json   # Plant database
+├── 📁 alembic/                  # Database migrations
+│   ├── versions/                # Migration files
+│   ├── env.py                   # Alembic environment
+│   └── script.py.mako           # Migration template
+├── 📁 generated_plans/          # Generated garden plans
+├── 📁 logs/                     # Application logs
+├── 📄 main.py                   # FastAPI application entry point
+├── 📄 config.py                 # Application configuration
+├── 📄 requirements.txt          # Python dependencies
+├── 📄 docker-compose.yml        # Docker services configuration
+├── 📄 Dockerfile               # Docker build instructions
+├── 📄 alembic.ini              # Alembic configuration
+├── 📄 .gitignore               # Git ignore rules
+├── 📄 .dockerignore            # Docker ignore rules
+└── 📄 README.md                # This file
 ```
 
 ## 🔧 Configuration
@@ -199,13 +281,26 @@ curl -X GET "http://localhost:8000/api/pdf/garden-plan/{plan_id}" \
 # Run all tests
 pytest
 
-# Run specific test files
-pytest tests/test_plant_service.py
-pytest tests/test_garden_plan.py
+# Run specific test files from scripts directory
+python scripts/test_plant_database.py
+python scripts/test_garden_plan_service.py
+python scripts/test_db_integration.py
+
+# Quick health check
+python scripts/quick_health_check.py
 
 # Test with coverage
 pytest --cov=services --cov-report=html
 ```
+
+### 🔧 Development Scripts
+The `/scripts` directory contains various testing and utility scripts:
+
+- **Database Testing**: `test_db_integration.py`, `test_plant_database.py`
+- **API Testing**: `test_garden_plan_api.py`, `test_pdf_generation.py`
+- **Debug Tools**: `debug_*.py` files for troubleshooting
+- **Setup Utilities**: `setup_database_enhanced.py`, `migrate_plants_to_db.py`
+- **Health Checks**: `quick_health_check.py` for system verification
 
 ## 🛠️ Development
 
@@ -292,7 +387,7 @@ sudo systemctl status postgresql
 
 **Database Setup Problems**
 - Run the automated setup: `python scripts/setup_database_enhanced.py`
-- Check the detailed guide: [Database Setup Guide](DATABASE_SETUP.md)
+- Check the detailed guide: [Database Setup Guide](docs/DATABASE_SETUP.md)
 - Verify `.env` file has correct database settings
 - Ensure database user has proper permissions
 
@@ -310,16 +405,33 @@ alembic history
 ## 🚀 Deployment
 
 ### Production Deployment
-1. Set environment variables for production
+1. Set environment variables for production (see `config/env.production`)
 2. Use production WSGI server (Gunicorn recommended)
-3. Configure reverse proxy (Nginx recommended)
+3. Configure reverse proxy (see `config/nginx.conf`)
 4. Set up SSL certificate
 5. Configure file permissions for PDF generation
 
 ```bash
-# Production server with Gunicorn
+# Quick deployment using provided script
+./deployment/deploy.sh
+
+# Manual production server with Gunicorn
 gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
 ```
+
+### 🐳 Docker Deployment
+```bash
+# Install Docker (if needed)
+./deployment/get-docker.sh
+
+# Set up database
+./deployment/setup_db.sh
+
+# Build and run with docker-compose
+docker-compose up -d
+```
+
+For detailed deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## 🤝 Contributing
 

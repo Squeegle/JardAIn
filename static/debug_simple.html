@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Plant Loading Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .plant-card { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            margin: 5px; 
+            display: inline-block; 
+            width: 150px; 
+            text-align: center; 
+            border-radius: 8px;
+        }
+        .plant-emoji { font-size: 2rem; margin-bottom: 5px; }
+        .plant-name { font-weight: bold; margin-bottom: 3px; }
+        .plant-type { color: #666; font-size: 0.9rem; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Simple Plant Loading Test</h1>
+    
+    <div id="status" class="status info">Loading...</div>
+    
+    <h2>Plant Grid:</h2>
+    <div id="plant-grid">
+        <div class="status info">Initializing...</div>
+    </div>
+
+    <script>
+        console.log('🚀 Simple test starting...');
+        
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            console.log(message);
+        }
+        
+        function getPlantEmoji(type) {
+            const emojis = {
+                'fruit': '🍅',
+                'vegetable': '🥕',
+                'herb': '🌿'
+            };
+            return emojis[type] || '🌱';
+        }
+        
+        async function loadAndDisplayPlants() {
+            try {
+                updateStatus('🔍 Fetching plants from API...', 'info');
+                
+                const response = await fetch('/api/plants/');
+                console.log('📡 API Response:', response);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('📦 API Data:', data);
+                
+                const plants = data.plants || [];
+                updateStatus(`✅ Loaded ${plants.length} plants from API`, 'success');
+                
+                if (plants.length === 0) {
+                    document.getElementById('plant-grid').innerHTML = '<div class="status error">No plants found in API response</div>';
+                    return;
+                }
+                
+                // Display first 10 plants
+                const plantsToShow = plants.slice(0, 10);
+                console.log('🎨 Rendering plants:', plantsToShow);
+                
+                const plantGrid = document.getElementById('plant-grid');
+                plantGrid.innerHTML = plantsToShow.map(plant => {
+                    const emoji = getPlantEmoji(plant.plant_type);
+                    const name = plant.name || 'Unknown';
+                    const type = plant.plant_type || 'Unknown';
+                    
+                    console.log(`🌱 Rendering: ${name} (${type}) ${emoji}`);
+                    
+                    return `
+                        <div class="plant-card">
+                            <div class="plant-emoji">${emoji}</div>
+                            <div class="plant-name">${name}</div>
+                            <div class="plant-type">${type}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                updateStatus(`🎉 Successfully displayed ${plantsToShow.length} plants`, 'success');
+                
+            } catch (error) {
+                console.error('❌ Error:', error);
+                updateStatus(`❌ Error: ${error.message}`, 'error');
+                document.getElementById('plant-grid').innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Start when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM loaded, starting plant loading...');
+            loadAndDisplayPlants();
+        });
+    </script>
+</body>
+</html> 

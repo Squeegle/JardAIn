@@ -1,0 +1,108 @@
+{
+  "plan_id": "b526637a-fdc8-488b-87e8-8f31c7717d25",
+  "created_date": "2025-05-25T10:02:14.808702",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "purple kale"
+  ],
+  "plant_information": [
+    {
+      "name": "purple kale",
+      "scientific_name": "Brassica oleracea var. sabellica",
+      "plant_type": "vegetable",
+      "days_to_harvest": 50,
+      "spacing_inches": 18,
+      "planting_depth_inches": 0.5,
+      "sun_requirements": "full sun to partial shade",
+      "water_requirements": "moderate",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "broccoli",
+        "cauliflower",
+        "strawberries"
+      ],
+      "avoid_planting_with": [
+        "tomatoes",
+        "peppers"
+      ]
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "purple kale",
+      "start_indoors_date": null,
+      "direct_sow_date": "2024-04-20",
+      "transplant_date": null,
+      "harvest_start_date": "2024-06-10",
+      "harvest_end_date": "2024-07-30",
+      "succession_planting_interval": 21
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "purple kale",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun to partial shade receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start purple kale seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 0.5 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water purple kale deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect purple kale weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting purple kale approximately 50 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh purple kale at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for vegetable type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "purple kale"
+        ],
+        "spacing_notes": "Space purple kale 18 inches apart in a grid pattern to allow for easy access and air circulation"
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Choose a location with full sun to partial shade for your purple kale plants, as they require at least 6 hours of direct sunlight per day.",
+    "In Moncton's cold climate, it's essential to start purple kale seeds indoors 4-6 weeks before the last frost date (around late May). Sow seeds in seed trays or small pots and keep them in a warm location until they're ready to be transplanted outside.",
+    "Purple kale prefers well-draining soil with a pH between 6.0 and 7.0. Test your soil to determine its pH level and amend it if necessary. Add compost or well-rotted manure to improve soil fertility and drainage.",
+    "Water your purple kale plants regularly, but avoid overwatering, which can lead to root rot and other problems. Aim for about 1 inch of water per week, either from rain or irrigation.",
+    "Purple kale is a cool-season crop and does best in temperatures between 40\u00b0F and 70\u00b0F (4\u00b0C and 21\u00b0C). In Moncton's climate, it's best to plant purple kale in early spring or late summer/early fall for a fall harvest.",
+    "Keep an eye out for pests like aphids, slugs, and snails, which can damage your purple kale plants. Use organic pest control methods whenever possible, such as neem oil or diatomaceous earth."
+  ]
+}

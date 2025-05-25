@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Tiles Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .plant-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .plant-card { border: 2px solid #e8f5e8; border-radius: 10px; padding: 1rem; text-align: center; }
+        .plant-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+        .plant-name { font-weight: 600; color: #2d5a2d; margin-bottom: 0.5rem; }
+        .plant-type { font-size: 0.85rem; color: #666; text-transform: capitalize; }
+    </style>
+</head>
+<body>
+    <h1>🌱 Plant Tiles Category Test</h1>
+    <p>This page tests the plant tile rendering with correct categories.</p>
+    
+    <div id="plant-grid" class="plant-grid">
+        <!-- Plants will be loaded here -->
+    </div>
+
+    <script>
+        // Test data matching the API structure
+        const testPlants = [
+            { name: "Tomato", plant_type: "vegetable", days_to_harvest: 75 },
+            { name: "Basil", plant_type: "herb", days_to_harvest: 65 },
+            { name: "Strawberries", plant_type: "fruit", days_to_harvest: 365 },
+            { name: "Lettuce", plant_type: "vegetable", days_to_harvest: 45 },
+            { name: "Cilantro", plant_type: "herb", days_to_harvest: 40 },
+            { name: "Watermelon", plant_type: "fruit", days_to_harvest: 85 }
+        ];
+
+        // Emoji mapping function (same as in app.js)
+        function getPlantEmoji(type) {
+            const emojis = {
+                'fruit': '🍅',
+                'vegetable': '🥕',
+                'herb': '🌿',
+                // Legacy support for more specific types
+                'leafy_green': '🥬',
+                'root_vegetable': '🥕',
+                'legume': '🌱',
+                'vine': '🥒',
+                'bulb': '🧅',
+                'cruciferous': '🥦'
+            };
+            return emojis[type] || '🌱';
+        }
+
+        // Render plant grid (same logic as in app.js)
+        function renderPlantGrid() {
+            const plantGrid = document.getElementById('plant-grid');
+            
+            plantGrid.innerHTML = testPlants.map(plant => `
+                <div class="plant-card" data-plant="${plant.name}">
+                    <div class="plant-emoji">${getPlantEmoji(plant.plant_type)}</div>
+                    <div class="plant-name">${plant.name}</div>
+                    <div class="plant-type">${plant.plant_type}</div>
+                </div>
+            `).join('');
+            
+            console.log(`✅ Loaded ${testPlants.length} test plants`);
+        }
+
+        // Load plants when page loads
+        document.addEventListener('DOMContentLoaded', renderPlantGrid);
+    </script>
+</body>
+</html> 

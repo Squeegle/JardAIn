@@ -1,0 +1,105 @@
+{
+  "plan_id": "2029a835-5460-49d3-9001-2b282f19003e",
+  "created_date": "2025-05-25T10:03:58.015055",
+  "location": {
+    "zip_code": "E1E 2A2",
+    "city": "Moncton",
+    "state": "New Brunswick",
+    "usda_zone": "4a-6a",
+    "last_frost_date": "2025-05-10",
+    "first_frost_date": "2025-10-01",
+    "growing_season_days": 144,
+    "climate_type": "cold"
+  },
+  "selected_plants": [
+    "pineapple"
+  ],
+  "plant_information": [
+    {
+      "name": "pineapple",
+      "scientific_name": "Ananas comosus",
+      "plant_type": "fruit",
+      "days_to_harvest": 120,
+      "spacing_inches": 18,
+      "planting_depth_inches": 1.5,
+      "sun_requirements": "full sun",
+      "water_requirements": "high",
+      "soil_ph_range": "6.0-7.0",
+      "companion_plants": [
+        "marigold",
+        "chili pepper",
+        "basil"
+      ],
+      "avoid_planting_with": []
+    }
+  ],
+  "planting_schedules": [
+    {
+      "plant_name": "Pineapple",
+      "start_indoors_date": null,
+      "direct_sow_date": "2025-05-10",
+      "transplant_date": null,
+      "harvest_start_date": "2026-08-29",
+      "harvest_end_date": "2026-11-22",
+      "succession_planting_interval": 120
+    }
+  ],
+  "growing_instructions": [
+    {
+      "plant_name": "pineapple",
+      "preparation_steps": [
+        "Test soil pH to 6.0-7.0 using digital meter 2-3 weeks before planting",
+        "Work 2-3 inches compost into top 8 inches soil when temperature reaches 50\u00b0F",
+        "Choose location with full sun receiving 6-8 hours direct sunlight daily"
+      ],
+      "planting_steps": [
+        "Start pineapple seeds indoors 6-8 weeks before 2025-05-10 at 70-75\u00b0F soil temperature",
+        "Sow seeds 1.5 inches deep with 18 inch spacing between plants",
+        "Transplant outdoors 2 weeks after 2025-05-10 when nighttime temperatures stay above 50\u00b0F"
+      ],
+      "care_instructions": [
+        "Water pineapple deeply 1-1.5 inches per week checking soil moisture 2 inches deep every 3 days",
+        "Apply 10-10-10 fertilizer at 2 tablespoons per plant every 3 weeks starting 2 weeks after transplant",
+        "Mulch with 2-3 inches organic matter keeping 6 inches away from plant stem"
+      ],
+      "pest_management": [
+        "Inspect pineapple weekly for common zone 4a-6a pests from May through September",
+        "Apply neem oil spray at 2 tablespoons per gallon water every 14 days if pests detected",
+        "Use floating row covers first 3 weeks after transplant to prevent early season pest damage"
+      ],
+      "harvest_instructions": [
+        "Begin harvesting pineapple approximately 120 days after transplant when fruits reach full size",
+        "Harvest in early morning 6-8 AM when temperatures below 75\u00b0F for best quality and flavor",
+        "Cut stems with clean sharp shears 1/4 inch above leaf node to encourage continued production"
+      ],
+      "storage_tips": [
+        "Store fresh pineapple at 55-60\u00b0F with 85% humidity for maximum 7-10 days after harvest",
+        "Blanch and freeze within 24 hours of harvest - maintains quality for 8-12 months in freezer",
+        "Preserve excess using canning or dehydrating methods appropriate for fruit type"
+      ]
+    }
+  ],
+  "layout_recommendations": {
+    "garden_dimensions": "Recommended for medium garden",
+    "plant_groupings": [
+      {
+        "group_name": "Main Garden Area",
+        "plants": [
+          "pineapple"
+        ],
+        "spacing_notes": "Pineapples can be spaced 18 inches apart to allow for proper growth and air circulation. Consider grouping them in a triangular formation to maximize space."
+      }
+    ],
+    "spacing_guide": {},
+    "companion_planting_tips": [],
+    "layout_tips": []
+  },
+  "general_tips": [
+    "Pineapple plants prefer well-draining soil with a pH between 5.5 and 6.5, so test your soil before planting.",
+    "In Moncton's cold climate, it's best to grow pineapple as an indoor plant or in a greenhouse until the temperature warms up in late spring.",
+    "Choose a variety of pineapple that is resistant to frost, such as 'Smooth Cayenne' or 'Red Spanish', for better success in your garden.",
+    "Pineapple plants require full sun to produce fruit, so choose a location with direct sunlight for at least 6 hours a day.",
+    "Water your pineapple plant regularly, but make sure the soil isn't waterlogged. Pineapples are sensitive to root rot and can be susceptible to fungal diseases in wet conditions.",
+    "Fertilize your pineapple plant with a balanced fertilizer (10-10-10) during the growing season (April to September), following the manufacturer's instructions for application rates."
+  ]
+}

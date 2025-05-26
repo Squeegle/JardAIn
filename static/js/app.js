@@ -575,7 +575,10 @@ class GardenPlannerApp {
             return;
         }
 
-        // Show loading state
+        // Show button loading state
+        this.setButtonLoading(true);
+        
+        // Show loading modal
         this.showLoading();
 
         try {
@@ -641,6 +644,7 @@ class GardenPlannerApp {
             this.showError(errorMessage);
         } finally {
             this.hideLoading();
+            this.setButtonLoading(false);
         }
     }
 
@@ -814,77 +818,85 @@ class GardenPlannerApp {
     }
 
     showLoading() {
-        const resultsDiv = document.getElementById('results');
-        if (resultsDiv) {
-            resultsDiv.innerHTML = `
-                <div class="step-loading">
-                    <div class="loading-container">
-                        <div class="loading-header">
-                            <div class="loading-icon">🌱</div>
-                            <h2 class="loading-title">Creating Your Garden Plan</h2>
+        // Create modal overlay and modal content
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'loading-modal-overlay';
+        modalOverlay.id = 'loading-modal-overlay';
+        
+        modalOverlay.innerHTML = `
+            <div class="loading-modal">
+                <button class="loading-modal-close" id="loading-modal-close" title="Close">×</button>
+                <div class="loading-container">
+                    <div class="loading-header">
+                        <div class="loading-icon">🌱</div>
+                        <h2 class="loading-title">Creating Your Garden Plan</h2>
+                    </div>
+                    
+                    <div class="loading-steps">
+                        <div class="step-item" id="step-1">
+                            <div class="step-icon">📍</div>
+                            <div class="step-content">
+                                <div class="step-title">Analyzing Location</div>
+                                <div class="step-description">Getting climate data for your area</div>
+                            </div>
+                            <div class="step-status">⏳</div>
                         </div>
                         
-                        <div class="loading-steps">
-                            <div class="step-item" id="step-1">
-                                <div class="step-icon">📍</div>
-                                <div class="step-content">
-                                    <div class="step-title">Analyzing Location</div>
-                                    <div class="step-description">Getting climate data for your area</div>
-                                </div>
-                                <div class="step-status">⏳</div>
+                        <div class="step-item" id="step-2">
+                            <div class="step-icon">🌱</div>
+                            <div class="step-content">
+                                <div class="step-title">Plant Information</div>
+                                <div class="step-description">Gathering details for selected plants</div>
                             </div>
-                            
-                            <div class="step-item" id="step-2">
-                                <div class="step-icon">🌱</div>
-                                <div class="step-content">
-                                    <div class="step-title">Plant Information</div>
-                                    <div class="step-description">Gathering details for selected plants</div>
-                                </div>
-                                <div class="step-status">⏸️</div>
-                            </div>
-                            
-                            <div class="step-item" id="step-3">
-                                <div class="step-icon">📅</div>
-                                <div class="step-content">
-                                    <div class="step-title">Planting Schedules</div>
-                                    <div class="step-description">Creating personalized timing</div>
-                                </div>
-                                <div class="step-status">⏸️</div>
-                            </div>
-                            
-                            <div class="step-item" id="step-4">
-                                <div class="step-icon">📋</div>
-                                <div class="step-content">
-                                    <div class="step-title">Growing Instructions</div>
-                                    <div class="step-description">Generating care guides</div>
-                                </div>
-                                <div class="step-status">⏸️</div>
-                            </div>
-                            
-                            <div class="step-item" id="step-5">
-                                <div class="step-icon">📄</div>
-                                <div class="step-content">
-                                    <div class="step-title">Finalizing Plan</div>
-                                    <div class="step-description">Putting it all together</div>
-                                </div>
-                                <div class="step-status">⏸️</div>
-                            </div>
+                            <div class="step-status">⏸️</div>
                         </div>
                         
-                        <div class="progress-section">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progress-fill"></div>
+                        <div class="step-item" id="step-3">
+                            <div class="step-icon">📅</div>
+                            <div class="step-content">
+                                <div class="step-title">Planting Schedules</div>
+                                <div class="step-description">Creating personalized timing</div>
                             </div>
-                            <div class="progress-text" id="progress-text">Step 1 of 5</div>
+                            <div class="step-status">⏸️</div>
+                        </div>
+                        
+                        <div class="step-item" id="step-4">
+                            <div class="step-icon">📋</div>
+                            <div class="step-content">
+                                <div class="step-title">Growing Instructions</div>
+                                <div class="step-description">Generating care guides</div>
+                            </div>
+                            <div class="step-status">⏸️</div>
+                        </div>
+                        
+                        <div class="step-item" id="step-5">
+                            <div class="step-icon">📄</div>
+                            <div class="step-content">
+                                <div class="step-title">Finalizing Plan</div>
+                                <div class="step-description">Putting it all together</div>
+                            </div>
+                            <div class="step-status">⏸️</div>
                         </div>
                     </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">Step 1 of 5</div>
+                    </div>
                 </div>
-            `;
-            resultsDiv.style.display = 'block';
-            
-            // Start the step-based loading animation
-            this.startStepLoading();
-        }
+            </div>
+        `;
+        
+        // Add modal to the body
+        document.body.appendChild(modalOverlay);
+        
+        // Add event listeners for closing the modal
+        this.setupModalEventListeners();
+        
+        // Start the step-based loading animation
+        this.startStepLoading();
     }
 
     hideLoading() {
@@ -901,7 +913,93 @@ class GardenPlannerApp {
             this.stepTimeout = null;
         }
         
-        console.log('🔄 Step loading animation stopped and cleaned up');
+        // Remove the modal from the DOM
+        const modalOverlay = document.getElementById('loading-modal-overlay');
+        if (modalOverlay) {
+            // Add fade-out animation before removing
+            modalOverlay.style.animation = 'modalFadeOut 0.3s ease-out forwards';
+            setTimeout(() => {
+                if (modalOverlay.parentNode) {
+                    modalOverlay.parentNode.removeChild(modalOverlay);
+                }
+            }, 300);
+        }
+        
+        console.log('🔄 Step loading animation stopped and modal removed');
+    }
+
+    // ========================
+    // Button State Management
+    // ========================
+    
+    setButtonLoading(isLoading) {
+        const generateBtn = document.getElementById('generate-btn');
+        const btnText = generateBtn?.querySelector('.btn-text');
+        const btnLoading = generateBtn?.querySelector('.btn-loading');
+        
+        if (!generateBtn || !btnText || !btnLoading) return;
+        
+        if (isLoading) {
+            generateBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline-flex';
+            generateBtn.classList.add('loading');
+        } else {
+            generateBtn.disabled = false;
+            btnText.style.display = 'inline-flex';
+            btnLoading.style.display = 'none';
+            generateBtn.classList.remove('loading');
+        }
+    }
+
+    // ========================
+    // Modal Event Listeners
+    // ========================
+    
+    setupModalEventListeners() {
+        const modalOverlay = document.getElementById('loading-modal-overlay');
+        const closeButton = document.getElementById('loading-modal-close');
+        
+        // Close modal when clicking the close button
+        if (closeButton) {
+            closeButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeLoadingModal();
+            });
+        }
+        
+        // Close modal when clicking outside the modal content
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    this.closeLoadingModal();
+                }
+            });
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', this.handleModalKeydown.bind(this));
+    }
+    
+    handleModalKeydown(e) {
+        if (e.key === 'Escape') {
+            const modalOverlay = document.getElementById('loading-modal-overlay');
+            if (modalOverlay) {
+                this.closeLoadingModal();
+            }
+        }
+    }
+    
+    closeLoadingModal() {
+        // Only allow closing if the generation is not in progress
+        // You might want to add a confirmation dialog here
+        const shouldClose = confirm('Are you sure you want to cancel the garden plan generation?');
+        if (shouldClose) {
+            this.hideLoading();
+            this.setButtonLoading(false);
+            // Remove the keydown event listener
+            document.removeEventListener('keydown', this.handleModalKeydown.bind(this));
+        }
     }
     
     // ========================

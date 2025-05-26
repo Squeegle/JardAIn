@@ -37,7 +37,8 @@
         "PDF_FONT_FAMILY": "Arial",
         "DEFAULT_GARDEN_SIZE": "medium",
         "DEFAULT_EXPERIENCE_LEVEL": "beginner",
-        "MAX_SELECTED_PLANTS": "20"
+        "MAX_SELECTED_PLANTS": "20",
+        "ALLOWED_ORIGINS": "https://${{RAILWAY_PUBLIC_DOMAIN}},http://localhost:3000,http://localhost:8000"
       }
     }
   }

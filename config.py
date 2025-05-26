@@ -152,9 +152,10 @@ class Settings(BaseSettings):
         default=8000, 
         description="Server port"
     )
-    allowed_origins: List[str] = Field(
-        default=["http://localhost:3000", "http://localhost:8000"], 
-        description="CORS allowed origins"
+    allowed_origins_str: str = Field(
+        default="http://localhost:3000,http://localhost:8000", 
+        description="CORS allowed origins (comma-separated)",
+        alias="ALLOWED_ORIGINS"
     )
     
     # ========================
@@ -201,6 +202,19 @@ class Settings(BaseSettings):
         for directory in directories:
             if directory:  # Only create if not empty string
                 os.makedirs(directory, exist_ok=True)
+    
+    @property
+    def allowed_origins(self) -> List[str]:
+        """
+        Parse CORS allowed origins from comma-separated string
+        """
+        if not self.allowed_origins_str:
+            return ["*"]  # Allow all origins if none specified
+        
+        # Split by comma and clean up whitespace
+        origins = [origin.strip() for origin in self.allowed_origins_str.split(",")]
+        # Filter out empty strings
+        return [origin for origin in origins if origin]
     
     @property
     def is_production(self) -> bool:

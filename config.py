@@ -206,8 +206,19 @@ class Settings(BaseSettings):
     def is_production(self) -> bool:
         """
         Check if running in production mode
+        Detects Railway environment and production settings
         """
-        return not self.debug
+        # Check for Railway environment variables
+        railway_env = os.getenv("RAILWAY_ENVIRONMENT") is not None
+        # Check for production indicators
+        production_indicators = [
+            not self.debug,
+            self.llm_provider == "openai",
+            os.getenv("RAILWAY_PROJECT_ID") is not None,
+            os.getenv("PORT") is not None  # Railway sets PORT
+        ]
+        
+        return railway_env or any(production_indicators)
     
     @property
     def llm_config(self) -> dict:

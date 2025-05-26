@@ -1,0 +1,83 @@
+# JardAIn Garden Planner - Railway Deployment Dockerfile
+# Optimized for Railway platform deployment with production settings
+
+FROM python:3.11-slim
+
+# Set environment variables for production
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONPATH="/app" \
+    DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies with WeasyPrint requirements
+# Consolidated and deduplicated package list
+RUN apt-get update && apt-get install -y \
+    # Build tools
+    build-essential \
+    pkg-config \
+    # Database dependencies
+    libpq-dev \
+    # SSL and crypto
+    libffi-dev \
+    libssl-dev \
+    # Network tools
+    curl \
+    ca-certificates \
+    # WeasyPrint core dependencies
+    libpango-1.0-0 \
+    libpangoft2-1.0-0 \
+    libgdk-pixbuf2.0-0 \
+    libcairo2 \
+    libcairo-gobject2 \
+    # XML processing
+    libxml2-dev \
+    libxslt1-dev \
+    # Font and MIME support
+    fontconfig \
+    shared-mime-info \
+    fonts-dejavu-core \
+    fonts-liberation \
+    fonts-noto \
+    # GLib dependencies (corrected package names)
+    libglib2.0-0t64 \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Create application directory first
+WORKDIR /app
+
+# Copy requirements first for better Docker layer caching
+COPY requirements.txt .
+
+# Install Python dependencies with better error handling
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip check
+
+# Copy application code
+COPY . .
+
+# Create necessary directories with proper permissions
+# Note: Railway runs as root, so we don't need to create a separate user
+RUN mkdir -p /tmp/logs /tmp/generated_plans /app/static /app/data && \
+    chmod -R 755 /app /tmp/logs /tmp/generated_plans
+
+# Ensure plant data is available (non-blocking check)
+RUN if [ ! -f /app/data/common_vegetables.json ]; then \
+        echo "Warning: Plant data file not found at /app/data/common_vegetables.json"; \
+        echo "Application will use default plant data"; \
+    fi
+
+# Expose port (Railway will set PORT environment variable)
+EXPOSE 8000
+
+# Simplified health check that works with Railway
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
+
+# Production startup command optimized for Railway
+# Railway automatically sets PORT environment variable
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --access-log --log-level info --timeout-keep-alive 30"] 

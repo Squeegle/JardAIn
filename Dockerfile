@@ -2,7 +2,7 @@
 # Multi-stage build for optimized production image
 
 # Build stage
-FROM python:3.11-slim as builder
+FROM python:3.11-slim AS builder
 
 # Set environment variables for build
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -28,7 +28,7 @@ RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # Production stage
-FROM python:3.11-slim as production
+FROM python:3.11-slim AS production
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -36,12 +36,22 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PATH="/opt/venv/bin:$PATH" \
     PYTHONPATH="/app"
 
-# Install runtime system dependencies
+# Install runtime system dependencies including WeasyPrint requirements
 RUN apt-get update && apt-get install -y \
     libpq5 \
     libffi8 \
     libssl3 \
     curl \
+    libpango-1.0-0 \
+    libpangoft2-1.0-0 \
+    libharfbuzz-subset0 \
+    libfontconfig1 \
+    libglib2.0-0 \
+    libgdk-pixbuf-2.0-0 \
+    libcairo2 \
+    libcairo-gobject2 \
+    fonts-liberation \
+    fonts-dejavu-core \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 

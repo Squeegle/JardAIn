@@ -267,10 +267,15 @@ class Settings(BaseSettings):
     def database_url_computed(self) -> str:
         """
         Get the complete database URL, either from DATABASE_URL env var 
-        or constructed from individual components
+        or constructed from individual components.
+        Ensures async driver (asyncpg) is used for Railway compatibility.
         """
         if self.database_url:
-            return self.database_url
+            # Railway provides postgresql:// but we need postgresql+asyncpg:// for async operations
+            url = self.database_url
+            if url.startswith("postgresql://"):
+                url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+            return url
         
         return (
             f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"

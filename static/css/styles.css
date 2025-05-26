@@ -496,38 +496,154 @@ body {
 .hidden { display: none !important; }
 .loading { opacity: 0.7; pointer-events: none; }
 
-/* PDF Download Button Styling */
-.pdf-download-container {
+/* PDF Modal Styling */
+.pdf-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pdf-modal-overlay.show {
+    opacity: 1;
+}
+
+.pdf-modal {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 25px 60px rgba(45, 90, 45, 0.3);
+    border: 2px solid #e8f5e8;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalSlideIn 0.4s ease-out;
+}
+
+.pdf-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #4a7c59;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    z-index: 1001;
+}
+
+.pdf-modal-close:hover {
+    background: rgba(74, 124, 89, 0.1);
+    transform: scale(1.1);
+}
+
+.pdf-modal-header {
     text-align: center;
-    padding: 30px 20px;
-    margin: 30px 0;
-    background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
-    border: 3px solid #66bb6a;
+    margin-bottom: 2rem;
+}
+
+.pdf-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+.pdf-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2d5a2d;
+    margin-bottom: 0.5rem;
+}
+
+.pdf-subtitle {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.pdf-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background: #f8fffe;
+    border-radius: 10px;
+    border: 1px solid #e8f5e8;
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    min-width: 40px;
+    text-align: center;
+}
+
+.feature-text {
+    font-size: 0.95rem;
+    color: #4a7c59;
+    font-weight: 500;
+}
+
+.pdf-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .btn-pdf-download {
-    background: #ffffff;
-    color: #2e7d32;
+    background: linear-gradient(135deg, #4a7c59, #2d5a2d);
+    color: white;
     border: none;
-    padding: 18px 36px;
-    font-size: 1.3rem;
-    font-weight: 700;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    min-width: 280px;
+    box-shadow: 0 4px 15px rgba(74, 124, 89, 0.3);
+    text-align: center;
 }
 
 .btn-pdf-download:hover {
-    background: #f1f8e9;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    color: #1b5e20;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(74, 124, 89, 0.4);
+    background: linear-gradient(135deg, #2d5a2d, #1b4332);
+}
+
+.btn-pdf-close {
+    background: transparent;
+    color: #666;
+    border: 1px solid #ddd;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-pdf-close:hover {
+    background: #f5f5f5;
+    border-color: #bbb;
 }
 
 .btn-pdf-download:active {
@@ -1009,74 +1125,56 @@ body {
     margin-bottom: 0;
 }
 
-/* Loading Steps */
-.loading-steps {
+/* Loading Animation */
+.loading-animation {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.step-item {
+.loading-spinner-large {
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 1rem;
-    background: #f8fffe;
-    border: 2px solid #e8f5e8;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-}
-
-.step-item.active {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
-    border-color: #4a7c59;
-    transform: translateX(4px);
-    box-shadow: 0 4px 15px rgba(74, 124, 89, 0.15);
+    border: 3px solid #4a7c59;
+    animation: loading-rotate 2s linear infinite;
 }
 
-.step-item.completed {
-    background: linear-gradient(135deg, #f0f8f0, #e8f5e8);
-    border-color: #2d5a2d;
-    opacity: 0.8;
+.spinner-leaf {
+    font-size: 2rem;
+    animation: leaf-bounce 1.5s ease-in-out infinite;
 }
 
-.step-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    min-width: 40px;
-    text-align: center;
+@keyframes loading-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.step-content {
-    flex: 1;
+@keyframes leaf-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
-.step-title {
+.loading-message {
     font-size: 1rem;
-    font-weight: 600;
-    color: #2d5a2d;
-    margin-bottom: 0.25rem;
-}
-
-.step-description {
-    font-size: 0.85rem;
     color: #4a7c59;
-    line-height: 1.4;
+    text-align: center;
+    font-weight: 500;
+    min-height: 1.5rem;
+    transition: opacity 0.3s ease;
 }
 
-.step-status {
-    font-size: 1.25rem;
-    margin-left: 1rem;
-    transition: all 0.3s ease;
-}
-
-.step-item.active .step-status {
-    animation: status-pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes status-pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
+.loading-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-top: 0.5rem;
 }
 
 
@@ -1111,28 +1209,23 @@ body {
 
 
 
-/* Responsive Design for Step Loading */
+/* Responsive Design for Modals */
 @media (max-width: 768px) {
-    .loading-modal-overlay {
+    .loading-modal-overlay, .pdf-modal-overlay {
         padding: 1rem;
     }
     
-    .loading-modal {
+    .loading-modal, .pdf-modal {
         padding: 1.5rem;
         max-width: 95%;
         max-height: 85vh;
     }
     
-    .loading-modal-close {
+    .loading-modal-close, .pdf-modal-close {
         top: 0.5rem;
         right: 0.5rem;
         font-size: 1.25rem;
         padding: 0.25rem;
-    }
-    
-    .step-loading {
-        padding: 1rem;
-        min-height: 40vh;
     }
     
     .loading-container {
@@ -1148,26 +1241,39 @@ body {
         font-size: 1.4rem;
     }
     
-    .step-item {
-        padding: 0.75rem;
+    .loading-spinner-large {
+        width: 60px;
+        height: 60px;
     }
     
-    .step-icon {
+    .spinner-leaf {
+        font-size: 1.5rem;
+    }
+    
+    .loading-message {
+        font-size: 0.9rem;
+    }
+    
+    .pdf-title {
+        font-size: 1.5rem;
+    }
+    
+    .pdf-icon {
+        font-size: 2.5rem;
+    }
+    
+    .feature-item {
+        padding: 0.5rem;
+    }
+    
+    .feature-icon {
         font-size: 1.25rem;
         margin-right: 0.75rem;
         min-width: 35px;
     }
     
-    .step-title {
-        font-size: 0.9rem;
-    }
-    
-    .step-description {
-        font-size: 0.8rem;
-    }
-    
-    .step-status {
-        font-size: 1.1rem;
+    .feature-text {
+        font-size: 0.85rem;
     }
 }
 

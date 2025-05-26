@@ -617,8 +617,8 @@ class GardenPlannerApp {
             
             this.displayResults(gardenPlan);
             
-            // Generate PDF option
-            this.showPDFOption(gardenPlan.plan_id);
+            // Show PDF download modal
+            this.showPDFModal(gardenPlan.plan_id);
 
         } catch (error) {
             console.error('Error generating garden plan:', error);
@@ -759,41 +759,113 @@ class GardenPlannerApp {
         `;
     }
 
-    showPDFOption(planId) {
-        const pdfSection = document.getElementById('pdfSection');
-        if (pdfSection) {
-            pdfSection.innerHTML = `
-                <div class="pdf-download-container" style="text-align: center; margin: 2rem 0; padding: 2rem; background: #f8fffe; border-radius: 12px; border: 2px solid #4a7c59;">
-                    <h3 style="color: #2d5a2d; margin-bottom: 1rem;">📄 Your Garden Plan is Ready!</h3>
-                    <button class="btn btn-pdf-download" onclick="app.downloadPDF('${planId}')" 
-                            style="background: #4a7c59; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
-                        📥 Download PDF Garden Plan
-                    </button>
-                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
-                        Your complete garden plan with planting schedules, growing instructions, and layout recommendations.
-                    </p>
+    showPDFModal(planId) {
+        // Create modal overlay and modal content
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'pdf-modal-overlay';
+        modalOverlay.id = 'pdf-modal-overlay';
+        
+        modalOverlay.innerHTML = `
+            <div class="pdf-modal">
+                <button class="pdf-modal-close" id="pdf-modal-close" title="Close">×</button>
+                <div class="pdf-modal-content">
+                    <div class="pdf-modal-header">
+                        <div class="pdf-icon">📄</div>
+                        <h2 class="pdf-title">Your Garden Plan is Ready!</h2>
+                        <p class="pdf-subtitle">Download your personalized garden plan as a beautiful PDF guide</p>
+                    </div>
+                    
+                    <div class="pdf-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">📅</div>
+                            <div class="feature-text">Personalized planting schedules</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌱</div>
+                            <div class="feature-text">Detailed growing instructions</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📐</div>
+                            <div class="feature-text">Garden layout recommendations</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌍</div>
+                            <div class="feature-text">Location-specific advice</div>
+                        </div>
+                    </div>
+                    
+                    <div class="pdf-actions">
+                        <button class="btn-pdf-download" onclick="app.downloadPDF('${planId}')">
+                            📥 Download PDF Garden Plan
+                        </button>
+                        <button class="btn-pdf-close" onclick="app.closePDFModal()">
+                            Maybe Later
+                        </button>
+                    </div>
                 </div>
-            `;
-            pdfSection.style.display = 'block';
-            
-            // Add hover effect to button
-            const button = pdfSection.querySelector('.btn-pdf-download');
-            button.addEventListener('mouseenter', () => {
-                button.style.background = '#2d5a2d';
-                button.style.transform = 'translateY(-2px)';
+            </div>
+        `;
+        
+        // Add modal to the body
+        document.body.appendChild(modalOverlay);
+        
+        // Add event listeners for closing the modal
+        this.setupPDFModalEventListeners();
+        
+        // Add entrance animation
+        setTimeout(() => {
+            modalOverlay.classList.add('show');
+        }, 10);
+    }
+
+    setupPDFModalEventListeners() {
+        const modalOverlay = document.getElementById('pdf-modal-overlay');
+        const closeButton = document.getElementById('pdf-modal-close');
+        
+        // Close modal when clicking the close button
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                this.closePDFModal();
             });
-            button.addEventListener('mouseleave', () => {
-                button.style.background = '#4a7c59';
-                button.style.transform = 'translateY(0)';
+        }
+        
+        // Close modal when clicking outside the modal content
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    this.closePDFModal();
+                }
             });
-            
-            // Scroll to the download section smoothly
-            pdfSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.closePDFModal();
+            }
+        });
+    }
+    
+    closePDFModal() {
+        const modalOverlay = document.getElementById('pdf-modal-overlay');
+        if (modalOverlay) {
+            modalOverlay.classList.remove('show');
+            setTimeout(() => {
+                if (modalOverlay.parentNode) {
+                    modalOverlay.parentNode.removeChild(modalOverlay);
+                }
+            }, 300);
         }
     }
 
     async downloadPDF(planId) {
         try {
+            // Close the PDF modal first
+            this.closePDFModal();
+            
+            // Show a brief loading message
+            this.showSuccess('Generating PDF... Please wait.');
+            
             const response = await fetch(`/api/pdf/garden-plan/${planId}`);
             
             if (!response.ok) {
@@ -830,60 +902,21 @@ class GardenPlannerApp {
                     <div class="loading-header">
                         <div class="loading-icon">🌱</div>
                         <h2 class="loading-title">Creating Your Garden Plan</h2>
+                        <p class="loading-subtitle">Please wait while we generate your personalized garden plan...</p>
                     </div>
                     
-                    <div class="loading-steps">
-                        <div class="step-item" id="step-1">
-                            <div class="step-icon">📍</div>
-                            <div class="step-content">
-                                <div class="step-title">Analyzing Location</div>
-                                <div class="step-description">Getting climate data for your area</div>
-                            </div>
-                            <div class="step-status">⏳</div>
+                    <div class="loading-animation">
+                        <div class="loading-spinner-large">
+                            <div class="spinner-leaf">🌱</div>
                         </div>
-                        
-                        <div class="step-item" id="step-2">
-                            <div class="step-icon">🌱</div>
-                            <div class="step-content">
-                                <div class="step-title">Plant Information</div>
-                                <div class="step-description">Gathering details for selected plants</div>
-                            </div>
-                            <div class="step-status">⏸️</div>
-                        </div>
-                        
-                        <div class="step-item" id="step-3">
-                            <div class="step-icon">📅</div>
-                            <div class="step-content">
-                                <div class="step-title">Planting Schedules</div>
-                                <div class="step-description">Creating personalized timing</div>
-                            </div>
-                            <div class="step-status">⏸️</div>
-                        </div>
-                        
-                        <div class="step-item" id="step-4">
-                            <div class="step-icon">📋</div>
-                            <div class="step-content">
-                                <div class="step-title">Growing Instructions</div>
-                                <div class="step-description">Generating care guides</div>
-                            </div>
-                            <div class="step-status">⏸️</div>
-                        </div>
-                        
-                        <div class="step-item" id="step-5">
-                            <div class="step-icon">📄</div>
-                            <div class="step-content">
-                                <div class="step-title">Finalizing Plan</div>
-                                <div class="step-description">Putting it all together</div>
-                            </div>
-                            <div class="step-status">⏸️</div>
-                        </div>
+                        <div class="loading-message" id="loading-message">Analyzing your location and plant selection...</div>
                     </div>
                     
                     <div class="progress-section">
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-fill"></div>
                         </div>
-                        <div class="progress-text" id="progress-text">Step 1 of 5</div>
+                        <div class="progress-text" id="progress-text">Processing...</div>
                     </div>
                 </div>
             </div>
@@ -895,8 +928,8 @@ class GardenPlannerApp {
         // Add event listeners for closing the modal
         this.setupModalEventListeners();
         
-        // Start the step-based loading animation
-        this.startStepLoading();
+        // Start the simple loading animation
+        this.startSimpleLoading();
     }
 
     hideLoading() {
@@ -907,10 +940,6 @@ class GardenPlannerApp {
         if (this.loadingInterval) {
             clearInterval(this.loadingInterval);
             this.loadingInterval = null;
-        }
-        if (this.stepTimeout) {
-            clearTimeout(this.stepTimeout);
-            this.stepTimeout = null;
         }
         
         // Remove the modal from the DOM
@@ -925,7 +954,7 @@ class GardenPlannerApp {
             }, 300);
         }
         
-        console.log('🔄 Step loading animation stopped and modal removed');
+        console.log('🔄 Loading animation stopped and modal removed');
     }
 
     // ========================
@@ -1003,42 +1032,29 @@ class GardenPlannerApp {
     }
     
     // ========================
-    // Clean Loading Animation System
+    // Simple Loading Animation System
     // ========================
     
-    startStepLoading() {
-        // Initialize step-based loading state
-        this.currentStep = 1;
-        this.totalSteps = 5;
+    startSimpleLoading() {
+        // Initialize simple loading state
         this.loadingProgress = 0;
         this.startTime = Date.now();
         this.animationCompleted = false;
         
-        // Calculate estimated time based on number of plants (more realistic)
+        // Calculate estimated time based on number of plants
         const numPlants = this.selectedPlants.size;
-        const baseTime = 25000; // 25 seconds base
-        const perPlantTime = 2000; // 2 seconds per plant
+        const baseTime = 15000; // 15 seconds base
+        const perPlantTime = 1000; // 1 second per plant
         this.estimatedTime = baseTime + (numPlants * perPlantTime);
         
-        // Step timing configuration (in milliseconds) - slower and more realistic
-        // Distribute the time more evenly across steps, with longer final steps
-        const stepTime1 = Math.floor(this.estimatedTime * 0.15); // 15% - Location analysis
-        const stepTime2 = Math.floor(this.estimatedTime * 0.20); // 20% - Plant info
-        const stepTime3 = Math.floor(this.estimatedTime * 0.25); // 25% - Schedules (most complex)
-        const stepTime4 = Math.floor(this.estimatedTime * 0.25); // 25% - Instructions (complex)
-        const stepTime5 = Math.floor(this.estimatedTime * 0.15); // 15% - Finalization
-        
-        this.stepDurations = [stepTime1, stepTime2, stepTime3, stepTime4, stepTime5];
-        
         console.log(`🕐 Loading timing: ${this.estimatedTime/1000}s total for ${numPlants} plants`);
-        console.log(`📊 Step durations: ${this.stepDurations.map(d => (d/1000).toFixed(1)+'s').join(', ')}`);
         
-        // Start the step animations
-        this.updateStepProgress();
-        this.animateSteps();
+        // Start the progress animation
+        this.updateSimpleProgress();
+        this.animateLoadingMessages();
     }
     
-    updateStepProgress() {
+    updateSimpleProgress() {
         this.loadingInterval = setInterval(() => {
             // Don't update if animation is completed
             if (this.animationCompleted) {
@@ -1047,21 +1063,8 @@ class GardenPlannerApp {
             
             const elapsed = Date.now() - this.startTime;
             
-            // Calculate progress based on current step and elapsed time within that step
-            let totalProgressFromSteps = 0;
-            for (let i = 0; i < this.currentStep - 1; i++) {
-                totalProgressFromSteps += this.stepDurations[i];
-            }
-            
-            // Add progress within current step
-            const currentStepStart = totalProgressFromSteps;
-            const currentStepDuration = this.stepDurations[this.currentStep - 1] || 5000;
-            const currentStepElapsed = elapsed - currentStepStart;
-            const currentStepProgress = Math.min(currentStepElapsed / currentStepDuration, 1);
-            
-            // Total progress percentage (cap at 90% until actual completion)
-            const totalElapsedFromSteps = totalProgressFromSteps + (currentStepProgress * currentStepDuration);
-            this.loadingProgress = Math.min((totalElapsedFromSteps / this.estimatedTime) * 100, 90);
+            // Calculate progress percentage (cap at 90% until actual completion)
+            this.loadingProgress = Math.min((elapsed / this.estimatedTime) * 100, 90);
             
             // Update progress bar and text
             const progressFill = document.getElementById('progress-fill');
@@ -1074,96 +1077,55 @@ class GardenPlannerApp {
             if (progressText) {
                 const remaining = Math.max(0, Math.ceil((this.estimatedTime - elapsed) / 1000));
                 if (remaining > 0) {
-                    progressText.textContent = `Step ${this.currentStep} of ${this.totalSteps} • ~${remaining}s remaining`;
+                    progressText.textContent = `Processing... ~${remaining}s remaining`;
                 } else {
-                    progressText.textContent = `Step ${this.currentStep} of ${this.totalSteps} • Almost done...`;
+                    progressText.textContent = `Almost done...`;
                 }
             }
-        }, 200); // Update every 200ms for smooth but not excessive updates
+        }, 200); // Update every 200ms for smooth updates
     }
     
-    animateSteps() {
-        if (this.animationCompleted) {
-            return;
-        }
-        
-        // If we've reached the final step, don't auto-advance - wait for actual completion
-        if (this.currentStep > this.totalSteps) {
-            console.log('🏁 All steps completed, waiting for actual request to finish...');
-            return;
-        }
-        
-        console.log(`🎬 Animating step ${this.currentStep}: ${this.getStepName(this.currentStep)}`);
-        
-        // Mark current step as active
-        const currentStepElement = document.getElementById(`step-${this.currentStep}`);
-        if (currentStepElement) {
-            currentStepElement.classList.add('active');
-            const statusElement = currentStepElement.querySelector('.step-status');
-            if (statusElement) {
-                statusElement.textContent = '⏳';
-            }
-        }
-        
-        // Mark previous steps as completed
-        for (let i = 1; i < this.currentStep; i++) {
-            const prevStepElement = document.getElementById(`step-${i}`);
-            if (prevStepElement) {
-                prevStepElement.classList.remove('active');
-                prevStepElement.classList.add('completed');
-                const statusElement = prevStepElement.querySelector('.step-status');
-                if (statusElement) {
-                    statusElement.textContent = '✅';
-                }
-            }
-        }
-        
-        // Schedule next step
-        const stepDuration = this.stepDurations[this.currentStep - 1] || 5000;
-        this.stepTimeout = setTimeout(() => {
-            if (!this.animationCompleted) {
-                this.currentStep++;
-                this.animateSteps();
-            }
-        }, stepDuration);
-    }
-    
-    getStepName(stepNumber) {
-        const stepNames = [
-            'Analyzing Location',
-            'Plant Information', 
-            'Planting Schedules',
-            'Growing Instructions',
-            'Finalizing Plan'
+    animateLoadingMessages() {
+        const messages = [
+            "Analyzing your location and plant selection...",
+            "Gathering plant information and requirements...",
+            "Creating personalized planting schedules...",
+            "Generating detailed growing instructions...",
+            "Finalizing your garden plan..."
         ];
-        return stepNames[stepNumber - 1] || 'Unknown Step';
+        
+        let messageIndex = 0;
+        const messageElement = document.getElementById('loading-message');
+        
+        const updateMessage = () => {
+            if (this.animationCompleted || !messageElement) {
+                return;
+            }
+            
+            messageElement.textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+            
+            // Schedule next message update
+            setTimeout(updateMessage, 3000); // Change message every 3 seconds
+        };
+        
+        updateMessage();
     }
     
     finalizeLoading() {
-        console.log('🎉 Finalizing step loading animation...');
+        console.log('🎉 Finalizing loading animation...');
         
         // Mark animation as completed to stop other processes
         this.animationCompleted = true;
         
-        // Mark all steps as completed
-        for (let i = 1; i <= this.totalSteps; i++) {
-            const stepElement = document.getElementById(`step-${i}`);
-            if (stepElement) {
-                stepElement.classList.remove('active');
-                stepElement.classList.add('completed');
-                const statusElement = stepElement.querySelector('.step-status');
-                if (statusElement) {
-                    statusElement.textContent = '✅';
-                }
-            }
-        }
-        
         // Complete the progress bar
         const progressFill = document.getElementById('progress-fill');
         const progressText = document.getElementById('progress-text');
+        const messageElement = document.getElementById('loading-message');
         
         if (progressFill) progressFill.style.width = '100%';
         if (progressText) progressText.textContent = 'Complete!';
+        if (messageElement) messageElement.textContent = 'Your garden plan is ready!';
     }
 
     showError(message) {

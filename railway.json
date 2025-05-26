@@ -20,7 +20,23 @@
         "LOG_LEVEL": "info",
         "PYTHONPATH": "/app",
         "PYTHONUNBUFFERED": "1",
-        "PYTHONDONTWRITEBYTECODE": "1"
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "APP_NAME": "JardAIn Garden Planner",
+        "OPENAI_MODEL": "gpt-3.5-turbo",
+        "OPENAI_MAX_TOKENS": "2000",
+        "PLANT_DATA_PATH": "/app/data/common_vegetables.json",
+        "PLANT_IMAGES_PATH": "/app/data/plant_images/",
+        "GENERATED_PLANS_PATH": "/tmp/generated_plans/",
+        "LOGS_PATH": "/tmp/logs/",
+        "HOST": "0.0.0.0",
+        "DATABASE_POOL_SIZE": "5",
+        "DATABASE_MAX_OVERFLOW": "10",
+        "PDF_PAGE_SIZE": "A4",
+        "PDF_MARGIN": "1in",
+        "PDF_FONT_FAMILY": "Arial",
+        "DEFAULT_GARDEN_SIZE": "medium",
+        "DEFAULT_EXPERIENCE_LEVEL": "beginner",
+        "MAX_SELECTED_PLANTS": "20"
       }
     }
   }

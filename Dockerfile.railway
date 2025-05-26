@@ -40,8 +40,8 @@ RUN apt-get update && apt-get install -y \
     fonts-dejavu-core \
     fonts-liberation \
     fonts-noto \
-    # GLib dependencies (corrected package names)
-    libglib2.0-0t64 \
+    # GLib dependencies (use correct package name for Debian 12/bookworm)
+    libglib2.0-0 \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean

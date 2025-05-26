@@ -121,7 +121,7 @@ def instructions_to_response(instructions: GrowingInstructions) -> GrowingInstru
 # Main Garden Plan Endpoints
 # ========================
 
-@router.post("/", response_model=GardenPlanResponse)
+@router.post("", response_model=GardenPlanResponse)
 async def create_garden_plan(request: CreatePlanRequest):
     """
     Create a personalized garden plan using AI.
@@ -417,7 +417,7 @@ async def get_garden_plan(plan_id: str):
         detail="Plan storage not implemented yet. Plans are generated fresh each time."
     )
 
-@router.get("/", response_model=List[PlanSummary])
+@router.get("", response_model=List[PlanSummary])
 async def list_garden_plans():
     """
     List all saved garden plans.

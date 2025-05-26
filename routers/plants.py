@@ -6,9 +6,12 @@ Provides HTTP access to plant data and search functionality.
 from fastapi import APIRouter, HTTPException, Query
 from typing import List, Optional
 from pydantic import BaseModel
+from datetime import datetime
 
 from models.garden_plan import PlantInfo
 from services.plant_service import plant_service
+from services.llm_service import llm_service
+from config import settings
 
 # Create the plants router
 router = APIRouter()
@@ -309,3 +312,109 @@ async def get_multiple_plants(plant_names: List[str]):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Batch request error: {str(e)}")
+
+# ========================
+# Diagnostic Endpoints
+# ========================
+
+@router.get("/debug/llm-test")
+async def test_llm_service():
+    """
+    Test LLM service configuration and functionality.
+    
+    **Returns:**
+    - LLM provider configuration status
+    - Test generation attempt
+    - Detailed error information if any
+    
+    **Use case:**
+    - Debugging LLM integration issues
+    - Verifying OpenAI API key configuration
+    """
+    try:
+        # Check configuration
+        config_status = {
+            "provider": settings.llm_provider,
+            "is_configured": llm_service.is_configured(),
+            "is_production": settings.is_production,
+            "openai_key_present": bool(settings.openai_api_key),
+            "openai_key_length": len(settings.openai_api_key) if settings.openai_api_key else 0
+        }
+        
+        # Test generation
+        test_prompt = "Generate basic information about tomato plants in JSON format."
+        generation_result = await llm_service.test_generation_quality(test_prompt)
+        
+        return {
+            "config": config_status,
+            "test_generation": generation_result,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        return {
+            "error": str(e),
+            "config": {
+                "provider": settings.llm_provider,
+                "is_configured": False,
+                "error_details": str(e)
+            },
+            "timestamp": datetime.now().isoformat()
+        }
+
+@router.get("/debug/plant-search-test")
+async def test_plant_search_with_ai(plant_name: str = "pineapple"):
+    """
+    Test plant search with AI generation for debugging.
+    
+    **Parameters:**
+    - **plant_name**: Plant name to test (defaults to "pineapple")
+    
+    **Returns:**
+    - Step-by-step search process results
+    - Detailed error information if any
+    """
+    import time
+    
+    start_time = time.time()
+    
+    try:
+        # Step 1: Check static database
+        static_results = await plant_service.search_plants(plant_name)
+        
+        # Step 2: Try direct plant lookup
+        direct_lookup = await plant_service.get_plant_info(plant_name)
+        
+        # Step 3: Check LLM service status
+        llm_status = llm_service.is_configured()
+        
+        search_time = int((time.time() - start_time) * 1000)
+        
+        return {
+            "query": plant_name,
+            "steps": {
+                "static_search": {
+                    "results_count": len(static_results),
+                    "results": [plant.name for plant in static_results]
+                },
+                "direct_lookup": {
+                    "found": bool(direct_lookup),
+                    "plant_name": direct_lookup.name if direct_lookup else None,
+                    "plant_type": direct_lookup.plant_type if direct_lookup else None
+                },
+                "llm_service": {
+                    "configured": llm_status,
+                    "provider": settings.llm_provider
+                }
+            },
+            "search_time_ms": search_time,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        return {
+            "error": str(e),
+            "query": plant_name,
+            "search_time_ms": int((time.time() - start_time) * 1000),
+            "timestamp": datetime.now().isoformat()
+        }

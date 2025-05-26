@@ -344,8 +344,13 @@ class PlantService:
     
     async def _generate_plant_info_via_llm(self, plant_name: str) -> Optional[PlantInfo]:
         """
-        Generate plant information using LLM
+        Generate plant information using LLM with detailed error handling
         """
+        # Check if LLM service is configured
+        if not llm_service.is_configured():
+            print(f"❌ LLM service not configured for {plant_name}")
+            return None
+        
         prompt = f"""
         You are an expert gardener and botanist. Provide detailed growing information for the plant: "{plant_name}"
 
@@ -377,27 +382,42 @@ class PlantService:
         """
         
         try:
+            print(f"🤖 Generating plant info for '{plant_name}' using {llm_service.provider}")
             response = await llm_service.generate_plant_info(prompt)
             
             if not response:
+                print(f"❌ No response from LLM service for {plant_name}")
                 return None
             
+            print(f"📝 LLM response length: {len(response)} characters")
+            
+            # Clean up response (remove any markdown formatting)
+            cleaned_response = response.strip()
+            if cleaned_response.startswith("```json"):
+                cleaned_response = cleaned_response[7:]
+            if cleaned_response.endswith("```"):
+                cleaned_response = cleaned_response[:-3]
+            cleaned_response = cleaned_response.strip()
+            
             # Parse the JSON response
-            plant_data = json.loads(response.strip())
+            plant_data = json.loads(cleaned_response)
             
             # Validate that we got actual data (not null)
             if plant_data is None:
+                print(f"⚠️  LLM returned null for {plant_name} (plant may not exist)")
                 return None
             
             # Create PlantInfo object
             plant_info = PlantInfo(**plant_data)
+            print(f"✅ Successfully generated plant info for {plant_name}")
             return plant_info
             
         except json.JSONDecodeError as e:
             print(f"❌ Invalid JSON response from LLM for {plant_name}: {e}")
+            print(f"📄 Raw response: {response[:200]}..." if response else "No response")
             return None
         except Exception as e:
-            print(f"❌ Error parsing LLM response for {plant_name}: {e}")
+            print(f"❌ Error generating plant info for {plant_name}: {e}")
             return None
     
     async def get_multiple_plants(self, plant_names: List[str]) -> List[PlantInfo]:

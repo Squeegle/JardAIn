@@ -293,13 +293,13 @@ class GardenPlannerApp {
         if (plants.length === 0) {
             content += `
                 <div class="autocomplete-section">
-                    <div class="autocomplete-header">No plants found</div>
+                    <div class="autocomplete-header">No plants found in database</div>
                     <div class="autocomplete-ai-option" onclick="app.searchWithAI('${query}')">
                         <div class="ai-search-content">
                             <span class="ai-icon">🤖</span>
                             <div class="ai-search-text">
                                 <div class="ai-search-title">Search with AI</div>
-                                <div class="ai-search-subtitle">Discover "${query}" using artificial intelligence</div>
+                                <div class="ai-search-subtitle">Generate "${query}" information using AI</div>
                             </div>
                         </div>
                     </div>
@@ -336,16 +336,26 @@ class GardenPlannerApp {
             
             const searchResults = await response.json();
             
-            if (searchResults.plants.length > 0) {
+            console.log('🤖 AI search results:', searchResults);
+            console.log('🔍 Plants found:', searchResults.plants?.length || 0);
+            
+            if (searchResults.plants && searchResults.plants.length > 0) {
                 const newPlant = searchResults.plants[0];
+                console.log('✅ Adding AI plant to grid:', newPlant);
                 this.addAIPlantToGrid(newPlant);
                 this.showSuccessMessage(`✅ Found "${newPlant.name}" using AI! Added to your plant options.`);
             } else {
-                this.showErrorMessage(`❌ AI couldn't find information about "${query}". Try a different plant name.`);
+                console.warn('⚠️ No plants in AI search results:', searchResults);
+                this.showErrorMessage(`❌ AI couldn't generate information for "${query}". This might not be a valid plant name, or there may be a configuration issue.`);
             }
             
         } catch (error) {
             console.error('AI search error:', error);
+            console.error('AI search error details:', {
+                message: error.message,
+                stack: error.stack,
+                query: query
+            });
             this.showErrorMessage(`❌ AI search failed: ${error.message}`);
         } finally {
             this.hideAISearching();
@@ -356,11 +366,29 @@ class GardenPlannerApp {
         // Ensure consistent plant name
         const plantName = plant.name.trim();
         
+        console.log(`🌱 Adding AI plant "${plantName}" to grid`);
+        console.log('🔍 Plant data:', plant);
+        
+        // Check if plant already exists
+        const existingCard = document.querySelector(`[data-plant="${plantName}"]`);
+        if (existingCard) {
+            console.log(`⚠️ Plant "${plantName}" already exists in grid, selecting it instead`);
+            if (!this.selectedPlants.has(plantName)) {
+                this.togglePlant(plantName);
+            }
+            return;
+        }
+        
         // Add to available plants array  
         this.availablePlants.push(plant);
         
         // Create new plant card with AI badge
         const plantGrid = document.getElementById('plant-grid');
+        if (!plantGrid) {
+            console.error('❌ Plant grid element not found!');
+            return;
+        }
+        
         const plantCard = document.createElement('div');
         plantCard.className = 'plant-card ai-generated';
         plantCard.setAttribute('data-plant', plantName);

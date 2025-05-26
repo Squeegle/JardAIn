@@ -73,6 +73,7 @@ def plant_info_to_response(plant: PlantInfo) -> PlantResponse:
 # ========================
 
 @router.get("", response_model=PlantListResponse)
+@router.get("/", response_model=PlantListResponse)
 async def get_all_plants(
     plant_type: Optional[str] = Query(None, description="Filter by plant type (vegetable, herb, fruit)")
 ):

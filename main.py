@@ -289,6 +289,87 @@ async def debug_railway():
     }
 
 # ========================
+# Database Population Helper
+# ========================
+
+async def populate_database_if_empty():
+    """
+    Check if the database is empty and populate it with static plants if needed.
+    This ensures Railway deployments have plant data available.
+    """
+    try:
+        from services.plant_service import plant_service
+        from models.database import PlantModel, get_database_manager
+        from models.garden_plan import PlantInfo
+        from sqlalchemy import select, func
+        import json
+        
+        # Check if database has any plants
+        db_manager = get_database_manager()
+        async with db_manager.async_session_maker() as session:
+            stmt = select(func.count(PlantModel.id))
+            result = await session.execute(stmt)
+            plant_count = result.scalar()
+            
+            if plant_count > 0:
+                print(f"🌱 Database already has {plant_count} plants - skipping population")
+                return
+            
+            print("📦 Database is empty - populating with static plants...")
+            
+            # Load static plants from JSON
+            try:
+                with open(settings.plant_data_path, 'r') as f:
+                    plant_data = json.load(f)
+                
+                print(f"📖 Loaded {len(plant_data)} plants from {settings.plant_data_path}")
+                
+                # Convert to PlantModel objects and add to database
+                plants_added = 0
+                for plant_dict in plant_data:
+                    try:
+                        # Create PlantInfo first to validate data
+                        plant_info = PlantInfo(**plant_dict)
+                        
+                        # Create PlantModel for database
+                        plant_model = PlantModel(
+                            name=plant_info.name,
+                            scientific_name=plant_info.scientific_name,
+                            plant_type=plant_info.plant_type,
+                            days_to_harvest=plant_info.days_to_harvest,
+                            spacing_inches=plant_info.spacing_inches,
+                            planting_depth_inches=plant_info.planting_depth_inches,
+                            sun_requirements=plant_info.sun_requirements,
+                            water_requirements=plant_info.water_requirements,
+                            soil_ph_range=plant_info.soil_ph_range,
+                            companion_plants=json.dumps(plant_info.companion_plants) if plant_info.companion_plants else None,
+                            avoid_planting_with=json.dumps(plant_info.avoid_planting_with) if plant_info.avoid_planting_with else None,
+                            source="static",
+                            llm_model=None,
+                            usage_count=1
+                        )
+                        
+                        session.add(plant_model)
+                        plants_added += 1
+                        
+                    except Exception as plant_e:
+                        print(f"⚠️  Error adding plant {plant_dict.get('name', 'unknown')}: {plant_e}")
+                        continue
+                
+                # Commit all plants
+                await session.commit()
+                print(f"✅ Successfully populated database with {plants_added} static plants")
+                
+            except FileNotFoundError:
+                print(f"⚠️  Static plant file not found: {settings.plant_data_path}")
+            except Exception as load_e:
+                print(f"⚠️  Error loading static plants: {load_e}")
+                
+    except Exception as e:
+        print(f"⚠️  Error populating database: {e}")
+        # Don't fail startup if population fails
+
+# ========================
 # Startup and Shutdown Events
 # ========================
 
@@ -322,6 +403,10 @@ async def startup_event():
                 # Notify plant service that database is now available
                 from services.plant_service import plant_service
                 plant_service.refresh_database_status()
+                
+                # Check if database needs to be populated with static plants
+                await populate_database_if_empty()
+                
                 print("✅ Database fully connected and ready")
                 
             except Exception as table_e:

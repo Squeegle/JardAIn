@@ -130,6 +130,11 @@ class PlantService:
             if not settings.validate_database_config():
                 return False
             
+            # Check if database manager is initialized
+            from models.database import is_database_initialized
+            if not is_database_initialized():
+                return False
+            
             # Try to get database manager
             get_database_manager()
             return True

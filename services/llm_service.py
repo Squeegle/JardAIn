@@ -55,7 +55,7 @@ class LLMService:
     
     async def _generate_with_openai(self, prompt: str) -> Optional[str]:
         """
-        Generate response using OpenAI API
+        Generate response using OpenAI API with timeout
         """
         try:
             # Import openai here to avoid dependency issues if not installed
@@ -65,20 +65,30 @@ class LLMService:
                 print("❌ OpenAI API key not configured")
                 return None
             
-            client = openai.AsyncOpenAI(api_key=settings.openai_api_key)
+            client = openai.AsyncOpenAI(
+                api_key=settings.openai_api_key,
+                timeout=30.0  # 30 second timeout
+            )
             
-            response = await client.chat.completions.create(
-                model=settings.openai_model,
-                messages=[
-                    {"role": "system", "content": "You are an expert gardener and botanist. Provide accurate, structured plant growing information."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.3,
-                max_tokens=settings.openai_max_tokens
+            # Add timeout wrapper
+            response = await asyncio.wait_for(
+                client.chat.completions.create(
+                    model=settings.openai_model,
+                    messages=[
+                        {"role": "system", "content": "You are an expert gardener and botanist. Provide accurate, structured plant growing information."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.3,
+                    max_tokens=settings.openai_max_tokens
+                ),
+                timeout=30.0  # 30 second timeout
             )
             
             return response.choices[0].message.content.strip()
             
+        except asyncio.TimeoutError:
+            print("❌ OpenAI API timeout (30 seconds)")
+            return None
         except ImportError:
             print("❌ OpenAI not installed. Install with: pip install openai")
             return None

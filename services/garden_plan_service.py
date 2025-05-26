@@ -43,7 +43,20 @@ class GardenPlanService:
         location_info = await location_service.get_location_info(request.zip_code)
         
         # Step 2: Get plant information (using our hybrid service)
-        plant_information = await plant_service.get_multiple_plants(request.selected_plants)
+        try:
+            plant_information = await plant_service.get_multiple_plants(request.selected_plants)
+        except Exception as e:
+            print(f"❌ Error retrieving plant information: {e}")
+            # Try to get plants from static database as fallback
+            plant_information = []
+            for plant_name in request.selected_plants:
+                try:
+                    static_plant = plant_service.static_plants.get(plant_name.lower())
+                    if static_plant:
+                        plant_information.append(static_plant)
+                        print(f"📖 Using static data for {plant_name}")
+                except Exception as static_e:
+                    print(f"⚠️  Could not get static data for {plant_name}: {static_e}")
         
         # Log detailed results for debugging
         found_plants = [p.name for p in plant_information]
@@ -54,30 +67,46 @@ class GardenPlanService:
             print(f"✅ Found plants: {found_plants}")
         
         if not plant_information:
-            raise ValueError(f"No plant information could be retrieved for any of the selected plants: {request.selected_plants}")
+            raise ValueError(f"No plant information could be retrieved for any of the selected plants: {request.selected_plants}. Please try with common plants like 'tomato', 'lettuce', or 'carrots'.")
         
         if len(plant_information) < len(request.selected_plants):
             print(f"⚠️  Only {len(plant_information)}/{len(request.selected_plants)} plants found, proceeding with available plants")
         
-        # Step 3: Generate planting schedules using AI
-        planting_schedules = await self._generate_planting_schedules(
-            plant_information, location_info, request
-        )
+        # Step 3: Generate planting schedules using AI (with fallback)
+        try:
+            planting_schedules = await self._generate_planting_schedules(
+                plant_information, location_info, request
+            )
+        except Exception as e:
+            print(f"⚠️  Error generating planting schedules, using defaults: {e}")
+            planting_schedules = self._create_default_schedules(plant_information, location_info)
         
-        # Step 4: Generate detailed growing instructions
-        growing_instructions = await self._generate_growing_instructions(
-            plant_information, location_info, request
-        )
+        # Step 4: Generate detailed growing instructions (with fallback)
+        try:
+            growing_instructions = await self._generate_growing_instructions(
+                plant_information, location_info, request
+            )
+        except Exception as e:
+            print(f"⚠️  Error generating growing instructions, using defaults: {e}")
+            growing_instructions = [self._create_default_instructions(plant) for plant in plant_information]
         
-        # Step 5: Generate layout recommendations
-        layout_recommendations = await self._generate_layout_recommendations(
-            plant_information, request
-        )
+        # Step 5: Generate layout recommendations (with fallback)
+        try:
+            layout_recommendations = await self._generate_layout_recommendations(
+                plant_information, request
+            )
+        except Exception as e:
+            print(f"⚠️  Error generating layout recommendations, using defaults: {e}")
+            layout_recommendations = self._create_default_layout(plant_information, request)
         
-        # Step 6: Generate general tips
-        general_tips = await self._generate_general_tips(
-            plant_information, location_info, request
-        )
+        # Step 6: Generate general tips (with fallback)
+        try:
+            general_tips = await self._generate_general_tips(
+                plant_information, location_info, request
+            )
+        except Exception as e:
+            print(f"⚠️  Error generating general tips, using defaults: {e}")
+            general_tips = self._create_default_tips(plant_information, location_info, request)
         
         # Create the complete garden plan
         garden_plan = GardenPlan(
@@ -883,6 +912,33 @@ Focus on practical layout advice for a {request.garden_size} {request.experience
         except Exception as e:
             print(f"⚠️  Error saving garden plan: {e}")
             # Don't fail the whole process if saving fails
+    
+    def _create_default_layout(self, plants: List[PlantInfo], request: PlanRequest) -> Dict[str, Any]:
+        """Create default layout recommendations when LLM generation fails"""
+        return {
+            "garden_dimensions": f"Recommended for {request.garden_size} garden",
+            "plant_groupings": [{"group_name": "Mixed Garden", "plants": [p.name for p in plants]}],
+            "spacing_guide": {p.name: f"{p.spacing_inches} inches apart" for p in plants if p.spacing_inches},
+            "companion_planting_tips": ["Consider companion planting benefits for better growth"],
+            "layout_tips": ["Place taller plants where they won't shade shorter ones", "Group plants with similar water needs together"]
+        }
+    
+    def _create_default_tips(self, plants: List[PlantInfo], location: LocationInfo, request: PlanRequest) -> List[str]:
+        """Create default general tips when LLM generation fails"""
+        tips = [
+            f"Start with {len(plants)} plants for a manageable {request.garden_size} garden",
+            f"Your USDA zone {location.usda_zone} has a {location.growing_season_days}-day growing season",
+            "Water consistently and mulch around plants to retain moisture",
+            "Test your soil pH and amend as needed for optimal plant growth"
+        ]
+        
+        if request.experience_level == "beginner":
+            tips.extend([
+                "Start small and expand your garden as you gain experience",
+                "Keep a garden journal to track what works best in your area"
+            ])
+        
+        return tips
 
 # Global instance
 garden_plan_service = GardenPlanService()

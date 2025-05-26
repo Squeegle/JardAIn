@@ -210,7 +210,7 @@ async def startup_event():
     if not settings.validate_llm_config():
         print("⚠️  Warning: LLM configuration incomplete")
     
-    # Initialize database connection (non-blocking)
+    # Initialize database connection (non-blocking, graceful fallback)
     print("🗄️  Initializing database connection...")
     if settings.validate_database_config():
         try:
@@ -229,13 +229,13 @@ async def startup_event():
                 
             except Exception as table_e:
                 print(f"⚠️  Database table creation failed: {table_e}")
-                print("⚠️  Application will continue with limited database functionality")
+                print("⚠️  Application will continue with JSON fallback and LLM generation")
             
         except Exception as e:
             print(f"❌ Database initialization failed: {e}")
-            print("⚠️  Application will continue with JSON fallback only")
+            print("⚠️  Application will continue with JSON fallback and LLM generation")
     else:
-        print("⚠️  Database configuration incomplete - using JSON fallback only")
+        print("⚠️  Database configuration incomplete - using JSON fallback and LLM generation")
     
     # Check if required directories exist
     required_dirs = [

@@ -156,6 +156,10 @@ def get_database_manager() -> DatabaseManager:
         raise RuntimeError("Database manager not initialized. Call init_database() first.")
     return database_manager
 
+def is_database_initialized() -> bool:
+    """Check if the database manager has been initialized"""
+    return database_manager is not None
+
 def init_database(database_url: str, **engine_kwargs) -> DatabaseManager:
     """
     Initialize the global database manager.

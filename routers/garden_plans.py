@@ -218,6 +218,34 @@ async def create_garden_plan(request: CreatePlanRequest):
 # Utility Endpoints
 # ========================
 
+@router.get("/test-static", response_model=Dict[str, Any])
+async def test_static_plants():
+    """
+    Test endpoint to verify static plant database is working.
+    Returns a sample of available plants from the static database.
+    """
+    try:
+        from services.plant_service import plant_service
+        
+        # Get a few sample plants from static database
+        static_plants = plant_service.get_all_static_plants()
+        sample_plants = static_plants[:5]  # First 5 plants
+        
+        return {
+            "status": "success",
+            "total_static_plants": len(static_plants),
+            "sample_plants": [plant.name for plant in sample_plants],
+            "database_available": plant_service.database_available,
+            "message": "Static plant database is working correctly"
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "message": "Static plant database test failed"
+        }
+
 @router.post("/validate", response_model=Dict[str, Any])
 async def validate_garden_plan_request(request: CreatePlanRequest):
     """

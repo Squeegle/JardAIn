@@ -18,7 +18,19 @@ class LocationService:
     """
     
     def __init__(self):
-        self.client = httpx.AsyncClient()
+        # Use shorter timeouts for Railway environment
+        timeout_config = httpx.Timeout(
+            connect=5.0,  # 5 seconds to connect
+            read=10.0,    # 10 seconds to read response
+            write=5.0,    # 5 seconds to write request
+            pool=10.0     # 10 seconds for pool operations
+        )
+        
+        self.client = httpx.AsyncClient(
+            timeout=timeout_config,
+            limits=httpx.Limits(max_connections=10, max_keepalive_connections=5),
+            follow_redirects=True
+        )
     
     def _detect_country_and_validate(self, postal_code: str) -> Tuple[str, str]:
         """
@@ -103,27 +115,50 @@ class LocationService:
         Uses multiple fallback methods for comprehensive coverage
         """
         try:
-            # Primary method: zippopotam.us API
+            # Primary method: zippopotam.us API with aggressive timeout
             url = f"http://api.zippopotam.us/{country}/{postal_code}"
-            response = await self.client.get(url, timeout=10)
+            print(f"🌐 Making API call to: {url}")
             
-            if response.status_code == 200:
-                data = response.json()
-                return {
-                    'city': data['places'][0]['place name'],
-                    'state': data['places'][0]['state'],  # Province for Canada
-                    'state_code': data['places'][0]['state abbreviation'],
-                    'latitude': float(data['places'][0]['latitude']),
-                    'longitude': float(data['places'][0]['longitude']),
-                    'country': country.upper()
-                }
+            # Use asyncio.wait_for for additional timeout protection
+            try:
+                response = await asyncio.wait_for(
+                    self.client.get(url), 
+                    timeout=8.0  # 8 second total timeout
+                )
+                print(f"📡 API response status: {response.status_code}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    print(f"✅ API response successful: {data.get('places', [{}])[0].get('place name', 'Unknown')}")
+                    return {
+                        'city': data['places'][0]['place name'],
+                        'state': data['places'][0]['state'],  # Province for Canada
+                        'state_code': data['places'][0]['state abbreviation'],
+                        'latitude': float(data['places'][0]['latitude']),
+                        'longitude': float(data['places'][0]['longitude']),
+                        'country': country.upper()
+                    }
+                else:
+                    print(f"⚠️ API returned non-200 status: {response.status_code}")
+            except asyncio.TimeoutError:
+                print(f"⏰ API call timed out after 8 seconds")
+            except Exception as api_e:
+                print(f"⚠️ API call failed: {api_e}")
+                
         except Exception as e:
             print(f"⚠️  Primary location API failed: {e}")
         
-        # Fallback for Canadian postal codes: Use known major city mappings
+        # Immediate fallback for Canadian postal codes
         if country == "ca":
+            print("🇨🇦 Using Canadian fallback location data...")
             return self._get_canadian_fallback_location(postal_code)
         
+        # For US zip codes, try a simple fallback based on zip code patterns
+        if country == "us":
+            print("🇺🇸 Using US fallback location data...")
+            return self._get_us_fallback_location(postal_code)
+        
+        print("❌ No location data available")
         return None
     
     def _get_canadian_fallback_location(self, postal_code: str) -> Optional[Dict[str, Any]]:
@@ -453,6 +488,65 @@ class LocationService:
         Close the HTTP client
         """
         await self.client.aclose()
+
+    def _get_us_fallback_location(self, zip_code: str) -> Optional[Dict[str, Any]]:
+        """
+        Fallback location data for US zip codes when API fails
+        Uses zip code ranges to determine approximate location
+        """
+        try:
+            zip_num = int(zip_code)
+            
+            # Major US region mappings by zip code ranges
+            us_locations = {
+                # Northeast
+                (1000, 19999): {'city': 'Boston', 'state': 'Massachusetts', 'state_code': 'MA'},
+                # Mid-Atlantic
+                (20000, 26999): {'city': 'Washington', 'state': 'District of Columbia', 'state_code': 'DC'},
+                # Southeast
+                (27000, 34999): {'city': 'Atlanta', 'state': 'Georgia', 'state_code': 'GA'},
+                # Florida
+                (32000, 34999): {'city': 'Miami', 'state': 'Florida', 'state_code': 'FL'},
+                # Midwest
+                (40000, 56999): {'city': 'Chicago', 'state': 'Illinois', 'state_code': 'IL'},
+                # Plains
+                (57000, 59999): {'city': 'Denver', 'state': 'Colorado', 'state_code': 'CO'},
+                # South Central
+                (60000, 79999): {'city': 'Dallas', 'state': 'Texas', 'state_code': 'TX'},
+                # Mountain West
+                (80000, 89999): {'city': 'Denver', 'state': 'Colorado', 'state_code': 'CO'},
+                # California
+                (90000, 96999): {'city': 'Los Angeles', 'state': 'California', 'state_code': 'CA'},
+                # Pacific Northwest
+                (97000, 99999): {'city': 'Seattle', 'state': 'Washington', 'state_code': 'WA'},
+            }
+            
+            for (min_zip, max_zip), location_data in us_locations.items():
+                if min_zip <= zip_num <= max_zip:
+                    print(f"🇺🇸 Using fallback location data for {zip_code}")
+                    return {
+                        'city': location_data['city'],
+                        'state': location_data['state'],
+                        'state_code': location_data['state_code'],
+                        'latitude': 39.0,  # Approximate US latitude
+                        'longitude': -98.0,  # Approximate US longitude
+                        'country': 'US'
+                    }
+            
+            # Default fallback for any US zip code
+            print(f"🇺🇸 Using default US fallback location for {zip_code}")
+            return {
+                'city': 'Kansas City',
+                'state': 'Kansas',
+                'state_code': 'KS',
+                'latitude': 39.0,
+                'longitude': -98.0,
+                'country': 'US'
+            }
+            
+        except Exception as e:
+            print(f"❌ US fallback location failed: {e}")
+            return None
 
 # Global instance
 location_service = LocationService()

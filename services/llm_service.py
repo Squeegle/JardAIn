@@ -55,7 +55,7 @@ class LLMService:
     
     async def _generate_with_openai(self, prompt: str) -> Optional[str]:
         """
-        Generate response using OpenAI API with timeout
+        Generate response using OpenAI API with aggressive timeout for Railway
         """
         try:
             # Import openai here to avoid dependency issues if not installed
@@ -65,12 +65,15 @@ class LLMService:
                 print("❌ OpenAI API key not configured")
                 return None
             
+            # Create client with shorter timeout for Railway
             client = openai.AsyncOpenAI(
                 api_key=settings.openai_api_key,
-                timeout=30.0  # 30 second timeout
+                timeout=20.0  # Reduced from 30 to 20 seconds
             )
             
-            # Add timeout wrapper
+            print(f"🤖 Making OpenAI API call with {settings.openai_model}...")
+            
+            # Use double timeout protection for Railway
             response = await asyncio.wait_for(
                 client.chat.completions.create(
                     model=settings.openai_model,
@@ -81,13 +84,15 @@ class LLMService:
                     temperature=0.3,
                     max_tokens=settings.openai_max_tokens
                 ),
-                timeout=30.0  # 30 second timeout
+                timeout=15.0  # Even more aggressive 15 second timeout
             )
             
-            return response.choices[0].message.content.strip()
+            result = response.choices[0].message.content.strip()
+            print(f"✅ OpenAI API response received ({len(result)} chars)")
+            return result
             
         except asyncio.TimeoutError:
-            print("❌ OpenAI API timeout (30 seconds)")
+            print("❌ OpenAI API timeout (15 seconds) - Railway network issue")
             return None
         except ImportError:
             print("❌ OpenAI not installed. Install with: pip install openai")

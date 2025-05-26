@@ -203,6 +203,91 @@ async def get_config_info():
         }
     }
 
+@app.get("/debug/railway")
+async def debug_railway():
+    """
+    Railway debugging endpoint - test all components that might cause hanging
+    """
+    import time
+    import asyncio
+    from datetime import datetime
+    
+    start_time = time.time()
+    results = {}
+    
+    # Test 1: Environment
+    try:
+        results["environment"] = {
+            "app_name": settings.app_name,
+            "llm_provider": settings.llm_provider,
+            "openai_configured": bool(settings.openai_api_key),
+            "debug_mode": settings.debug,
+            "success": True
+        }
+    except Exception as e:
+        results["environment"] = {"success": False, "error": str(e)}
+    
+    # Test 2: Location Service (with timeout)
+    try:
+        location_start = time.time()
+        location_info = await asyncio.wait_for(
+            location_service.get_location_info("90210"),
+            timeout=15.0
+        )
+        location_elapsed = time.time() - location_start
+        
+        results["location_service"] = {
+            "success": True,
+            "duration": location_elapsed,
+            "city": location_info.city,
+            "state": location_info.state,
+            "zone": location_info.usda_zone
+        }
+    except asyncio.TimeoutError:
+        results["location_service"] = {
+            "success": False,
+            "error": "Timeout after 15 seconds",
+            "duration": 15.0
+        }
+    except Exception as e:
+        results["location_service"] = {"success": False, "error": str(e)}
+    
+    # Test 3: LLM Service (with timeout)
+    try:
+        llm_start = time.time()
+        llm_response = await asyncio.wait_for(
+            llm_service.generate_plant_info("Generate JSON for tomato plant."),
+            timeout=10.0
+        )
+        llm_elapsed = time.time() - llm_start
+        
+        results["llm_service"] = {
+            "success": bool(llm_response),
+            "duration": llm_elapsed,
+            "response_length": len(llm_response) if llm_response else 0
+        }
+    except asyncio.TimeoutError:
+        results["llm_service"] = {
+            "success": False,
+            "error": "Timeout after 10 seconds",
+            "duration": 10.0
+        }
+    except Exception as e:
+        results["llm_service"] = {"success": False, "error": str(e)}
+    
+    total_elapsed = time.time() - start_time
+    
+    return {
+        "timestamp": datetime.now().isoformat(),
+        "total_duration": total_elapsed,
+        "environment": "Railway" if os.getenv('RAILWAY_ENVIRONMENT') else "Local",
+        "tests": results,
+        "summary": {
+            "passed": sum(1 for r in results.values() if r.get("success")),
+            "total": len(results)
+        }
+    }
+
 # ========================
 # Startup and Shutdown Events
 # ========================

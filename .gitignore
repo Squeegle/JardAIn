@@ -59,8 +59,7 @@ logs/*.log
 *.sqlite
 
 # Generated files
-generated_plans/*.pdf
-generated_plans/*.png
+generated_plans/
 
 # Docker
 get-docker.sh

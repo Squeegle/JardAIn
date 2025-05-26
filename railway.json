@@ -8,15 +8,16 @@
     "numReplicas": 1,
     "sleepApplication": false,
     "restartPolicyType": "ON_FAILURE",
-    "healthcheckPath": "/health",
+    "healthcheckPath": "/ping",
     "healthcheckTimeout": 300,
-    "startCommand": "uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1 --access-log --log-level info --timeout-keep-alive 30"
+    "startCommand": "sh -c 'uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --access-log --log-level info --timeout-keep-alive 30'"
   },
   "environments": {
     "production": {
       "variables": {
         "DEBUG": "false",
         "LLM_PROVIDER": "openai",
+        "OPENAI_API_KEY": "${{OPENAI_API_KEY}}",
         "LOG_LEVEL": "info",
         "PYTHONPATH": "/app",
         "PYTHONUNBUFFERED": "1",

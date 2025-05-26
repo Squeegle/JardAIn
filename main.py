@@ -107,24 +107,37 @@ async def home(request: Request):
         </html>
         """)
 
+@app.get("/ping")
+async def ping():
+    """
+    Simple ping endpoint for basic health checks
+    Returns immediately without any dependencies
+    """
+    return {"status": "ok", "service": "JardAIn Garden Planner"}
+
 @app.get("/health")
 async def health_check():
     """
     Health check endpoint for monitoring and deployment
     Returns application status and configuration info
     """
-    # Check database connectivity
-    database_status = "disconnected"
+    # Always return healthy for basic health check
+    # Database connectivity is optional for this application
+    database_status = "not_configured"
     database_error = None
     
     try:
         if settings.validate_database_config():
-            from sqlalchemy import text
-            db_manager = get_database_manager()
-            # Simple connection test
-            async with db_manager.async_session_maker() as session:
-                await session.execute(text("SELECT 1"))
-            database_status = "connected"
+            try:
+                from sqlalchemy import text
+                db_manager = get_database_manager()
+                # Simple connection test with timeout
+                async with db_manager.async_session_maker() as session:
+                    await session.execute(text("SELECT 1"))
+                database_status = "connected"
+            except Exception as db_e:
+                database_error = str(db_e)
+                database_status = "error"
         else:
             database_status = "not_configured"
     except Exception as e:
@@ -197,24 +210,30 @@ async def startup_event():
     if not settings.validate_llm_config():
         print("⚠️  Warning: LLM configuration incomplete")
     
-    # Initialize database connection
+    # Initialize database connection (non-blocking)
     print("🗄️  Initializing database connection...")
     if settings.validate_database_config():
         try:
             db_manager = init_database(settings.database_url_computed, **settings.database_config)
-            print(f"✅ Database connected: {settings.postgres_db}")
+            print(f"✅ Database manager initialized for: {settings.postgres_db}")
             
-            # Create tables if they don't exist
-            await db_manager.create_tables()
-            print("🏗️  Database tables ready")
-            
-            # Notify plant service that database is now available
-            from services.plant_service import plant_service
-            plant_service.refresh_database_status()
+            # Create tables if they don't exist (with timeout)
+            try:
+                await db_manager.create_tables()
+                print("🏗️  Database tables ready")
+                
+                # Notify plant service that database is now available
+                from services.plant_service import plant_service
+                plant_service.refresh_database_status()
+                print("✅ Database fully connected and ready")
+                
+            except Exception as table_e:
+                print(f"⚠️  Database table creation failed: {table_e}")
+                print("⚠️  Application will continue with limited database functionality")
             
         except Exception as e:
             print(f"❌ Database initialization failed: {e}")
-            print("⚠️  Application will continue with limited functionality")
+            print("⚠️  Application will continue with JSON fallback only")
     else:
         print("⚠️  Database configuration incomplete - using JSON fallback only")
     

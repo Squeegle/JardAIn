@@ -619,7 +619,26 @@ class GardenPlannerApp {
 
         } catch (error) {
             console.error('Error generating garden plan:', error);
-            this.showError(`Failed to generate garden plan: ${error.message}`);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                name: error.name,
+                timestamp: new Date().toISOString(),
+                requestData: requestData
+            });
+            
+            // Provide more detailed error information
+            let errorMessage = `Failed to generate garden plan: ${error.message}`;
+            
+            if (error.message.includes('NetworkError') || error.message.includes('fetch')) {
+                errorMessage += '\n\n🔧 Troubleshooting tips:\n' +
+                              '• Check your internet connection\n' +
+                              '• Try refreshing the page\n' +
+                              '• Clear your browser cache\n' +
+                              '• Try a different browser';
+            }
+            
+            this.showError(errorMessage);
         } finally {
             this.hideLoading();
         }

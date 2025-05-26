@@ -107,6 +107,18 @@ async def home(request: Request):
         </html>
         """)
 
+@app.get("/test", response_class=HTMLResponse)
+async def frontend_test():
+    """
+    Frontend test page for debugging API issues
+    """
+    try:
+        with open("static/test-frontend.html", "r") as f:
+            html_content = f.read()
+        return HTMLResponse(content=html_content)
+    except FileNotFoundError:
+        return HTMLResponse(content="<h1>Test page not found</h1><p>Please ensure static/test-frontend.html exists.</p>")
+
 @app.get("/ping")
 async def ping():
     """
